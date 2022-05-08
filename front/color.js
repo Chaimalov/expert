@@ -15,6 +15,7 @@ const rgbToHsl = async (r, g, b) => {
 
     return [hue, saturation, luminance];
 }
+
 icons.forEach(icon => {
     const canvas = document.createElement("canvas")
     canvas.width = 30;
