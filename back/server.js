@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+const PORT = 8080;
 
-app.listen(port, () => console.log("listening in port " + port))
 
 
 // Import the functions you need from the SDKs you need
@@ -43,5 +42,6 @@ app.get("/", (req, res) => {
 
 
 
+app.listen(PORT, () => console.log("listening on PORT " + PORT))
 
 
