@@ -6,8 +6,9 @@ app.listen(port, () => console.log("listening in port " + port))
 
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+const { initializeApp } = require("firebase/app");
+const { getAnalytics } = require("firebase/analytics");
+const { getFirestore, collection, getDocs } = require('firebase/firestore/lite');
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,6 +27,21 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebase);
+const db = getFirestore(firebase);
+
+async function getProducts(db) {
+    const productsCol = collection(db, "products");
+    const productsSnapshot = await getDocs(productsCol);
+    const productsList = productsSnapshot.docs.map(doc => doc.data());
+
+    return productsList;
+}
+
+app.get("/", (req, res) => {
+    return res.send(getProducts(db))
+})
+
+
 
 
 
