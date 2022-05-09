@@ -1,8 +1,10 @@
-import express from "express";
+import express, { query } from "express";
+import cors from "cors"
+import { collection, getDocs, db, addDoc } from "./firebase.js";
 const app = express()
 const PORT = 8080;
-import { collection, getDocs, db, addDoc } from "./firebase.js";
-
+app.use(cors())
+app.use(express.json())
 
 const productsCol = collection(db, "products");
 
@@ -13,7 +15,7 @@ async function getProducts() {
     return productsList;
 }
 
-app.post("/", async (req, res) => {
+app.post("/add", async (req, res) => {
     // Add a new document with a generated id.
     const docRef = await addDoc(productsCol, {
         name: req.body.name,
@@ -23,8 +25,7 @@ app.post("/", async (req, res) => {
 })
 
 app.get("/", async (req, res) => {
-
-
+    // res.send("hi")
     return res.send(await getProducts())
 })
 

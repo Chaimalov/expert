@@ -1,22 +1,24 @@
 import axios from "axios"
 import { useState } from "react"
 
-
-
 function App() {
   const [name, setName] = useState("")
   const [category, setCategory] = useState("")
 
   function sendData() {
-    axios.post("http://localhost:8080/", {
-      name,
-      category,
+    axios.post("http://localhost:8080/add", {
+      name: name,
+      category: category,
     })
   }
 
   return (
     <div className="App">
-      <form onSubmit={sendData()}>
+      <form onSubmit={e => {
+        e.preventDefault()
+        sendData()
+        e.reset()
+      }}>
         <label for="name">Name:</label>
         <input
           id="name"
@@ -32,7 +34,7 @@ function App() {
           name="category"
           required value={category}
           onChange={e => setCategory(e.target.value)} />
-        <input type={"submit"}></input>
+        <input type={"submit"} />
 
       </form>
     </div>
