@@ -20,6 +20,7 @@ function App() {
         <label for="name">Name:</label>
         <input
           id="name"
+          type="text"
           name="name"
           required value={name}
           onChange={e => setName(e.target.value)} />
@@ -27,6 +28,7 @@ function App() {
         <label for="category">Category</label>
         <input
           id="category"
+          type="text"
           name="category"
           required value={category}
           onChange={e => setCategory(e.target.value)} />
