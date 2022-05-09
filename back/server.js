@@ -24,7 +24,7 @@ app.post("/", async (req, res) => {
 
 app.get("/", async (req, res) => {
 
-   
+
     return res.send(await getProducts())
 })
 

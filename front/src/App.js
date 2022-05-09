@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios"
+import { useState } from "react"
+
+
 
 function App() {
+  const [name, setName] = useState("")
+  const [category, setCategory] = useState("")
+
+  function sendData() {
+    axios.post("http://localhost:8080/", {
+      name,
+      category,
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={sendData()}>
+        <label for="name">Name:</label>
+        <input id="name" name="name" required value={name} onChange={e => setName(e.target.value)} />
+        <label for="category">Category</label>
+        <input id="category" name="category" required value={category} onChange={e => setCategory(e.target.value)} />
+        <input type={"submit"}></input>
+      </form>
     </div>
   );
 }
