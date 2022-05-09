@@ -18,10 +18,20 @@ function App() {
     <div className="App">
       <form onSubmit={sendData()}>
         <label for="name">Name:</label>
-        <input id="name" name="name" required value={name} onChange={e => setName(e.target.value)} />
+        <input
+          id="name"
+          name="name"
+          required value={name}
+          onChange={e => setName(e.target.value)} />
+
         <label for="category">Category</label>
-        <input id="category" name="category" required value={category} onChange={e => setCategory(e.target.value)} />
+        <input
+          id="category"
+          name="category"
+          required value={category}
+          onChange={e => setCategory(e.target.value)} />
         <input type={"submit"}></input>
+
       </form>
     </div>
   );
