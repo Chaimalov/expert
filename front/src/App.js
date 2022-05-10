@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import Input from "./components/Input"
 
 function App() {
   const [name, setName] = useState("")
@@ -17,23 +18,11 @@ function App() {
       <form onSubmit={e => {
         e.preventDefault()
         sendData()
-        e.reset()
+        e.target.reset()
       }}>
-        <label for="name">Name:</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          required value={name}
-          onChange={e => setName(e.target.value)} />
 
-        <label for="category">Category</label>
-        <input
-          id="category"
-          type="text"
-          name="category"
-          required value={category}
-          onChange={e => setCategory(e.target.value)} />
+        <Input name="name" onChange={setName} />
+        <Input name="category" onChange={setCategory} />
         <input type={"submit"} />
 
       </form>
