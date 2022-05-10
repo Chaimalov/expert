@@ -20,6 +20,7 @@ function App() {
       e.target.reset()
     })
   }
+
   function searchItem(e) {
     e.preventDefault()
     axios.get("http://localhost:8080/search", {
