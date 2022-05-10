@@ -1,6 +1,7 @@
-import express, { query } from "express";
+import express from "express";
 import cors from "cors"
-import { collection, getDocs, db, addDoc } from "./firebase.js";
+import { collection, getDocs, db, addDoc,query,where} from "./firebase.js";
+
 const app = express()
 const PORT = 8080;
 app.use(cors())
@@ -23,9 +24,12 @@ app.post("/add", async (req, res) => {
     });
     console.log("Document written with ID: ", docRef.id);
 })
-
+app.get("/search", async (req, res) => {
+    const searchRes = query(productsCol, where("name", "==", ""))
+    
+    res.send((await getDocs(searchRes)).docs.map(doc => doc.data()))
+})
 app.get("/", async (req, res) => {
-    // res.send("hi")
     return res.send(await getProducts())
 })
 

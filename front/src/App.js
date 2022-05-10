@@ -23,7 +23,7 @@ function App() {
 
         <Input name="name" onChange={setName} />
         <Input name="category" onChange={setCategory} />
-        <input type={"submit"} />
+        <input type={"submit"}/>
 
       </form>
     </div>
