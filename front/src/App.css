@@ -1,0 +1,24 @@
+@import "./assets/styles/style.css";
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    max-width: 200px;
+    margin-inline: auto;
+}
+
+.submit {
+    background-color: var(--clr-primary);
+    width: max-content;
+    padding: .5em 1em;
+    margin-inline: auto;
+    border: none;
+    outline: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+label {
+    text-transform: capitalize;
+}
