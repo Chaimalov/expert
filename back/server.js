@@ -21,8 +21,8 @@ app.use(express.json())
     })
 
     app.get("/search", async (req, res) => {
-        const searchRes = query(productsCol, where("name", "==", ""))
-        res.send((await getDocs(searchRes)).docs.map(doc => doc.data()))
+        const searchRes = query(productsCol, where("name", "==", req.query.item))
+        res.json((await getDocs(searchRes)).docs.map(doc => doc.data()))
     })
 
     app.get("/", async (req, res) => {
@@ -33,11 +33,10 @@ app.use(express.json())
 }
 
 //Functions
-{
+
     async function getProducts() {
         const productsSnapshot = await getDocs(productsCol);
         const productsList = productsSnapshot.docs.map(doc => doc.data());
 
         return productsList;
     }
-}
