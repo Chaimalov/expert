@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors"
-import { collection, getDocs, db, addDoc,query,where} from "./firebase.js";
+import { collection, getDocs, db, addDoc, query, where } from "./firebase.js";
 
 const app = express()
 const PORT = 8080;
@@ -9,12 +9,7 @@ app.use(express.json())
 
 const productsCol = collection(db, "products");
 
-async function getProducts() {
-    const productsSnapshot = await getDocs(productsCol);
-    const productsList = productsSnapshot.docs.map(doc => doc.data());
-
-    return productsList;
-}
+//Routes
 
 app.post("/add", async (req, res) => {
     // Add a new document with a generated id.
@@ -22,13 +17,13 @@ app.post("/add", async (req, res) => {
         name: req.body.name,
         category: req.body.category
     });
-    console.log("Document written with ID: ", docRef.id);
 })
+
 app.get("/search", async (req, res) => {
     const searchRes = query(productsCol, where("name", "==", ""))
-    
     res.send((await getDocs(searchRes)).docs.map(doc => doc.data()))
 })
+
 app.get("/", async (req, res) => {
     return res.send(await getProducts())
 })
@@ -36,3 +31,11 @@ app.get("/", async (req, res) => {
 app.listen(PORT, () => console.log("listening on PORT " + PORT))
 
 
+//Functions
+
+async function getProducts() {
+    const productsSnapshot = await getDocs(productsCol);
+    const productsList = productsSnapshot.docs.map(doc => doc.data());
+
+    return productsList;
+}
