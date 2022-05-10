@@ -2,7 +2,8 @@ import "./App.css"
 import axios from "axios"
 import { useState } from "react"
 import Input from "./components/Input"
-import Submit from "./components/Submit"
+import Button from "./components/Button"
+
 
 function App() {
   const [name, setName] = useState("")
@@ -23,7 +24,7 @@ function App() {
       <form onSubmit={e => sendData(e)}>
         <Input name="name" onChange={setName} />
         <Input name="category" onChange={setCategory} />
-        <Submit />
+        <Button value="add" type="submit" />
       </form>
     </div>
   );

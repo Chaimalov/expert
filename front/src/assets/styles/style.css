@@ -80,6 +80,8 @@ button {
     background-color: var(--clr-primary);
     cursor: pointer;
     padding: .5em 1em;
+    width: max-content;
+    margin-inline: auto;
 }
 
 button:hover {
