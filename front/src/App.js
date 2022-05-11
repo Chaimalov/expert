@@ -13,7 +13,7 @@ function App() {
 
   function sendData(e) {
     e.preventDefault()
-    axios.post("http://localhost:8080/add", {
+    axios.post("/add", {
       name: nameRef.current.value,
       category: categoryRef.current.value,
     }).then(() => {
@@ -23,7 +23,7 @@ function App() {
 
   function searchItem(e) {
     e.preventDefault()
-    axios.get("http://localhost:8080/search", {
+    axios.get("/search", {
       params: {
         item: searchRef.current.value,
       }
