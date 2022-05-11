@@ -1,19 +1,6 @@
-const rgbToHsl = async (r, g, b) => {
-    rPercentage = r / 255.0;
-    gPercentage = g / 255.0;
-    bPercentage = b / 255.0;
 
-    const cMax = Math.max(rPercentage, gPercentage, bPercentage);
-    const cMin = Math.min(rPercentage, gPercentage, bPercentage);
 
-    const luminance = Math.round(((cMax + cMin) * 0.5) * 100.0);
-    const saturation = Math.round((cMax - cMin) / (luminance < 50.0 ? (cMax + cMin) : (2.0 - cMax - cMin)) * 100.0);
-    const hueBase = rPercentage === cMax ? (gPercentage - bPercentage) / (cMax - cMin) : gPercentage === cMax ? 2.0 + (bPercentage - rPercentage) / (cMax - cMin) : 4.0 + (rPercentage - gPercentage) / (cMax - cMin);
-    const hue = Math.round(hueBase * 60.0);
-
-    return [hue, saturation, luminance];
-}
-
+export function emoji_rgba(icon) {
     const canvas = document.createElement("canvas")
     canvas.width = 30;
     canvas.height = 30;
@@ -37,10 +24,22 @@ const rgbToHsl = async (r, g, b) => {
     sums[3] = sums[3] / 3; // divide by 3 since we counted each pixel 3 times
     const averages = [Math.floor(sums[0] / sums[3]), Math.floor(sums[1] / sums[3]), Math.floor(sums[2] / sums[3])];
 
+    const rgbToHsl = (r, g, b) => {
+        let rPercentage = r / 255.0;
+        let gPercentage = g / 255.0;
+        let bPercentage = b / 255.0;
 
+        const cMax = Math.max(rPercentage, gPercentage, bPercentage);
+        const cMin = Math.min(rPercentage, gPercentage, bPercentage);
+
+        const luminance = Math.round(((cMax + cMin) * 0.5) * 100.0);
+        const saturation = Math.round((cMax - cMin) / (luminance < 50.0 ? (cMax + cMin) : (2.0 - cMax - cMin)) * 100.0);
+        const hueBase = rPercentage === cMax ? (gPercentage - bPercentage) / (cMax - cMin) : gPercentage === cMax ? 2.0 + (bPercentage - rPercentage) / (cMax - cMin) : 4.0 + (rPercentage - gPercentage) / (cMax - cMin);
+        const hue = Math.round(hueBase * 60.0);
+
+        return [hue, saturation, luminance];
+    }
     // just to see the color
-    rgbToHsl(...averages).then((color) => {
-        return color[0]
-    })
-
+    return rgbToHsl(...averages)
+}
 

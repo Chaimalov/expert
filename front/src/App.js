@@ -5,7 +5,7 @@ import Input from "./components/Input"
 import Button from "./components/Button"
 import Category from "./components/Category"
 
-const categories =["fruits","vegetables","dairy","meat","pantry","wine","ice_cream"]
+const categories = ["fruits", "vegetables", "dairy", "meat", "pantry", "wine", "ice_cream"]
 
 function App() {
   const nameRef = createRef()
@@ -37,9 +37,9 @@ function App() {
   return (
     <div className="App">
       <form onSubmit={e => sendData(e)}>
-        <Input name="name"  ref={nameRef} />
-        <Category category="fruits" icon= "🥲" />
-        <Button value="add" type="submit"/>
+        <Input name="name" ref={nameRef} />
+        <Category category="fruits" icon="🍅" />
+        <Button value="add" type="submit" />
       </form>
       {/* <form onSubmit={e => searchItem(e)}>
         <Input name="search" ref={searchRef} />
