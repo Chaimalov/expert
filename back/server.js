@@ -21,8 +21,10 @@ app.use(express.json())
             maxDays: categoryDays[req.body.category].maxDays,
             supportRate: 1,
             createdBy: "",
-            nameVariation:[],
-        });
+            nameVariation: [],
+        }).then(() => {
+            res.json("added " + req.body.name + " successfully")
+        })
     })
 
     app.get("/search", async (req, res) => {
@@ -51,7 +53,7 @@ async function getProducts() {
 }
 
 const categoryDays = {
-    fruit: {
+    fruits: {
         minDays: 4,
         maxDays: 30
     },

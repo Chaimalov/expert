@@ -17,16 +17,18 @@ const categories = [
 function App() {
   const nameRef = createRef()
   const searchRef = createRef()
-  const [category, setCategory] = useState(false)
+  const [category, setCategory] = useState()
 
 
   function sendData(e) {
+    if (!category) return
     e.preventDefault()
     axios.post("/add", {
       name: nameRef.current.value,
       category,
-    }).then(() => {
+    }).then(({ data }) => {
       e.target.reset()
+      console.log(data)
     }).catch(error => console.error(error))
   }
 
@@ -46,7 +48,7 @@ function App() {
       <form onSubmit={e => sendData(e)}>
         <Input name="name" ref={nameRef} />
         <div className="section">{categories.map(category => (
-          <Category key={category.name} category={category.name} icon={category.icon} israel ={console.log} />
+          <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
         ))}
         </div>
         <Button value="add" type="submit" />
