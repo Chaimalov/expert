@@ -8,7 +8,7 @@
     margin: 0;
     --clr-primary: hsl(var(--hue), var(--saturation), var(--value));
     --clr-primary-dark: hsl(calc(var(--hue) * 1.2), var(--saturation), calc(var(--value) * .9));
-    --clr-primary-light: hsl(var(--hue), var(--saturation), calc(var(--value) * 2.3));
+    --clr-primary-light: hsl(var(--hue), var(--saturation), calc(var(--value) * 1.1));
 }
 
 :root {

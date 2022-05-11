@@ -1,6 +1,6 @@
 
 
-export function emoji_rgba(icon) {
+export function colorFromEmoji(icon) {
     const canvas = document.createElement("canvas")
     canvas.width = 30;
     canvas.height = 30;
