@@ -16,7 +16,7 @@ app.use(express.json())
         // Add a new document with a generated id.
         const docRef = await addDoc(productsCol, {
             name: req.body.name,
-            category: req.body.category
+            category: req.body.category,
         });
     })
 
@@ -43,4 +43,7 @@ async function getProducts() {
     const productsList = productsSnapshot.docs.map(doc => doc.data());
 
     return productsList;
+}
+const categoryDays = {
+    
 }
