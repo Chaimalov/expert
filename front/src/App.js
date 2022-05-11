@@ -1,21 +1,21 @@
 import "./App.css"
 import axios from "axios"
-import { useState } from "react"
+import React, { useState, useRef } from "react"
 import Input from "./components/Input"
 import Button from "./components/Button"
 
 
 function App() {
-  const [name, setName] = useState("")
-  const [category, setCategory] = useState("")
-  const [search, setSearch] = useState("")
+  const nameRef = React.createRef()
+  const categoryRef = React.createRef()
+  const searchRef = React.createRef()
 
 
   function sendData(e) {
     e.preventDefault()
     axios.post("http://localhost:8080/add", {
-      name: name,
-      category: category,
+      name: nameRef.current.value,
+      category: categoryRef.current.value,
     }).then(() => {
       e.target.reset()
     })
@@ -25,23 +25,22 @@ function App() {
     e.preventDefault()
     axios.get("http://localhost:8080/search", {
       params: {
-        item: search,
+        item: searchRef.current.value,
       }
+    }).then(({ data }) => {
+      console.log(data)
     })
-      .then(({ data }) => {
-        console.log(data)
-      })
   }
 
   return (
     <div className="App">
       {/* <form onSubmit={e => sendData(e)}>
-        <Input name="name" onChange={setName} />
-        <Input name="category" onChange={setCategory} />
+        <Input name="name"  ref={nameRef} />
+        <Input name="category" ref={categoryRef} />
         <Button value="add" type="submit"/>
       </form> */}
       <form onSubmit={e => searchItem(e)}>
-        <Input name="search" onChange={setSearch} />
+        <Input name="search" ref={searchRef} />
         <Button value="search" type="submit" />
       </form>
     </div>

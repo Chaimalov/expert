@@ -1,16 +1,16 @@
 import React from 'react'
 
-export default function Input({ name, type, onChange }) {
-    return (
-        <>
-            <label for={name}><h3>{name}:</h3></label>
-            <input
-                id={name}
-                type={type}
-                name={name}
-                required
-                onChange={e => onChange(e.target.value)} />
-        </>
-    )
-}
+const Input = React.forwardRef(({ name, type }, ref) => (
+    <>
+        <label htmlFor={name}><h3>{name}:</h3></label>
+        <input
+            id={name}
+            type={type}
+            name={name}
+            required
+            ref={ref} />
+    </>
+))
+
+export default Input
 

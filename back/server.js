@@ -24,7 +24,9 @@ app.use(express.json())
         const item = req.query.item
         if (!item) return res.json("query was empty")
         const searchRes = query(productsCol, where("name", "==", item))
-        return res.json((await getDocs(searchRes)).docs)
+        return res.json((await getDocs(searchRes)).docs.map(doc => (
+            { ...doc.data(), id: doc.id }
+        )))
     })
 
     app.get("/", async (req, res) => {
