@@ -1,5 +1,3 @@
-const icons = document.querySelectorAll(".icon")
-
 const rgbToHsl = async (r, g, b) => {
     rPercentage = r / 255.0;
     gPercentage = g / 255.0;
@@ -16,7 +14,6 @@ const rgbToHsl = async (r, g, b) => {
     return [hue, saturation, luminance];
 }
 
-icons.forEach(icon => {
     const canvas = document.createElement("canvas")
     canvas.width = 30;
     canvas.height = 30;
@@ -24,7 +21,7 @@ icons.forEach(icon => {
     ctx.fillStyle = '#121212'; // 12 => 17 in decimal
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.font = "20px Arial";
-    ctx.fillText(icon.innerHTML, 0, 20);
+    ctx.fillText(icon, 0, 20);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // an array in the format [r, g, b, count] decimal
     const sums = imageData.data.reduce((r, v, i) => {
@@ -43,7 +40,7 @@ icons.forEach(icon => {
 
     // just to see the color
     rgbToHsl(...averages).then((color) => {
-        icon.closest(".category").style.setProperty("--hue", color[0])
+        return color[0]
     })
-})
+
 

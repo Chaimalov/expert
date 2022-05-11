@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState, createRef } from "react"
 import Input from "./components/Input"
 import Button from "./components/Button"
+import Category from "./components/Category"
 
 const categories =["fruits","vegetables","dairy","meat","pantry","wine","ice_cream"]
 
@@ -35,15 +36,15 @@ function App() {
 
   return (
     <div className="App">
-      {/* <form onSubmit={e => sendData(e)}>
+      <form onSubmit={e => sendData(e)}>
         <Input name="name"  ref={nameRef} />
-        <Input name="category" ref={categoryRef} />
+        <Category category="fruits" icon= "🥲" />
         <Button value="add" type="submit"/>
-      </form> */}
-      <form onSubmit={e => searchItem(e)}>
+      </form>
+      {/* <form onSubmit={e => searchItem(e)}>
         <Input name="search" ref={searchRef} />
         <Button value="search" type="submit" />
-      </form>
+      </form> */}
     </div>
   );
 }
