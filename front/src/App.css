@@ -33,12 +33,13 @@ input[type="radio"]:checked {
     opacity: 1;
 }
 
-input[type="radio"]:checked::after {
+input[type="radio"]:checked::before {
     content: '';
     position: absolute;
     inset: 0;
     border: 5px solid var(--clr-primary-dark);
     border-radius: 1em;
+    pointer-events: none;
 }
 
 label {
