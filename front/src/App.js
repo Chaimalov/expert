@@ -4,6 +4,7 @@ import { useState, createRef } from "react"
 import Input from "./components/Input"
 import Button from "./components/Button"
 
+const categories =["fruits","vegetables","dairy","meat","pantry","wine","ice_cream"]
 
 function App() {
   const nameRef = createRef()

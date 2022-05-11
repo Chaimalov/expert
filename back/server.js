@@ -18,7 +18,10 @@ app.use(express.json())
             name: req.body.name,
             category: req.body.category,
             minDays: categoryDays[req.body.category].minDays,
-            maxDays: categoryDays[req.body.category].maxDays
+            maxDays: categoryDays[req.body.category].maxDays,
+            supportRate: 1,
+            createdBy: "",
+            nameVariation:[],
         });
     })
 
@@ -50,9 +53,30 @@ async function getProducts() {
 const categoryDays = {
     fruit: {
         minDays: 4,
-        maxDays: 8
+        maxDays: 30
     },
     vegetables: {
+        minDays: 1,
+        maxDays: 14
+    },
+    dairy: {
+        minDays: 7,
+        maxDays: 10
 
-    }
+    }, meat: {
+        minDays: 120,
+        maxDays: 360
+
+    }, pantry: {
+        minDays: 240,
+        maxDays: 360
+
+    }, wine: {
+        minDays: 720,
+        maxDays: 1800
+
+    }, ice_cream: {
+        minDays: 1,
+        maxDays: 45
+    },
 }
