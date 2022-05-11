@@ -4,8 +4,9 @@ form {
     display: flex;
     flex-direction: column;
     gap: 2em;
-    max-width: 1000px;
+    max-width: 800px;
     margin-inline: auto;
+    align-items: center;
 }
 
 .input {
@@ -14,11 +15,33 @@ form {
     gap: .5em;
     margin: auto;
 }
-input{
+
+.input input {
     width: 500px;
     padding: .5em;
 }
 
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    transition: .2s ease;
+    opacity: 0;
+}
+
+input[type="radio"]:checked {
+    opacity: 1;
+}
+
+input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 5px solid var(--clr-primary-dark);
+    border-radius: 1em;
+}
+
 label {
+    position: relative;
     text-transform: capitalize;
 }

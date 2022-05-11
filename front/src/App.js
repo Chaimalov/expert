@@ -12,7 +12,7 @@ const categories = [
   { name: "meat", icon: "🥩" },
   { name: "pantry", icon: "🥫" },
   { name: "wine", icon: "🍷" },
-  { name: "ice_cream", icon: "🍧" }]
+  { name: "ice cream", icon: "🍧" }]
 
 function App() {
   const nameRef = createRef()
@@ -48,7 +48,7 @@ function App() {
       <form onSubmit={e => sendData(e)}>
         <Input name="name" ref={nameRef} />
         <div className="section">{categories.map(category => (
-          <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
+          <Category key={category.name} category={category.name} icon={category.icon} onClick={console.log} />
         ))}
         </div>
         <Button value="add" type="submit" />

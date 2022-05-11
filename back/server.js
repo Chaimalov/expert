@@ -13,12 +13,13 @@ app.use(express.json())
 //Routes
 {
     app.post("/add", async (req, res) => {
+        const category = req.body.category.replace(" ", "_")
         // Add a new document with a generated id.
         const docRef = await addDoc(productsCol, {
             name: req.body.name,
-            category: req.body.category,
-            minDays: categoryDays[req.body.category].minDays,
-            maxDays: categoryDays[req.body.category].maxDays,
+            category: category,
+            minDays: categoryDays[category].minDays,
+            maxDays: categoryDays[category].maxDays,
             supportRate: 1,
             createdBy: "",
             nameVariation: [],

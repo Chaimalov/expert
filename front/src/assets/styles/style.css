@@ -32,15 +32,15 @@ body {
     color: #333;
 }
 
-.section{
+.section {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: wrap;
+    justify-content: center;
     gap: 1em;
 }
 
 .category {
     display: flex;
-    flex-direction: row;
     color: #333;
     width: max-content;
     align-items: center;
@@ -78,7 +78,6 @@ button {
     cursor: pointer;
     padding: .5em 1em;
     width: max-content;
-    margin-inline: auto;
 }
 
 button:hover {
