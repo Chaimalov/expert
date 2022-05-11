@@ -18,7 +18,7 @@ function App() {
       category: categoryRef.current.value,
     }).then(() => {
       e.target.reset()
-    })
+    }).catch(error => console.error(error))
   }
 
   function searchItem(e) {
@@ -29,7 +29,7 @@ function App() {
       }
     }).then(({ data }) => {
       console.log(data)
-    })
+    }).catch(error => console.error(error))
   }
 
   return (
