@@ -1,14 +1,14 @@
 import "./App.css"
 import axios from "axios"
-import React, { useState, useRef } from "react"
+import { useState, createRef } from "react"
 import Input from "./components/Input"
 import Button from "./components/Button"
 
 
 function App() {
-  const nameRef = React.createRef()
-  const categoryRef = React.createRef()
-  const searchRef = React.createRef()
+  const nameRef = createRef()
+  const categoryRef = createRef()
+  const searchRef = createRef()
 
 
   function sendData(e) {
