@@ -23,7 +23,7 @@ app.use(express.json())
             createdBy: "",
             nameVariation: [],
         }).then(() => {
-            res.json("added " + req.body.name + " successfully")
+            res.json({ message: "added " + req.body.name + " successfully" })
         })
     })
 
