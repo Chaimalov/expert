@@ -73,5 +73,5 @@ label {
 }
 
 .category:hover input[type="radio"]:checked::before {
-    border-width: 0;
+    /* border-width: 0; */
 }
