@@ -17,11 +17,8 @@ app.use(express.json())
         const docRef = await addDoc(productsCol, {
             name: req.body.name,
             category: req.body.category,
-<<<<<<< HEAD
             minDays: categoryDays[req.body.category].minDays,
             maxDays: categoryDays[req.body.category].maxDays
-=======
->>>>>>> 45830804896f1bb678b7ecf8e075c2e40f0c1056
         });
     })
 
@@ -49,7 +46,6 @@ async function getProducts() {
 
     return productsList;
 }
-<<<<<<< HEAD
 
 const categoryDays = {
     fruit: {
@@ -59,8 +55,4 @@ const categoryDays = {
     vegetables: {
 
     }
-=======
-const categoryDays = {
-
->>>>>>> 45830804896f1bb678b7ecf8e075c2e40f0c1056
 }
