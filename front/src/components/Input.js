@@ -1,7 +1,8 @@
 import React from 'react'
 
 const Input = React.forwardRef(({ name, type }, ref) => (
-    <>
+    <div className='input'>
+        
         <label htmlFor={name}><h3>{name}:</h3></label>
         <input
             id={name}
@@ -9,7 +10,7 @@ const Input = React.forwardRef(({ name, type }, ref) => (
             name={name}
             required
             ref={ref} />
-    </>
+    </div>
 ))
 
 export default Input

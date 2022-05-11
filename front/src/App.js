@@ -5,19 +5,26 @@ import Input from "./components/Input"
 import Button from "./components/Button"
 import Category from "./components/Category"
 
-const categories = ["fruits", "vegetables", "dairy", "meat", "pantry", "wine", "ice_cream"]
+const categories = [
+  { name: "fruits", icon: "🍉" },
+  { name: "vegetables", icon: "🥑" },
+  { name: "dairy", icon: "🧀" },
+  { name: "meat", icon: "🥩" },
+  { name: "pantry", icon: "🥫" },
+  { name: "wine", icon: "🍷" },
+  { name: "ice_cream", icon: "🍧" }]
 
 function App() {
   const nameRef = createRef()
-  const categoryRef = createRef()
   const searchRef = createRef()
+  const [category, setCategory] = useState(false)
 
 
   function sendData(e) {
     e.preventDefault()
     axios.post("/add", {
       name: nameRef.current.value,
-      category: categoryRef.current.value,
+      category,
     }).then(() => {
       e.target.reset()
     }).catch(error => console.error(error))
@@ -38,7 +45,10 @@ function App() {
     <div className="App">
       <form onSubmit={e => sendData(e)}>
         <Input name="name" ref={nameRef} />
-        <Category category="fruits" icon="🍅" />
+        <div className="section">{categories.map(category => (
+          <Category key={category.name} category={category.name} icon={category.icon} israel ={console.log} />
+        ))}
+        </div>
         <Button value="add" type="submit" />
       </form>
       {/* <form onSubmit={e => searchItem(e)}>

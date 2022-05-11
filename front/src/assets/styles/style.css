@@ -32,6 +32,12 @@ body {
     color: #333;
 }
 
+.section{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
 .category {
     display: flex;
     flex-direction: row;

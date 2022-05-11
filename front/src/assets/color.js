@@ -40,6 +40,6 @@ export function emoji_rgba(icon) {
         return [hue, saturation, luminance];
     }
     // just to see the color
-    return rgbToHsl(...averages)
+    return rgbToHsl(...averages)[0]
 }
 
