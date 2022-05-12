@@ -1,12 +1,11 @@
 @import "./assets/styles/style.css";
 
 form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    place-items: center;
     gap: 2em;
     max-width: 800px;
     margin-inline: auto;
-    align-items: center;
 }
 
 .input {

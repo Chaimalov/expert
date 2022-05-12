@@ -1,20 +1,25 @@
 @import url('variables.css');
 
-h1 {
+:where(h1, h2, h3, h4, strong) {
     text-transform: capitalize;
+}
+
+strong {
+    font-weight: 900;
+}
+
+h1 {
     font-weight: 900;
     font-size: 48px;
 }
 
 h2 {
-    text-transform: capitalize;
     font-weight: 700;
     font-size: 24px;
     line-height: 2em;
 }
 
 h3 {
-    text-transform: capitalize;
     font-weight: 700;
     font-size: 18px;
     line-height: 2em;
@@ -58,6 +63,7 @@ button {
     cursor: pointer;
     padding: .5em 1em;
     width: max-content;
+    margin: .5em;
 }
 
 button:hover {

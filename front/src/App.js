@@ -15,27 +15,26 @@ const categories = [
   { name: "ice cream", icon: "🍧" }]
 
 function App() {
-  const nameRef = createRef()
+  const [name, setName] = useState("")
   const searchRef = createRef()
   const [category, setCategory] = useState()
-  const [found,setFound] = useState(true)
+  const [found, setFound] = useState(true)
 
   function sendData(e) {
     e.preventDefault()
     if (!category) return
 
     axios.post("/add", {
-      name: nameRef.current.value,
+      name,
       category,
     }).then(({ data }) => {
-      e.target.reset()
+      // e.target.reset()
       alert(data.message)
-    }).catch(error => console.error(error))
+    }).catch(error => console.error(error.response.data))
   }
 
   function handleCancel(f) {
     setFound(f)
-    nameRef.current.value = ""
   }
 
   function searchItem(e) {
@@ -45,33 +44,39 @@ function App() {
         item: searchRef.current.value,
       }
     }).then(({ data }) => {
-      if (data.length == 0) setFound(false)
+      setName(searchRef.current.value)
+      if (data.length == 0) return setFound(false)
       console.log(data)
-    }).catch(error => console.error(error))
+    }).catch(error => {
+      console.error(error)
+    })
   }
 
   if (found) {
     return (
       <div className="App">
-      <form onSubmit={e => searchItem(e)}>
-        <Input name="search" ref={searchRef} />
-        <Button value="search" type="submit" />
+        <form onSubmit={e => searchItem(e)}>
+          <Input name="search" ref={searchRef} />
+          <Button value="search" type="submit" />
         </form>
       </div>
     )
   }
   else {
     return (
-        <div className="App">
+      <div className="App">
         <form onSubmit={e => sendData(e)}>
-        <Input name="name" ref={nameRef} />
-        <div className="section">{categories.map(category => (
-          <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
-        ))}
-        </div>
-        <Button value="add" type="submit" />
-          <Button value="cancel" danger onClick={handleCancel}/>
-      </form>
+          {/* <Input name="name" ref={nameRef} /> */}
+          <h2><strong>{name}</strong> is in what Category?</h2>
+          <div className="section">{categories.map(category => (
+            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
+          ))}
+          </div>
+          <div>
+            <Button value="add" type="submit" />
+            <Button value="cancel" danger onClick={handleCancel} />
+          </div>
+        </form>
       </div>
     );
   }
