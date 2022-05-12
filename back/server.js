@@ -57,7 +57,7 @@ async function getProducts() {
 
 async function checkExist(item) {
     const result = query(productsCol, where("name", "==", item.name), where("category", "==", item.category))
-    return (await getDocs(result)).docs.length > 0;
+    return (await getDocs(result)).docs.length;
 }
 
 
