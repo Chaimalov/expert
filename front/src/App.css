@@ -34,6 +34,7 @@ input[type="radio"]:checked {
 }
 
 input[type="radio"]:checked::after {
+    pointer-events: none;
     content: '';
     position: absolute;
     inset: 0;

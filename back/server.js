@@ -48,9 +48,7 @@ app.use(express.json())
 
 async function getProducts() {
     const productsSnapshot = await getDocs(productsCol);
-    const productsList = productsSnapshot.docs.map(doc => doc.data());
-
-    return productsList;
+    return productsSnapshot.docs.map(doc => doc.data());
 }
 
 const categoryDays = {

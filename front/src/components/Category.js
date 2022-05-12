@@ -9,12 +9,11 @@ export default function Category({ category, icon, onClick }) {
                 style={{ "--hue": color }}
                 onClick={() => {
                     onClick(category)
-                }}
-            >
-                <div className="icon">{icon}</div>
+                }}>
                 <div>
                     <h2>{category}</h2>
                 </div>
+                <div className="icon">{icon}</div>
             </div>
             <input
                 type="radio"
