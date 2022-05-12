@@ -18,18 +18,24 @@ function App() {
   const nameRef = createRef()
   const searchRef = createRef()
   const [category, setCategory] = useState()
-
+  const [found,setFound] = useState(true)
 
   function sendData(e) {
-    if (!category) return
     e.preventDefault()
+    if (!category) return
+
     axios.post("/add", {
       name: nameRef.current.value,
       category,
     }).then(({ data }) => {
       e.target.reset()
-      console.log(data)
+      alert(data.message)
     }).catch(error => console.error(error))
+  }
+
+  function handleCancel(f) {
+    setFound(f)
+    nameRef.current.value = ""
   }
 
   function searchItem(e) {
@@ -39,26 +45,36 @@ function App() {
         item: searchRef.current.value,
       }
     }).then(({ data }) => {
+      if (data.length == 0) setFound(false)
       console.log(data)
     }).catch(error => console.error(error))
   }
 
-  return (
-    <div className="App">
-      <form onSubmit={e => sendData(e)}>
+  if (found) {
+    return (
+      <div className="App">
+      <form onSubmit={e => searchItem(e)}>
+        <Input name="search" ref={searchRef} />
+        <Button value="search" type="submit" />
+        </form>
+      </div>
+    )
+  }
+  else {
+    return (
+        <div className="App">
+        <form onSubmit={e => sendData(e)}>
         <Input name="name" ref={nameRef} />
         <div className="section">{categories.map(category => (
-          <Category key={category.name} category={category.name} icon={category.icon} onClick={console.log} />
+          <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
         ))}
         </div>
         <Button value="add" type="submit" />
+          <Button value="cancel" danger onClick={handleCancel}/>
       </form>
-      {/* <form onSubmit={e => searchItem(e)}>
-        <Input name="search" ref={searchRef} />
-        <Button value="search" type="submit" />
-      </form> */}
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;

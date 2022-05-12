@@ -13,8 +13,10 @@ app.use(express.json())
 //Routes
 {
     app.post("/add", async (req, res) => {
+        if (checkExist(req.body)) return res.json({ message:  req.body.name + " already exists!"})
         const category = req.body.category.replace(" ", "_")
         // Add a new document with a generated id.
+        
         const docRef = await addDoc(productsCol, {
             name: req.body.name,
             category: category,
@@ -50,6 +52,11 @@ async function getProducts() {
     const productsSnapshot = await getDocs(productsCol);
     return productsSnapshot.docs.map(doc => doc.data());
 }
+
+async function checkExist(item) {
+    return query(productsCol, where("name", "==", item.name).where("category", "==", item.category)).docs.length > 0;
+}
+
 
 const categoryDays = {
     fruits: {
