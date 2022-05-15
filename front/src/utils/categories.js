@@ -7,4 +7,4 @@ const categories = [
     { name: "wine", icon: "🍷" },
     { name: "ice cream", icon: "🍧" }]
 
-    export default categories
+export default categories

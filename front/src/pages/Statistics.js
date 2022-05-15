@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
-import Category from './components/Category'
-import categories from "./components/categories"
+import React, { useState } from 'react'
+import Category from '../components/Category'
+import categories from "../utils/categories"
 
 export default function Statistics() {
 
