@@ -38,6 +38,15 @@ body {
     color: #333;
 }
 
+nav {
+    position: absolute;
+    inset: 0;
+    bottom: auto;
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+}
+
 .section {
     display: flex;
     flex-flow: wrap;

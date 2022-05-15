@@ -1,10 +1,10 @@
 import axios from "axios"
 import { useState, createRef } from "react"
-import Input from "./components/Input"
-import Button from "./components/Button"
-import Category from "./components/Category"
-import Item from "./components/Item"
-import categories from "./components/categories"
+import Input from "../components/Input"
+import Button from "../components/Button"
+import Category from "../components/Category"
+import Item from "../components/Item"
+import categories from "../utils/categories"
 
 
 function Home() {
