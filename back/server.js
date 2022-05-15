@@ -21,20 +21,18 @@ app.use(express.json())
         const category = req.body.category.replace(" ", "_")
         // Add a new document with a generated id.
 
-        console.log(getEmoji(req.body.name))
-
-        // const docRef = await addDoc(productsCol, {
-        //     name: req.body.name,
-        //     category: category,
-        //     icon: getEmoji(req.body.name),
-        //     minDays: categoryDays[category].minDays,
-        //     maxDays: categoryDays[category].maxDays,
-        //     supportRate: 1,
-        //     createdBy: "",
-        //     nameVariation: [],
-        // }).then(() => {
-        //     res.json({ message: "added " + req.body.name + " successfully" })
-        // })
+        const docRef = await addDoc(productsCol, {
+            name: req.body.name,
+            category: category,
+            icon: await getEmoji(req.body.name),
+            minDays: categoryDays[category].minDays,
+            maxDays: categoryDays[category].maxDays,
+            supportRate: 1,
+            createdBy: "",
+            nameVariation: [],
+        }).then(() => {
+            res.json({ message: "added " + req.body.name + " successfully" })
+        })
     })
 
     app.get("/search", async (req, res) => {
@@ -98,14 +96,12 @@ const categoryDays = {
 }
 
 
-function getEmoji(name) {
-    axios.get('https://emoji-api.com/emojis', {
+async function getEmoji(name) {
+    const response = await axios.get('https://emoji-api.com/emojis', {
         params: {
             search: name,
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
-    }).then((data) => {
-        return data
     })
-        .catch(error => console.log(error))
+    return response.status(200) ? response.data[0].character : "no-icon"
 }
