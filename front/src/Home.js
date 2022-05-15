@@ -4,15 +4,8 @@ import Input from "./components/Input"
 import Button from "./components/Button"
 import Category from "./components/Category"
 import Item from "./components/Item"
+import categories from "./components/categories"
 
-const categories = [
-    { name: "fruits", icon: "🍉" },
-    { name: "vegetables", icon: "🥑" },
-    { name: "dairy", icon: "🧀" },
-    { name: "meat", icon: "🥩" },
-    { name: "pantry", icon: "🥫" },
-    { name: "wine", icon: "🍷" },
-    { name: "ice cream", icon: "🍧" }]
 
 function Home() {
     const [name, setName] = useState("")
