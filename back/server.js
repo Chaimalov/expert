@@ -103,5 +103,5 @@ async function getEmoji(name) {
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     })
-    return response.status(200) ? response.data[0].character : "no-icon"
+    return response.status == 200 ? response.data[1].character : "no-icon"
 }

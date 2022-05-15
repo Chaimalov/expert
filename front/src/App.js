@@ -4,6 +4,7 @@ import { useState, createRef } from "react"
 import Input from "./components/Input"
 import Button from "./components/Button"
 import Category from "./components/Category"
+import Item from "./components/Item"
 
 const categories = [
   { name: "fruits", icon: "🍉" },
@@ -19,6 +20,7 @@ function App() {
   const searchRef = createRef()
   const [category, setCategory] = useState()
   const [found, setFound] = useState(true)
+  const [item, setItem] = useState()
 
   function sendData(e) {
     e.preventDefault()
@@ -46,6 +48,7 @@ function App() {
     }).then(({ data }) => {
       setName(searchRef.current.value)
       if (data.length == 0) return setFound(false)
+      setItem(data[0])
       console.log(data)
     }).catch(error => {
       console.error(error)
@@ -59,6 +62,7 @@ function App() {
           <Input name="search" ref={searchRef} />
           <Button value="search" type="submit" />
         </form>
+        {item && <Item name={item.name} category={item.category} icon={item.icon} />}
       </div>
     )
   }
