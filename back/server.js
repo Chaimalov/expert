@@ -97,11 +97,11 @@ const categoryDays = {
 
 
 async function getEmoji(name) {
-    const { data } = await axios.get('https://emoji-api.com/emojis', {
+    const response = await axios.get('https://emoji-api.com/emojis', {
         params: {
             search: name,
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     })
-    return data ? data[0].character : "error"
+    return response.status(200) ? response.data[0].character : "no-icon"
 }
