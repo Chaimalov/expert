@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors"
 import { collection, getDocs, db, addDoc, query, where } from "./firebase.js";
+import axios from "axios"
+
 
 const app = express()
 const PORT = 8080;
@@ -19,17 +21,20 @@ app.use(express.json())
         const category = req.body.category.replace(" ", "_")
         // Add a new document with a generated id.
 
-        const docRef = await addDoc(productsCol, {
-            name: req.body.name,
-            category: category,
-            minDays: categoryDays[category].minDays,
-            maxDays: categoryDays[category].maxDays,
-            supportRate: 1,
-            createdBy: "",
-            nameVariation: [],
-        }).then(() => {
-            res.json({ message: "added " + req.body.name + " successfully" })
-        })
+        console.log(getEmoji(req.body.name))
+
+        // const docRef = await addDoc(productsCol, {
+        //     name: req.body.name,
+        //     category: category,
+        //     icon: getEmoji(req.body.name),
+        //     minDays: categoryDays[category].minDays,
+        //     maxDays: categoryDays[category].maxDays,
+        //     supportRate: 1,
+        //     createdBy: "",
+        //     nameVariation: [],
+        // }).then(() => {
+        //     res.json({ message: "added " + req.body.name + " successfully" })
+        // })
     })
 
     app.get("/search", async (req, res) => {
@@ -90,4 +95,17 @@ const categoryDays = {
         minDays: 1,
         maxDays: 45
     },
+}
+
+
+function getEmoji(name) {
+    axios.get('https://emoji-api.com/emojis', {
+        params: {
+            search: name,
+            access_key: 'b8441a54d10349910152d879cd68f21074ee4482',
+        }
+    }).then((data) => {
+        return data
+    })
+        .catch(error => console.log(error))
 }
