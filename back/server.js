@@ -44,6 +44,13 @@ app.use(express.json())
         )))
     })
 
+    app.get("/search/:category", async (req, res) => {
+        const searchRes = query(productsCol, where("category", "==", req.params.category))
+        return res.json((await getDocs(searchRes)).docs.map(doc => (
+            { ...doc.data(), id: doc.id }
+        )))
+    })
+
     app.get("/", async (req, res) => {
         return res.send(await getProducts())
     })
