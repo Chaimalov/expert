@@ -53,10 +53,10 @@ label {
 
 .category {
     display: flex;
-    color: #333;
+    color: var(--text-clr);
     width: max-content;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: var(--grey);
     gap: .25em;
     padding: .5em 1em;
     border-radius: 1em;
@@ -66,6 +66,84 @@ label {
 }
 
 .category:hover {
-    --value: 85%;
+    --value: 80%;
     background-color: var(--clr-primary-light);
+}
+
+.item {
+    --value: 80%;
+    background: var(--gradient);
+    aspect-ratio: 1;
+    padding: 1.2em;
+    border-radius: 1em;
+    transform: scale(0);
+    animation: scale .25s ease-out forwards;
+    animation-delay: calc(30ms * var(--i));
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ion {
+    box-sizing: content-box;
+    background-color: rgba(0, 0, 0, .2);
+    padding: .5em;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.ion:where(:hover, :focus) {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.list {
+    position: relative;
+    max-width: 1000px;
+    min-height: 400px;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 2em clamp(2vw, 2vw, 2em);
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: repeat(auto-fit, 11em);
+    margin: 2em auto;
+    gap: 1em;
+    /* background-color: hsla(0, 0%, 50%, 0.05); */
+    border-radius: .5em;
+}
+
+.loading,
+.no-data {
+    position: absolute;
+    display: grid;
+    place-content: center;
+    inset: 0;
+    text-align: center;
+    opacity: .1;
+}
+
+.loadingLogo {
+    animation: loading .5s infinite alternate;
+    display: block;
+    font-size: 10em;
+}
+
+@keyframes loading {
+    0% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scale {
+
+    100% {
+        transform: scale(1);
+    }
 }

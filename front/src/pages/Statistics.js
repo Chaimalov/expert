@@ -1,17 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from "axios"
 import Category from '../components/Category'
+import Item from '../components/Item'
 import categories from "../utils/categories"
+import { IoBasketOutline } from 'react-icons/io5';
+
+
 
 export default function Statistics() {
 
     const [category, setCategory] = useState()
+    const [categoryData, setCategoryData] = useState()
+    const [noData, setNoData] = useState(true)
+
+    useEffect(() => {
+        if (!category) return
+        setNoData(false)
+        setCategoryData()
+        axios.get("/search/:category", {
+            params: {
+                category,
+            }
+        }).then(({ data }) => {
+            if (data.length === 0) return setNoData(true)
+            setCategoryData(data)
+        }).catch(error => {
+            console.error(error)
+        })
+    }, [category])
 
     return (
-        <div>
+        <>
+            <h1>statistics</h1>
             <div className="section">{categories.map(category => (
                 <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
             ))}
             </div>
-        </div>
+            <div className='list'>
+                {categoryData ? categoryData.map((item, index) => (
+                    <Item
+                        key={item.id}
+                        id={item.id}
+                        name={item.name}
+                        category={item.category}
+                        icon={item.icon}
+                        minDays={item.minDays}
+                        maxDays={item.maxDays}
+                        index={index}
+                    />
+                ))
+                    : noData ?
+                        <div className='no-data'>
+                            <h1>no data</h1>
+                        </div>
+                        :
+                        <div className='loading'>
+                            <IoBasketOutline className='loadingLogo' />loading...
+                        </div>}
+            </div>
+        </>
     )
 }

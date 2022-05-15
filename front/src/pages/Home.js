@@ -24,6 +24,7 @@ function Home() {
         }).then(({ data }) => {
             // e.target.reset()
             alert(data.message)
+            setFound(true)
         }).catch(error => console.error(error.response.data))
     }
 
@@ -47,20 +48,15 @@ function Home() {
         })
     }
 
-    if (found) {
-        return (
-            <div className="App">
+    return (
+        <div className="App">
+            <h1>home</h1>
+            {found ?
                 <form onSubmit={e => searchItem(e)}>
                     <Input name="search" ref={searchRef} />
                     <Button value="search" type="submit" />
                 </form>
-                {item && <Item name={item.name} category={item.category} icon={item.icon} minDays={item.minDays} maxDays={item.maxDays} />}
-            </div>
-        )
-    }
-    else {
-        return (
-            <div className="App">
+                :
                 <form onSubmit={e => sendData(e)}>
                     {/* <Input name="name" ref={nameRef} /> */}
                     <h2><strong>{name}</strong> is in what Category?</h2>
@@ -73,9 +69,14 @@ function Home() {
                         <Button value="cancel" danger onClick={handleCancel} />
                     </div>
                 </form>
-            </div>
-        );
-    }
+            }
+            {item && found &&
+                <div className="list">
+                    <Item name={item.name} category={item.category} icon={item.icon} minDays={item.minDays} maxDays={item.maxDays} />
+                </div>}
+        </div>
+    );
+
 }
 
 export default Home;

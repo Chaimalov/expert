@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors"
-import { collection, getDocs, db, addDoc, query, where } from "./firebase.js";
+import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc } from "./firebase.js";
 import axios from "axios"
 
 
@@ -45,10 +45,14 @@ app.use(express.json())
     })
 
     app.get("/search/:category", async (req, res) => {
-        const searchRes = query(productsCol, where("category", "==", req.params.category))
+        const searchRes = query(productsCol, where("category", "==", req.query.category))
         return res.json((await getDocs(searchRes)).docs.map(doc => (
             { ...doc.data(), id: doc.id }
         )))
+    })
+
+    app.post("/delete", async (req, res) => {
+        res.send(await deleteDoc(doc(db, "products", req.body.id)))
     })
 
     app.get("/", async (req, res) => {
@@ -107,8 +111,9 @@ async function getEmoji(name) {
     const response = await axios.get('https://emoji-api.com/emojis', {
         params: {
             search: name,
+            group: "fruit",
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     })
-    return response.status == 200 ? response.data[1].character : "no-icon"
+    return response.data ? response.data[0].character : "no-icon"
 }

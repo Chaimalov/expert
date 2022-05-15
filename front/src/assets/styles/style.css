@@ -11,6 +11,7 @@ strong {
 h1 {
     font-weight: 900;
     font-size: 48px;
+    text-align: center;
 }
 
 h2 {
@@ -31,23 +32,25 @@ h4 {
 }
 
 body {
-    display: grid;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
-    color: #333;
+    color: var(--text-clr);
+
 }
 
 nav {
-    position: absolute;
     inset: 0;
     bottom: auto;
-    display: flex;
-    gap: 1em;
+    display: block;
     padding: 1em;
 }
 
+nav>div {
+    display: flex;
+    gap: 1em;
+}
+
 .section {
+    margin: 2em;
     display: flex;
     flex-flow: wrap;
     justify-content: center;
@@ -55,7 +58,7 @@ nav {
 }
 
 .icon {
-    font-size: 30px;
+    font-size: 1.5em;
     display: inline-block;
     border-radius: .25em;
     /* background-image: linear-gradient(to bottom right, var(--clr-primary), var(--clr-primary-dark)); */

@@ -10,7 +10,7 @@ export default function Category({ category, icon, onClick }) {
                 onClick(category)
             }}>
             <div className="icon">{icon}</div>
-            <h2>{category}</h2>
+            <h3>{category}</h3>
 
             <input
                 type="radio"
