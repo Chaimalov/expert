@@ -33,6 +33,7 @@ h4 {
 body {
     display: grid;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
     color: #333;
 }

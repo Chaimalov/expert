@@ -1,9 +1,14 @@
 import "./App.css"
 import React from 'react'
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./Home"
+import Statistics from "./Statistics"
 
 export default function App() {
   return (
-    <Home />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/statistics" element={<Statistics />} />
+    </Routes>
   )
 }
