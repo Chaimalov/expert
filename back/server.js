@@ -102,7 +102,7 @@ function getEmoji(name) {
     axios.get('https://emoji-api.com/emojis', {
         params: {
             search: name,
-            access_key: 'b8441a54d10349910152d879cd68f21074ee4482',
+            access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     }).then((data) => {
         return data
