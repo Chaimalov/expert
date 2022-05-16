@@ -52,7 +52,7 @@ app.use(express.json())
     })
 
     app.post("/delete", async (req, res) => {
-        res.send(await deleteDoc(doc(db, "products", req.body.id)))
+        return res.send(await deleteDoc(doc(db, "products", req.body.id)))
     })
 
     app.get("/", async (req, res) => {
