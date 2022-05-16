@@ -6,6 +6,7 @@ import Category from "../components/Category"
 import Item from "../components/Item"
 import categories from "../utils/categories"
 import { BiSearchAlt2 } from "react-icons/bi"
+import Transitions from "../Transition"
 
 
 function Home() {
@@ -50,42 +51,44 @@ function Home() {
     }
 
     return (
-        <div className="App">
-            <header>
-                <h1>expert</h1>
-                <h2>expiry dates by the experts</h2>
-            </header>
-            {found ?
-                <form onSubmit={e => searchItem(e)} className="search">
-                    <Input name="search" ref={searchRef} placeholder="search for an item" />
-                    <Button value={<BiSearchAlt2 />} type="submit" />
-                </form>
-                :
-                <form onSubmit={e => sendData(e)}>
-                    {/* <Input name="name" ref={nameRef} /> */}
-                    <h2><strong>{name}</strong> is in what Category?</h2>
-                    <div className="section">{categories.map(category => (
-                        <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
-                    ))}
-                    </div>
-                    <div>
-                        <Button value="add" type="submit" />
-                        <Button value="cancel" danger onClick={handleCancel} />
-                    </div>
-                </form>
-            }
-            {item && found &&
-                <div className="list">
-                    <Item
-                        name={item.name}
-                        category={item.category}
-                        icon={item.icon}
-                        minDays={item.minDays}
-                        maxDays={item.maxDays}
-                        id={item.id}
-                    />
-                </div>}
-        </div>
+        <Transitions>
+            <div className="App">
+                <header>
+                    <h1>expert</h1>
+                    <h2>expiry dates by the experts</h2>
+                </header>
+                {found ?
+                    <form onSubmit={e => searchItem(e)} className="search">
+                        <Input name="search" ref={searchRef} placeholder="search for an item" />
+                        <Button value={<BiSearchAlt2 />} type="submit" />
+                    </form>
+                    :
+                    <form onSubmit={e => sendData(e)}>
+                        {/* <Input name="name" ref={nameRef} /> */}
+                        <h2><strong>{name}</strong> is in what Category?</h2>
+                        <div className="section">{categories.map(category => (
+                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
+                        ))}
+                        </div>
+                        <div>
+                            <Button value="add" type="submit" />
+                            <Button value="cancel" danger onClick={handleCancel} />
+                        </div>
+                    </form>
+                }
+                {item && found &&
+                    <div className="list">
+                        <Item
+                            name={item.name}
+                            category={item.category}
+                            icon={item.icon}
+                            minDays={item.minDays}
+                            maxDays={item.maxDays}
+                            id={item.id}
+                        />
+                    </div>}
+            </div>
+        </Transitions>
     );
 
 }

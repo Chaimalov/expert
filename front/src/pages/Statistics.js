@@ -4,8 +4,7 @@ import Category from '../components/Category'
 import Item from '../components/Item'
 import categories from "../utils/categories"
 import { IoBasketOutline } from 'react-icons/io5';
-
-
+import Transitions from '../Transition'
 
 export default function Statistics() {
 
@@ -30,7 +29,7 @@ export default function Statistics() {
     }, [category])
 
     return (
-        <>
+        <Transitions>
             <h1>statistics</h1>
             <div className="section">{categories.map(category => (
                 <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
@@ -58,6 +57,6 @@ export default function Statistics() {
                             <IoBasketOutline className='loadingLogo' />loading...
                         </div>}
             </div>
-        </>
+        </Transitions>
     )
 }
