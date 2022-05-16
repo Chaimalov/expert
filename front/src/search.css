@@ -1,0 +1,33 @@
+form{
+    display: flex;
+    margin: auto;
+    border: solid 1px black;
+    border-radius: 3em;
+    align-items: center;
+}
+form button {
+    margin: 0;
+}
+
+form .input label{
+    display: none;
+}
+form .input{
+    margin: 0;
+}
+
+form .input input{
+    border: none;
+    background: none;
+    outline: none;
+    padding: 1em;
+}
+
+form button{
+    background: none;
+    color: var(--clr-primary-dark);
+    font-size: 1.5em;
+    padding: .5em;
+    line-height: 0;
+
+}

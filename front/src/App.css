@@ -1,13 +1,10 @@
 @import "./assets/styles/style.css";
+@import "./nav.css";
+@import "./search.css";
 
-form {
+.App{
     display: grid;
-    place-items: center;
-    gap: 2em;
-    max-width: 800px;
-    margin-inline: auto;
 }
-
 .input {
     display: flex;
     flex-direction: column;

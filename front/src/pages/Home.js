@@ -5,6 +5,7 @@ import Button from "../components/Button"
 import Category from "../components/Category"
 import Item from "../components/Item"
 import categories from "../utils/categories"
+import { BiSearchAlt2 } from "react-icons/bi"
 
 
 function Home() {
@@ -54,7 +55,7 @@ function Home() {
             {found ?
                 <form onSubmit={e => searchItem(e)}>
                     <Input name="search" ref={searchRef} />
-                    <Button value="search" type="submit" />
+                    <Button value={<BiSearchAlt2/>} type="submit" />
                 </form>
                 :
                 <form onSubmit={e => sendData(e)}>

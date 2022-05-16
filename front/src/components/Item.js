@@ -11,6 +11,11 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
     return today.toLocaleDateString("en-US")
   }
 
+  function calcDays(days) {
+    if (days > 30) return parseInt(days / 30) + " months " + ((days % 30) > 0 ? (days % 30) + " days" : "")
+    return days
+  }
+
   function handleClick() {
     if (window.confirm(`would you like to delete ${name}?`)) {
       axios.post("/delete", {
@@ -29,7 +34,8 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
       </div>
       <h2>{name}</h2>
       <h3>{category} </h3>
-      <h4>exp: {calcExp()}</h4>
+      <h4>{calcDays(minDays)} - {calcDays(maxDays) + (maxDays > 30 ? "" : " days")}</h4>
+      {/* <h4>exp: {calcExp()}</h4> */}
     </div>
   )
 }
