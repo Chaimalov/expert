@@ -51,11 +51,14 @@ function Home() {
 
     return (
         <div className="App">
-            <h1>home</h1>
+            <header>
+                <h1>expert</h1>
+                <h2>expiry dates dy experts</h2>
+            </header>
             {found ?
-                <form onSubmit={e => searchItem(e)}>
-                    <Input name="search" ref={searchRef} />
-                    <Button value={<BiSearchAlt2/>} type="submit" />
+                <form onSubmit={e => searchItem(e)} className="search">
+                    <Input name="search" ref={searchRef} placeholder="search for an item" />
+                    <Button value={<BiSearchAlt2 />} type="submit" />
                 </form>
                 :
                 <form onSubmit={e => sendData(e)}>
@@ -73,7 +76,14 @@ function Home() {
             }
             {item && found &&
                 <div className="list">
-                    <Item name={item.name} category={item.category} icon={item.icon} minDays={item.minDays} maxDays={item.maxDays} />
+                    <Item
+                        name={item.name}
+                        category={item.category}
+                        icon={item.icon}
+                        minDays={item.minDays}
+                        maxDays={item.maxDays}
+                        id={item.id}
+                    />
                 </div>}
         </div>
     );

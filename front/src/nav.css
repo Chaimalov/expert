@@ -1,20 +1,21 @@
-nav{
+nav {
     background-color: var(--clr-primary-dark);
-    margin-bottom: 1.5em;
-     
+    text-transform: capitalize;
 }
-a{
+
+a {
     text-decoration: none;
     color: aliceblue;
     transition: 150ms;
 }
 
-nav div{
+nav div {
     display: flex;
     align-items: center;
+    gap: 2em;
 }
 
-nav div a:last-of-type{
+nav div a:last-of-type {
     margin-left: auto;
     font-size: 1.4em;
 }
@@ -22,7 +23,8 @@ nav div a:last-of-type{
 nav div a:last-of-type:hover {
     opacity: 0.7;
 }
-a:hover{
+
+a:hover {
     font-weight: bold;
-    
+
 }

@@ -2,9 +2,32 @@
 @import "./nav.css";
 @import "./search.css";
 
-.App{
+.App {
     display: grid;
 }
+
+header {
+    background: var(--clr-primary-dark);
+    width: 100%;
+    color: white;
+    padding-block: 5em;
+    margin-bottom: 2em;
+}
+
+header>* {
+    text-align: left;
+    max-width: 1000px;
+    padding: 0 5rem;
+}
+
+form {
+    display: grid;
+}
+
+form>* {
+    margin: auto;
+}
+
 .input {
     display: flex;
     flex-direction: column;
