@@ -1,22 +1,39 @@
-import React from 'react'
-import {firebase, provider, auth, signInWithRedirect, StyledFirebaseAuth } from '../firebase'
+import React, { createRef } from 'react'
+import { auth, createUserWithEmailAndPassword } from "../firebase";
+import Input from "../components/Input"
+import Button from '../components/Button';
 
 
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
-  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: '/signedIn',
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-  ],
-};
-export default function login() {
-  return (
-    <div>{signInWithRedirect(firebase.auth(), provider)}</div>
+function signUp(emailRef, passRef) {
+
+  createUserWithEmailAndPassword(auth, emailRef, passRef)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
     
+     console.log(user)
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+}
+export default function Login() {
+  const emailRef = createRef()
+  const passRef = createRef()
+
+  return (
+    <div>
+      {/* <form onSubmit={e => e.target.preventDefault()}> */}
+        <Input name="email" type="email" ref={emailRef}/>
+        <Input name="password" type="password" ref={passRef}/>
+        <Button value={"sign up"} type="submit" onClick={(e) => {
+          signUp(emailRef.current.value, passRef.current.value)
+        }
+        }/>
+      {/* </form> */}
+    </div>
   )
 }
