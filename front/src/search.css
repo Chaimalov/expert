@@ -1,18 +1,14 @@
 .search {
     display: flex;
-<<<<<<< HEAD
-    margin: auto;
     border: solid 3px black;
-=======
     margin: 2em auto;
->>>>>>> fa4e6c210f8552a520e20808941a091842a95ebc
     border-radius: 3em;
     align-items: center;
     overflow: hidden;
     background-color: hsl(0, 0%, 98%);
     box-shadow: 0 .5em 1em hsl(0, 0%, 95%);
     border: solid 3px;
-    border-color: transparent;
+    border-color: hsl(0, 0%, 90%);
 }
 
 .search:focus-within {

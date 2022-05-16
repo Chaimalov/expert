@@ -101,6 +101,10 @@ label {
     animation-delay: calc(30ms * var(--i));
 }
 
+.hide {
+    animation: scale .25s ease-out forwards reverse;
+}
+
 .top {
     display: flex;
     justify-content: space-between;

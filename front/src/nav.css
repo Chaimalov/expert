@@ -1,38 +1,30 @@
-nav {
-    background-color: var(--clr-primary-dark);
-    text-transform: capitalize;
+nav{
+    background-color: var(--clr-primary-dark); 
 }
-
-a {
+a{
     text-decoration: none;
     color: aliceblue;
     transition: 150ms;
 }
 
-nav div {
+nav div{
     display: flex;
     align-items: center;
-    gap: 2em;
 }
 
-nav div a:last-of-type {
+nav div a:last-of-type{
     margin-left: auto;
     font-size: 1.4em;
     
 }
 
 nav div a:last-of-type:hover {
-    opacity: 0.8;
+    opacity: 0.7;
     transform: scale(1.2);
     
     
 }
-
-a:hover {
+a:hover{
     font-weight: bold;
-<<<<<<< HEAD
-   
-=======
-
->>>>>>> fa4e6c210f8552a520e20808941a091842a95ebc
+    
 }

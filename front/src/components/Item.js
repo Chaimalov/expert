@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { colorFromEmoji } from "../assets/color"
 import { IoEllipsisHorizontal } from 'react-icons/io5';
 import axios from "axios"
 
 
+
 export default function Item({ name, category, icon, minDays, maxDays, id, index }) {
+
+  const [hide, setHide] = useState("")
+  
+
   function calcExp() {
     const today = new Date()
     today.setDate(today.getDate() + ((minDays + maxDays) / 2))
@@ -22,12 +27,14 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
         id,
       }).then(() => {
         alert("deleted")
+        setHide('hide')
+
       })
     }
   }
 
   return (
-    <div className='item' style={{ "--hue": colorFromEmoji(icon) || 50, "--i": index }}>
+    <div className={'item ' + hide} style={{ "--hue": colorFromEmoji(icon) || 50, "--i": index }}>
       <div className='top'>
         <div className='icon'>{icon}</div>
         <IoEllipsisHorizontal className='ion' onClick={handleClick} />

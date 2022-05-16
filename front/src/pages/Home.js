@@ -53,7 +53,7 @@ function Home() {
         <div className="App">
             <header>
                 <h1>expert</h1>
-                <h2>expiry dates dy experts</h2>
+                <h2>expiry dates by the experts</h2>
             </header>
             {found ?
                 <form onSubmit={e => searchItem(e)} className="search">
