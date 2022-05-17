@@ -1,9 +1,10 @@
-import React, { createRef, useState, useEffect } from 'react'
+import React, { createRef, useState, useEffect, useContext } from 'react'
 import { firebase, createUserWithEmailAndPassword } from "../firebase";
 import Input from "../components/Input"
 import Button from '../components/Button';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Transition from '../Transition';
+
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -61,7 +62,7 @@ export default function Login() {
   return (
     <Transition>
       <div className='center'>
-        <h2>Welcome {firebase.auth().currentUser.displayName}!</h2>
+        <h2>Welcome <span dir='auto'>!</span></h2>
         <h3>You are now signed-in!</h3>
         <Button
           secondary
