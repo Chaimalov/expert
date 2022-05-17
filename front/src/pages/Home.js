@@ -66,10 +66,15 @@ function Home() {
                     </form>
                     :
                     <form onSubmit={e => sendData(e)}>
-                        {/* <Input name="name" ref={nameRef} /> */}
                         <h2><strong>{name}</strong> is in what Category?</h2>
                         <div className="section">{categories.map(category => (
-                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} value={category.name} group="category" />
+                            <Category
+                                key={category.name}
+                                category={category.name}
+                                icon={category.icon}
+                                onClick={setCategory}
+                                value={category.name}
+                                group="category" />
                         ))}
                         </div>
                         <div className="section">
