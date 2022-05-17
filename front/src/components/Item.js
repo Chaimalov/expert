@@ -8,7 +8,7 @@ import axios from "axios"
 export default function Item({ item, index }) {
 
   const [hide, setHide] = useState("")
-  
+
 
   function calcExp() {
     const today = new Date()
@@ -40,7 +40,7 @@ export default function Item({ item, index }) {
       </div>
       <h2>{item.name}</h2>
       <h3>{item.category} </h3>
-      <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}</h4>
+      <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
       {/* <h4>exp: {calcExp()}</h4> */}
     </div>
   )
