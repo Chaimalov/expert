@@ -9,13 +9,14 @@ strong {
 }
 
 h1 {
+    margin-top: 2em;
     font-weight: 900;
     font-size: 48px;
     text-align: center;
 }
 
 h2 {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 24px;
     line-height: 2em;
 }
@@ -27,7 +28,7 @@ h3 {
 }
 
 h4 {
-    font-weight: 300;
+    font-weight: 600;
     font-size: 12px;
 }
 
@@ -90,4 +91,8 @@ button:hover {
 .secondary {
     background-color: var(--clr-primary-light);
     color: var(--clr-primary-dark);
+}
+
+.center {
+    text-align: center;
 }

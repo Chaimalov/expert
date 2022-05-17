@@ -50,9 +50,9 @@ export default function Login() {
   if (!isSignedIn) {
     return (
       <Transition>
-        <div>
-          <h1>log-in</h1>
-          <p>Please sign-in:</p>
+        <div className='center'>
+          <h1>sign-in</h1>
+          <h2>Please sign-in:</h2>
           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         </div>
       </Transition>

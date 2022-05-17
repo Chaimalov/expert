@@ -8,8 +8,8 @@ header {
     background: var(--clr-primary-dark);
     width: 100%;
     color: white;
-    padding-block: 5em;
-    margin-bottom: 2em;
+    padding-block: 3em;
+    margin-bottom: 3em;
 }
 
 header>* {
