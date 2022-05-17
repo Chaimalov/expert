@@ -2,9 +2,7 @@
 @import "./nav.css";
 @import "./search.css";
 
-.App {
-    display: grid;
-}
+.App {}
 
 header {
     background: var(--clr-primary-dark);
@@ -124,7 +122,6 @@ label {
     grid-template-columns: repeat(auto-fit, 11em);
     margin: 2em auto;
     gap: 1em;
-    /* background-color: hsla(0, 0%, 50%, 0.05); */
     border-radius: .5em;
 }
 

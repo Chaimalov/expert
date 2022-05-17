@@ -41,8 +41,11 @@
     width: 100%;
 }
 
-.search .input input:placeholder-shown {
+.search .input input::placeholder {
     color: hsl(0, 0%, 75%);
+}
+
+.search .input input:placeholder-shown {
     text-overflow: ellipsis;
 }
 
