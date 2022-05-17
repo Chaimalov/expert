@@ -1,9 +1,8 @@
 import React, { createRef, useState, useEffect, useContext } from 'react'
 import { firebase, createUserWithEmailAndPassword } from "../firebase";
-import Transition from '../Transition';
 import { AuthProvider, useAuth} from '../context/AuthContext';
 import {GoogleButton} from "react-google-button"
-import Button from "../components/Button"
+import Button from "./Button"
 
 export default function Login() {
 
@@ -13,26 +12,31 @@ export default function Login() {
     try{
       await signInWithGoogle()
     }catch(error){
-
+      console.error(error)
+    }
+  }
+  
+  async function signOut(){
+    try{
+      await logOut()
+    }catch(error){
+      console.error(error)
     }
   }
 
     return (
-      <Transition>
         <div className='center'>
-          <h1>sign-in</h1>
           {user ? 
           <>
-            <Button value="log Out" onClick={logOut}/>
+            <Button value="sign out" onClick={signOut}/>
           </>
           :
           <>
-            <h2>Please sign-in:</h2>
-            <GoogleButton onClick={signin}/>
+          <Button value="sign in with google" onClick={signin}/>
+            {/* <GoogleButton onClick={signin}/> */}
           </>
           }
         </div>
-      </Transition>
     );
   }
 

@@ -6,6 +6,7 @@ nav a {
     text-decoration: none;
     color: aliceblue;
     transition: 150ms;
+    font-size: 1.25em;
 }
 
 nav div {
@@ -13,16 +14,22 @@ nav div {
     align-items: center;
 }
 
-nav div a:last-of-type {
+nav div:nth-last-child(2){
     margin-left: auto;
-    font-size: 1.4em;
 }
-
-nav div a:last-of-type:hover {
+nav .user{
+    font-size: 1.4em;
     opacity: 0.7;
+}
+nav div a:last-of-type:hover {
 }
 
 nav a:hover {
     font-weight: bold;
 
+}
+
+nav img{
+    width: 40px;
+    border-radius: 100%;
 }

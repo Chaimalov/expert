@@ -26,9 +26,8 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
       axios.post("/delete", {
         id,
       }).then(() => {
-        alert("deleted")
+        // alert("deleted")
         setHide('hide')
-
       })
     }
   }

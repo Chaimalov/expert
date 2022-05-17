@@ -89,7 +89,8 @@ label {
 }
 
 .hide {
-    animation: scale .25s ease-out forwards reverse;
+    position: absolute;
+    transform: scale(0);
 }
 
 .top {
