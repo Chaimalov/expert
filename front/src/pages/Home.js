@@ -15,14 +15,16 @@ function Home() {
     const [category, setCategory] = useState()
     const [found, setFound] = useState(true)
     const [item, setItem] = useState()
+    const [refrigerator, setRefrigerator] = useState(null)
 
     function sendData(e) {
         e.preventDefault()
-        if (!category) return
+        if (!category || refrigerator === null) return
 
         axios.post("/add", {
             name,
             category,
+            refrigerator,
         }).then(({ data }) => {
             // e.target.reset()
             alert(data.message)
@@ -67,8 +69,12 @@ function Home() {
                         {/* <Input name="name" ref={nameRef} /> */}
                         <h2><strong>{name}</strong> is in what Category?</h2>
                         <div className="section">{categories.map(category => (
-                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
+                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} value={category.name} group= "category"/>
                         ))}
+                        </div>
+                        <div className="section">
+                            <Category category="refrigerator" icon="❄️" onClick={setRefrigerator} value={true} group= "refrigerator"/>
+                            <Category category="noRefrigerator" icon="🧺" onClick={setRefrigerator} value={false} group="refrigerator"/>
                         </div>
                         <div>
                             <Button value="add" type="submit" />

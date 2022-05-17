@@ -29,6 +29,7 @@ app.use(express.json())
             maxDays: categoryDays[category].maxDays,
             supportRate: 1,
             createdBy: "",
+            refrigerator: req.body.refrigerator,
             nameVariation: [],
         }).then(() => {
             res.json({ message: "added " + req.body.name + " successfully" })
