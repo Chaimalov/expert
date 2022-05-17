@@ -44,16 +44,7 @@ export default function Statistics() {
             </div>
             <div className='list'>
                 {categoryData ? categoryData.map((item, index) => (
-                    <Item
-                        key={item.id}
-                        id={item.id}
-                        name={item.name}
-                        category={item.category}
-                        icon={item.icon}
-                        minDays={item.minDays}
-                        maxDays={item.maxDays}
-                        index={index}
-                    />
+                    <Item item={item} index={index} />
                 ))
                     : noData ?
                         <div className='no-data'>

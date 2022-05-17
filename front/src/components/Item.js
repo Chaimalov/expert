@@ -5,14 +5,14 @@ import axios from "axios"
 
 
 
-export default function Item({ name, category, icon, minDays, maxDays, id, index }) {
+export default function Item({ item, index }) {
 
   const [hide, setHide] = useState("")
   
 
   function calcExp() {
     const today = new Date()
-    today.setDate(today.getDate() + ((minDays + maxDays) / 2))
+    today.setDate(today.getDate() + ((item.minDays + item.maxDays) / 2))
     return today.toLocaleDateString("en-US")
   }
 
@@ -22,9 +22,9 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
   }
 
   function handleClick() {
-    if (window.confirm(`would you like to delete ${name}?`)) {
+    if (window.confirm(`would you like to delete ${item.name}?`)) {
       axios.post("/delete", {
-        id,
+        id: item.id,
       }).then(() => {
         // alert("deleted")
         setHide('hide')
@@ -33,14 +33,14 @@ export default function Item({ name, category, icon, minDays, maxDays, id, index
   }
 
   return (
-    <div className={'item ' + hide} style={{ "--hue": colorFromEmoji(icon) || 50, "--i": index }}>
+    <div className={'item ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
       <div className='top'>
-        <div className='icon'>{icon}</div>
+        <div className='icon'>{item.icon}</div>
         <IoEllipsisHorizontal className='ion' onClick={handleClick} />
       </div>
-      <h2>{name}</h2>
-      <h3>{category} </h3>
-      <h4>{calcDays(minDays)} - {calcDays(maxDays) + (maxDays > 30 ? "" : " days")}</h4>
+      <h2>{item.name}</h2>
+      <h3>{item.category} </h3>
+      <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}</h4>
       {/* <h4>exp: {calcExp()}</h4> */}
     </div>
   )

@@ -1,5 +1,8 @@
 nav {
     background-color: var(--clr-primary-dark);
+    position: fixed;
+    top: 0;
+    z-index: 999;
 }
 
 nav a {
@@ -30,6 +33,13 @@ nav a:hover {
 }
 
 nav img{
+    --value: 40%;
     width: 40px;
     border-radius: 100%;
+    transition: 250ms;
+    box-shadow: 0 0 0 1px var(--clr-primary-dark);
+}
+
+nav img:hover{
+    box-shadow: 0 0 0 3px var(--clr-primary-dark);
 }

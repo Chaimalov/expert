@@ -99,14 +99,7 @@ function Home() {
                 }
                 {item && found &&
                     <div className="list">
-                        <Item
-                            name={item.name}
-                            category={item.category}
-                            icon={item.icon}
-                            minDays={item.minDays}
-                            maxDays={item.maxDays}
-                            id={item.id}
-                        />
+                        <Item item={item}/>
                     </div>}
             </div>
         </Transitions>
