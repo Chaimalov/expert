@@ -15,7 +15,6 @@ const uiConfig = {
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
-  // 'credentialHelper': firebase.auth.CredentialHelper.NONE
 }
 
 // function signUp(email, password) {
