@@ -69,22 +69,22 @@ function Home() {
                         {/* <Input name="name" ref={nameRef} /> */}
                         <h2><strong>{name}</strong> is in what Category?</h2>
                         <div className="section">{categories.map(category => (
-                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} value={category.name} group= "category"/>
+                            <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} value={category.name} group="category" />
                         ))}
                         </div>
                         <div className="section">
-                            <Category 
-                            category="refrigerator" 
-                            icon="❄️" 
-                            onClick={setRefrigerator} 
-                            value={true} 
-                            group= "refrigerator"/>
-                            <Category 
-                            category="noRefrigerator" 
-                            icon="🧺" 
-                            onClick={setRefrigerator} 
-                            value={false} 
-                            group="refrigerator"/>
+                            <Category
+                                category="refrigerator"
+                                icon="❄️"
+                                onClick={setRefrigerator}
+                                value={true}
+                                group="refrigerator" />
+                            <Category
+                                category="noRefrigerator"
+                                icon="🧺"
+                                onClick={setRefrigerator}
+                                value={false}
+                                group="refrigerator" />
                         </div>
                         <div>
                             <Button value="add" type="submit" />
