@@ -73,8 +73,18 @@ function Home() {
                         ))}
                         </div>
                         <div className="section">
-                            <Category category="refrigerator" icon="❄️" onClick={setRefrigerator} value={true} group= "refrigerator"/>
-                            <Category category="noRefrigerator" icon="🧺" onClick={setRefrigerator} value={false} group="refrigerator"/>
+                            <Category 
+                            category="refrigerator" 
+                            icon="❄️" 
+                            onClick={setRefrigerator} 
+                            value={true} 
+                            group= "refrigerator"/>
+                            <Category 
+                            category="noRefrigerator" 
+                            icon="🧺" 
+                            onClick={setRefrigerator} 
+                            value={false} 
+                            group="refrigerator"/>
                         </div>
                         <div>
                             <Button value="add" type="submit" />

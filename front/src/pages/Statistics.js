@@ -32,7 +32,14 @@ export default function Statistics() {
         <Transitions>
             <h1>statistics</h1>
             <div className="section">{categories.map(category => (
-                <Category key={category.name} category={category.name} icon={category.icon} onClick={setCategory} />
+                <Category 
+                key={category.name} 
+                category={category.name} 
+                icon={category.icon} 
+                onClick={setCategory} 
+                value={category.name}
+                group="category"
+                />
             ))}
             </div>
             <div className='list'>
