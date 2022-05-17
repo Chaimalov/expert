@@ -29,6 +29,7 @@ form>* {
 
 input[type="radio"] {
     -webkit-appearance: none;
+    -ms-progress-appearance: none;
     appearance: none;
     display: block;
     transition: .2s linear;
@@ -73,7 +74,6 @@ label {
 }
 
 .category:hover {
-    --value: 80%;
     background-color: var(--clr-primary-light);
 }
 
