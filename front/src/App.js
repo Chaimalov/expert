@@ -7,12 +7,14 @@ import Home from "./pages/Home"
 import Statistics from "./pages/Statistics"
 import Login from "./pages/Login"
 import Nav from "./components/Nav";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   const location = useLocation();
 
   return (
     <div className="App">
+      <AuthProvider>
       <Nav />
       <AnimatePresence exitBeforeEnter >
         <Routes location={location} key={location.pathname}>
@@ -21,6 +23,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </AnimatePresence>
+      </AuthProvider>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import firebase from "firebase/compat/app"
-import 'firebase/compat/auth';
+import { getAuth } from "firebase/auth";
+import {initializeApp} from "firebase/app"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,13 +18,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
-// To apply the default browser preference instead of explicitly setting it.
-// auth().useDeviceLanguage();
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 
 
-
-
-
-export { firebase, createUserWithEmailAndPassword, auth }

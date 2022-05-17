@@ -1,74 +1,34 @@
 import React, { createRef, useState, useEffect, useContext } from 'react'
 import { firebase, createUserWithEmailAndPassword } from "../firebase";
-import Input from "../components/Input"
-import Button from '../components/Button';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Transition from '../Transition';
-
-
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'redirect',
-  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: '/',
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  ],
-}
-
-// function signUp(email, password) {
-
-//   createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       // Signed in 
-//       const user = userCredential.user;
-//       console.log(user)
-//       // ...
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // ..
-//     });
-// }
+import { AuthProvider, useAuth} from '../context/AuthContext';
+import {GoogleButton} from "react-google-button"
+import Button from "../components/Button"
 
 export default function Login() {
-  // const emailRef = createRef()
-  // const passRef = createRef()
 
-  const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
+  const {signInWithGoogle, user, logOut} = useAuth()
 
-  // Listen to the Firebase Auth state and set the local state.
-  useEffect(() => {
-    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-      setIsSignedIn(!!user);
-    });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
+  async function signin(){
+    try{
+      await signInWithGoogle()
+    }catch(error){
 
-  if (!isSignedIn) {
+    }
+  }
+
     return (
       <Transition>
         <div className='center'>
           <h1>sign-in</h1>
           <h2>Please sign-in:</h2>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          {user ? 
+          <Button value="log Out" onClick={logOut}/>
+          :
+          <GoogleButton onClick={signin}/>
+          }
         </div>
       </Transition>
     );
   }
-  return (
-    <Transition>
-      <div className='center'>
-        <h2>Welcome <span dir='auto'>!</span></h2>
-        <h3>You are now signed-in!</h3>
-        <Button
-          secondary
-          value="Sign-out"
-          onClick={() => firebase.auth().signOut()} />
-      </div>
-    </Transition >
-  );
-}
+
