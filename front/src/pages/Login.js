@@ -21,11 +21,15 @@ export default function Login() {
       <Transition>
         <div className='center'>
           <h1>sign-in</h1>
-          <h2>Please sign-in:</h2>
           {user ? 
-          <Button value="log Out" onClick={logOut}/>
+          <>
+            <Button value="log Out" onClick={logOut}/>
+          </>
           :
-          <GoogleButton onClick={signin}/>
+          <>
+            <h2>Please sign-in:</h2>
+            <GoogleButton onClick={signin}/>
+          </>
           }
         </div>
       </Transition>
