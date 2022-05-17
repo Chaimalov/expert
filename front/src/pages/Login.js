@@ -15,6 +15,7 @@ const uiConfig = {
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
+  // 'credentialHelper': firebase.auth.CredentialHelper.NONE
 }
 
 // function signUp(email, password) {
@@ -60,9 +61,13 @@ export default function Login() {
   }
   return (
     <Transition>
-      <div>
-        <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-        <Button secondary onClick={() => firebase.auth().signOut()}>Sign-out</Button>
+      <div className='center'>
+        <h2>Welcome {firebase.auth().currentUser.displayName}!</h2>
+        <h3>You are now signed-in!</h3>
+        <Button
+          secondary
+          value="Sign-out"
+          onClick={() => firebase.auth().signOut()} />
       </div>
     </Transition >
   );

@@ -8,7 +8,7 @@
     --text-color: hsl(0, 0%, 20%);
     --clr-primary: hsl(var(--hue), var(--saturation), var(--value));
     --clr-primary-dark: hsl(calc(var(--hue) * 1.3), var(--saturation), calc(var(--value) * .9));
-    --clr-primary-light: hsl(var(--hue), var(--saturation), calc(var(--value) * 1.1));
+    --clr-primary-light: hsl(var(--hue), var(--saturation), calc(var(--value) * 1.9));
     --gradient: linear-gradient(to bottom right, var(--clr-primary), var(--clr-primary-dark));
 }
 
