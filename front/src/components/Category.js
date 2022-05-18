@@ -1,7 +1,7 @@
 import { colorFromEmoji } from "../assets/color"
 
-export default function Category({group, category, value, icon, onClick }) {
-    
+export default function Category({ group, category, value, icon, onClick }) {
+
     const color = colorFromEmoji(icon)
     return (
         <label
@@ -15,9 +15,8 @@ export default function Category({group, category, value, icon, onClick }) {
 
             <input
                 type="radio"
-                value={category}
                 name={group}
-                />
+            />
         </label>
     )
 }       

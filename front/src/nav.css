@@ -29,6 +29,7 @@ nav a:not(:last-of-type)::before {
     z-index: -1;
 }
 
+nav a:focus::before,
 nav a:hover::before {
     transform-origin: left;
     transform: scaleX(1);

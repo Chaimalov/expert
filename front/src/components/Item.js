@@ -111,7 +111,9 @@ export default function Item({ item, index }) {
       <div className='item'>
         <div className='top'>
           {emoji && <div className='icon'>{emoji}</div>}
-          <IoEllipsisHorizontal className='ion' onClick={() => handleClick(true)} />
+          <button onClick={() => handleClick(true)} className="reset">
+            <IoEllipsisHorizontal className='ion' />
+          </button>
         </div>
         <Link to="/product" state={{ ...item }}>
           <h2>{item.name}</h2>

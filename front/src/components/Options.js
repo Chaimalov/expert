@@ -5,7 +5,13 @@ export default function Options({ open, list, type }) {
     return (
         <div className={'options' + (open ? " open" : "")}>
             {list && list.map(option => (
-                <button className={type} key={option.key} onClick={() => option.action(option.send)}>{option.text}</button>
+                <button
+                    className={type}
+                    key={option.key}
+                    tabIndex={open ? "1" : "-1"}
+                    onClick={() => option.action(option.send)}>
+                    {option.text}
+                </button>
             ))}
         </div>
     )

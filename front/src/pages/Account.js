@@ -5,7 +5,6 @@ import { useAuth } from "../context/AuthContext"
 export default function Account() {
 
     const { user } = useAuth()
-    console.log(user)
     return (
         <div className='center m2'>
             <h1>Account</h1>

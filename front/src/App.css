@@ -110,7 +110,13 @@ label {
 
 .item a {
     text-decoration: none;
-    color: var(--text-clr);
+    color: var(--text-color);
+}
+
+
+
+.item button {
+    border-radius: 100%;
 }
 
 .list {
@@ -186,6 +192,7 @@ label {
 }
 
 .options.open {
+    display: grid;
     transform: translateY(0);
 }
 

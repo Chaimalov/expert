@@ -66,10 +66,17 @@ nav>div {
     /* background-image: linear-gradient(to bottom right, var(--clr-primary), var(--clr-primary-dark)); */
 }
 
+button.reset {
+    padding: 0;
+    line-height: 0;
+}
+
 button {
     text-transform: capitalize;
     border-radius: .5em;
+    background: none;
     border: none;
+    outline: none;
     font-weight: 700;
     font-size: 1em;
     color: white;
@@ -84,8 +91,21 @@ button {
     margin: .5em;
 }
 
+:where(a):focus {
+    outline: none;
+}
+
+:where(.btn) {
+    box-shadow: 0 0 0 0px var(--clr-primary-light);
+    transition: var(--transition);
+}
+
 .btn:hover {
     --value: 35%;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 3px var(--clr-primary-light);
 }
 
 .danger {

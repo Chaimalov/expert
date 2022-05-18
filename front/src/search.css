@@ -58,3 +58,7 @@
     line-height: 0;
     width: min-content;
 }
+
+.search .btn {
+    box-shadow: none;
+}
