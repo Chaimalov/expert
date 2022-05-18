@@ -22,7 +22,10 @@ export default function Statistics() {
             }
         }).then(({ data }) => {
             if (data.length === 0) return setNoData(true)
-            setCategoryData(data)
+            const sorted = data.sort((a, b) => {
+                return a.name > b.name
+            })
+            setCategoryData(sorted)
         }).catch(error => {
             console.error(error)
         })
