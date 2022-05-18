@@ -168,8 +168,9 @@ label {
     --value: 70%;
     position: absolute;
     inset: 0;
+    padding: .5em;
     display: grid;
-    place-content: center;
+    justify-content: center;
     grid-template-columns: repeat(2, min-content);
     overflow-y: auto;
     background-color: var(--clr-primary);
@@ -194,6 +195,7 @@ label {
 .options button {
     color: var(--text-clr);
     background: none;
+    padding-block: .25em;
     grid-column: main-start / main-end;
     margin: 0;
     width: 100%;
@@ -217,14 +219,14 @@ label {
     color: darkred;
 }
 
-*::-webkit-scrollbar,
-*::-webkit-scrollbar-thumb {
-    width: 26px;
+.options::-webkit-scrollbar,
+.options::-webkit-scrollbar-thumb {
+    width: 15px;
     border-radius: 13px;
     background-clip: padding-box;
-    border: 10px solid transparent;
+    border: 5px solid transparent;
 }
 
-*::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 0 10px #00000080;
+.options:hover::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px #00000070;
 }

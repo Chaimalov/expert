@@ -31,6 +31,7 @@ export default function Item({ item, index }) {
   function handleEmoji(icon) {
     setEmoji(icon)
     setOpenOption(prev => !prev)
+
   }
 
   function editEmoji() {
@@ -87,7 +88,11 @@ export default function Item({ item, index }) {
     setOpen(state)
   }
 
-  const domRef = useClickOutside(() => handleClick(false))
+  const domRef = useClickOutside(() => {
+    handleClick(false)
+    setOpenOption(false)
+  })
+
 
   return (
     <div ref={domRef} className={'itemContainer ' + hide} style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}>
@@ -105,5 +110,4 @@ export default function Item({ item, index }) {
       </div>
     </div>
   )
-
 }
