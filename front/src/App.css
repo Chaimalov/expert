@@ -2,7 +2,7 @@
 @import "./nav.css";
 @import "./search.css";
 
-.App {}
+/* .App {} */
 
 header {
     background: var(--clr-primary-dark);

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors"
-import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc } from "./firebase.js";
+import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc } from "./firebase.js";
 import axios from "axios"
 
 
@@ -55,6 +55,21 @@ app.use(express.json())
 
     app.post("/delete", async (req, res) => {
         return res.send(await deleteDoc(doc(db, "products", req.body.id)))
+    })
+
+    // app.get("/delete-all", async (req, res) => {
+    //     const data = await getDocs(productsCol)
+    //     const foda = data.docs.map(doc => (
+    //         { ...doc.data(), id: doc.id }))
+    //     foda.forEach(async (item) => {
+    //         await deleteDoc(doc(db, "products", item.id))
+    //     })
+    //     return res.send("all-was-deleted!")
+    // })
+
+    app.post("/update/:id", async (req, res) => {
+        await updateDoc(doc(db, "products", req.body.id), { icon: req.body.icon })
+        return res.json("icon was updated")
     })
 
     app.get("/", async (req, res) => {

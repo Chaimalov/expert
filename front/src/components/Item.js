@@ -24,13 +24,18 @@ export default function Item({ item, index }) {
   }
 
   function calcDays(days) {
-    if (days > 30) return parseInt(days / 30) + " months " + ((days % 30) > 0 ? (days % 30) + " days" : "")
+    if (days > 30) return parseInt(days / 30) + ((days % 30) > 0 ? (days % 30) + " days" : "")
     return days
   }
 
   function handleEmoji(icon) {
-    setEmoji(icon)
     setOpenOption(prev => !prev)
+    if (icon === item.icon) return
+    setEmoji(icon)
+    axios.post("/update/:id", {
+      id: item.id,
+      icon
+    }).then(({ data }) => { console.log(data) })
 
   }
 
@@ -105,7 +110,7 @@ export default function Item({ item, index }) {
         </div>
         <h2>{item.name}</h2>
         <h3>{item.category} </h3>
-        <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
+        <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? " months" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
         {/* <h4>exp: {calcExp()}</h4> */}
       </div>
     </div>
