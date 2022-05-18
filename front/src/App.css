@@ -215,7 +215,8 @@ label {
 
 .options .emoji:hover,
 .options button:not(:first-of-type):hover {
-    background-color: #00000020;
+    --value: 90%;
+    background-color: var(--clr-primary);
 }
 
 .options button:last-of-type:hover {
