@@ -31,7 +31,6 @@ export default function Item({ item, index }) {
 
   function handleEmoji(icon) {
     setOpenOption(prev => !prev)
-    if (icon === item.icon) return
     setEmoji(icon)
     axios.post("/update/:id", {
       id: item.id,
