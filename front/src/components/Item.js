@@ -4,6 +4,7 @@ import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { AiOutlineClose } from 'react-icons/ai';
 import Options from './Options';
 import axios from "axios"
+import { useClickOutside } from '../utils/useClickOutside';
 
 
 
@@ -65,12 +66,14 @@ export default function Item({ item, index }) {
     },
   ]
 
-  function handleClick() {
-    setOpen(prev => !prev)
+  function handleClick(state) {
+    setOpen(state)
   }
 
+  const domRef = useClickOutside(() => handleClick(false))
+
   return (
-    <div className={'itemContainer ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
+    <div ref={domRef} className={'itemContainer ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
       <Options open={open} list={list} />
       <div className={'item'}>
         <div className='top'>
