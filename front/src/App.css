@@ -82,7 +82,6 @@ label {
     background: var(--gradient);
     aspect-ratio: 1;
     padding: 1.2em;
-    border-radius: 1em;
     transition: 250ms;
 }
 
@@ -159,6 +158,7 @@ label {
 .itemContainer {
     position: relative;
     overflow: hidden;
+    border-radius: 1em;
     transform: scale(0);
     animation: scale .25s ease-out forwards;
     animation-delay: calc(30ms * var(--i));
