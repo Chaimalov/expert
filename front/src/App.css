@@ -165,7 +165,7 @@ label {
 }
 
 .options {
-    --value: 70%;
+    --value: 85%;
     position: absolute;
     inset: 10px;
     padding: .5em;
