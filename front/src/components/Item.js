@@ -78,7 +78,7 @@ export default function Item({ item, index }) {
       <div className={'item'}>
         <div className='top'>
           <div className='icon'>{item.icon}</div>
-          <IoEllipsisHorizontal className='ion' onClick={handleClick} />
+          <IoEllipsisHorizontal className='ion' onClick={() => handleClick(true)} />
         </div>
         <h2>{item.name}</h2>
         <h3>{item.category} </h3>

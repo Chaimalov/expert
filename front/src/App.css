@@ -167,19 +167,18 @@ label {
 .options {
     --value: 70%;
     position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    inset: 0;
     background-color: var(--clr-primary);
     border-radius: 1em;
-    overflow: hidden;
     transform: translateY(100%);
     transition: transform 250ms;
 }
 
 .options.open {
-    transform: scale(1);
+    transform: translateY(0);
 }
 
 .item>* {
