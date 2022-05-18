@@ -83,10 +83,7 @@ label {
     aspect-ratio: 1;
     padding: 1.2em;
     border-radius: 1em;
-    /* transform: scale(0); */
     transition: 250ms;
-    animation: scale .25s ease-out forwards;
-    animation-delay: calc(30ms * var(--i));
 }
 
 .hide {
@@ -153,25 +150,28 @@ label {
     }
 }
 
-/* @keyframes scale {
-
+@keyframes scale {
     100% {
         transform: scale(1);
     }
-} */
+}
 
 .itemContainer {
     position: relative;
     overflow: hidden;
+    transform: scale(0);
+    animation: scale .25s ease-out forwards;
+    animation-delay: calc(30ms * var(--i));
 }
 
 .options {
+    --value: 70%;
     position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     inset: 0;
-    background-color: #55555588;
+    background-color: var(--clr-primary);
     border-radius: 1em;
     overflow: hidden;
     transform: translateY(100%);
@@ -192,6 +192,7 @@ label {
 }
 
 .options button {
+    color: var(--text-clr);
     background: none;
     padding: .5em 1em;
     display: block;
@@ -201,5 +202,9 @@ label {
 }
 
 .options button:not(:first-of-type):hover {
-    background-color: #ffffff20;
+    background-color: #00000020;
+}
+
+.options button:last-of-type:hover {
+    color: darkred;
 }

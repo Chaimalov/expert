@@ -70,9 +70,9 @@ export default function Item({ item, index }) {
   }
 
   return (
-    <div className='itemContainer'>
+    <div className={'itemContainer ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
       <Options open={open} list={list} />
-      <div className={'item ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
+      <div className={'item'}>
         <div className='top'>
           <div className='icon'>{item.icon}</div>
           <IoEllipsisHorizontal className='ion' onClick={handleClick} />
