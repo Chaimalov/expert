@@ -23,7 +23,7 @@ export default function Statistics() {
         }).then(({ data }) => {
             if (data.length === 0) return setNoData(true)
             const sorted = data.sort((a, b) => {
-                return a.name > b.name
+                return a.name < b.name ? -1 : 1
             })
             setCategoryData(sorted)
         }).catch(error => {

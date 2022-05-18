@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Options from './Options';
 import axios from "axios"
 import { useClickOutside } from '../utils/useClickOutside';
+import { Link } from "react-router-dom"
 
 
 
@@ -100,15 +101,21 @@ export default function Item({ item, index }) {
 
 
   return (
-    <div ref={domRef} className={'itemContainer ' + hide} style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}>
+    <div
+      ref={domRef}
+      className={'itemContainer ' + hide}
+      style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}
+    >
       {<Options type="emoji" open={openOption} list={icons} />}
       <Options open={open} list={list} />
-      <div className={'item'}>
+      <div className='item'>
         <div className='top'>
           {emoji && <div className='icon'>{emoji}</div>}
           <IoEllipsisHorizontal className='ion' onClick={() => handleClick(true)} />
         </div>
-        <h2>{item.name}</h2>
+        <Link to="/product" state={{ ...item }}>
+          <h2>{item.name}</h2>
+        </Link>
         <h3>{item.category} </h3>
         <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? " months" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
         {/* <h4>exp: {calcExp()}</h4> */}

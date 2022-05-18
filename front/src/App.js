@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import Home from "./pages/Home"
 import Statistics from "./pages/Statistics"
 import Account from "./pages/Account"
+import Product from "./pages/Product"
 import Nav from "./components/Nav";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/product" element={<Product />} />
           </Routes>
         </AnimatePresence>
       </AuthProvider>

@@ -108,6 +108,11 @@ label {
     background-color: rgba(0, 0, 0, .3);
 }
 
+.item a {
+    text-decoration: none;
+    color: var(--text-clr);
+}
+
 .list {
     position: relative;
     max-width: 1000px;
