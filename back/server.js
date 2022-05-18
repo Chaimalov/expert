@@ -116,5 +116,5 @@ async function getEmoji(name) {
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     })
-    return response.data ? response.data[0].character : "no-icon"
+    return response.data ? response.data : "no-icon"
 }

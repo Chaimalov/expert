@@ -12,6 +12,7 @@ export default function Item({ item, index }) {
 
   const [hide, setHide] = useState("")
   const [open, setOpen] = useState(false)
+  const [icons, setIcons] = useState()
 
 
   function calcExp() {
@@ -26,7 +27,7 @@ export default function Item({ item, index }) {
   }
 
   function editEmoji() {
-
+    setIcons(item.icon.map(icon => ( <h2>{icon.character}</h2> )))
   }
   function editDate() {
 
@@ -71,20 +72,23 @@ export default function Item({ item, index }) {
   }
 
   const domRef = useClickOutside(() => handleClick(false))
-
+  const icon = item.icon[0].character
   return (
-    <div ref={domRef} className={'itemContainer ' + hide} style={{ "--hue": colorFromEmoji(item.icon) || 50, "--i": index }}>
-      <Options open={open} list={list} />
-      <div className={'item'}>
-        <div className='top'>
-          <div className='icon'>{item.icon}</div>
-          <IoEllipsisHorizontal className='ion' onClick={() => handleClick(true)} />
+    <>{icons && <div>{icons}</div>}
+      <div ref={domRef} className={'itemContainer ' + hide} style={{ "--hue": colorFromEmoji(icon) || 50, "--i": index }}>
+        
+        <Options open={open} list={list} />
+        <div className={'item'}>
+          <div className='top'>
+            <div className='icon'>{icon}</div>
+            <IoEllipsisHorizontal className='ion' onClick={() => handleClick(true)} />
+          </div>
+          <h2>{item.name}</h2>
+          <h3>{item.category} </h3>
+          <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
+          {/* <h4>exp: {calcExp()}</h4> */}
         </div>
-        <h2>{item.name}</h2>
-        <h3>{item.category} </h3>
-        <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? "" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
-        {/* <h4>exp: {calcExp()}</h4> */}
       </div>
-    </div>
+    </>
   )
 }
