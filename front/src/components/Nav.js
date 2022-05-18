@@ -8,7 +8,6 @@ import { useAuth } from '../context/AuthContext';
 export default function Nav() {
 
     const { user } = useAuth()
-    console.log(user?.photoURL)
 
     return (
         <nav>

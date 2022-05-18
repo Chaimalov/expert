@@ -100,3 +100,8 @@ button:hover {
     text-align: center;
     justify-content: center;
 }
+
+img {
+    margin: auto;
+    border-radius: 100%;
+}

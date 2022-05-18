@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = React.forwardRef(({ name, type, placeholder }, ref) => (
+const Input = React.forwardRef(({ name, type, placeholder, onChange }, ref) => (
     <div className='input'>
 
         <label htmlFor={name}><h3>{name}:</h3></label>
@@ -10,6 +10,7 @@ const Input = React.forwardRef(({ name, type, placeholder }, ref) => (
             name={name}
             placeholder={placeholder || ""}
             required
+            onChange={() => onChange(null) || ""}
             ref={ref} />
     </div>
 ))

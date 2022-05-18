@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState, createRef } from "react"
+import { useState, createRef, useEffect } from "react"
 import Input from "../components/Input"
 import Button from "../components/Button"
 import Category from "../components/Category"
@@ -26,7 +26,7 @@ function Home() {
             category,
             refrigerator,
         }).then(({ data }) => {
-            // e.target.reset()
+            e.target.reset()
             alert(data.message)
             setFound(true)
         }).catch(error => console.error(error.response.data))
@@ -46,7 +46,6 @@ function Home() {
             setName(searchRef.current.value)
             if (data.length == 0) return setFound(false)
             setItem(data[0])
-            console.log(data)
         }).catch(error => {
             console.error(error)
         })
@@ -60,8 +59,8 @@ function Home() {
                     <h2>expiry dates by the experts</h2>
                 </header>
                 {found ?
-                    <form onSubmit={e => searchItem(e)} className="search">
-                        <Input name="search" ref={searchRef} placeholder="search for an item" />
+                    <form onSubmit={e => searchItem(e)} className="search" >
+                        <Input name="search" ref={searchRef} placeholder="search for an item" onChange={setItem} />
                         <Button value={<BiSearchAlt2 />} type="submit" />
                     </form>
                     :
@@ -99,10 +98,10 @@ function Home() {
                 }
                 {item && found &&
                     <div className="list">
-                        <Item item={item}/>
+                        <Item item={item} />
                     </div>}
             </div>
-        </Transitions>
+        </Transitions >
     );
 
 }
