@@ -167,7 +167,7 @@ label {
 .options {
     --value: 70%;
     position: absolute;
-    inset: 0;
+    inset: 10px;
     padding: .5em;
     display: grid;
     justify-content: center;
@@ -175,7 +175,7 @@ label {
     overflow-y: auto;
     background-color: var(--clr-primary);
     border-radius: 1em;
-    transform: translateY(100%);
+    transform: translateY(120%);
     transition: transform 250ms;
     z-index: 3;
 }
@@ -194,6 +194,7 @@ label {
 }
 
 .options button {
+    border: none;
     color: var(--text-clr);
     background: none;
     padding-block: .25em;
@@ -205,8 +206,7 @@ label {
 .options .emoji {
     grid-column: span 1;
     font-size: 2.5em;
-    padding: .25em;
-    line-height: 1;
+    padding: 0;
     align-self: center;
     border-radius: 100%;
 }
@@ -222,10 +222,10 @@ label {
 
 .options::-webkit-scrollbar,
 .options::-webkit-scrollbar-thumb {
-    width: 15px;
+    width: 8px;
     border-radius: 13px;
     background-clip: padding-box;
-    border: 5px solid transparent;
+    border: 2px solid transparent;
 }
 
 .options:hover::-webkit-scrollbar-thumb {

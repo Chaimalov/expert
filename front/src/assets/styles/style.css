@@ -1,6 +1,6 @@
 @import url('variables.css');
 
-:where(h1, h2, h3, h4, strong, a) {
+:where(h1, h2, h3, h4, strong, a, button) {
     text-transform: capitalize;
 }
 
@@ -68,21 +68,24 @@ nav>div {
 }
 
 button {
-    --value: 40%;
     text-transform: capitalize;
     border-radius: .5em;
     border: none;
     font-weight: 700;
     font-size: 1em;
     color: white;
-    background-color: var(--clr-primary);
     cursor: pointer;
     padding: .5em 1em;
+}
+
+.btn {
+    --value: 40%;
+    background-color: var(--clr-primary);
     width: max-content;
     margin: .5em;
 }
 
-button:hover {
+.btn:hover {
     --value: 35%;
 }
 
