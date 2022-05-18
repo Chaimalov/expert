@@ -168,9 +168,10 @@ label {
     --value: 70%;
     position: absolute;
     inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    display: grid;
+    place-content: center;
+    grid-template-columns: repeat(2, min-content);
+    overflow-y: auto;
     background-color: var(--clr-primary);
     border-radius: 1em;
     transform: translateY(100%);
@@ -193,17 +194,37 @@ label {
 .options button {
     color: var(--text-clr);
     background: none;
-    padding: .5em 1em;
-    display: block;
+    grid-column: main-start / main-end;
     margin: 0;
-    border-radius: 0;
     width: 100%;
 }
 
+.options .emoji {
+    width: min-content;
+    grid-column: span 1;
+    font-size: 2.5em;
+    padding: 0;
+    align-self: center;
+    border-radius: 100%;
+}
+
+.options .emoji:hover,
 .options button:not(:first-of-type):hover {
     background-color: #00000020;
 }
 
 .options button:last-of-type:hover {
     color: darkred;
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+    width: 26px;
+    border-radius: 13px;
+    background-clip: padding-box;
+    border: 10px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px #00000080;
 }

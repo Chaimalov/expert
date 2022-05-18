@@ -20,11 +20,12 @@ app.use(express.json())
 
         const category = req.body.category.replace(" ", "_")
         // Add a new document with a generated id.
-
+        const iconsList = await getEmoji(req.body.name)
         const docRef = await addDoc(productsCol, {
             name: req.body.name,
             category: category,
-            icon: await getEmoji(req.body.name),
+            iconsList: iconsList,
+            icon: iconsList[0].character,
             minDays: categoryDays[category].minDays,
             maxDays: categoryDays[category].maxDays,
             supportRate: 1,
@@ -108,6 +109,8 @@ const categoryDays = {
 }
 
 
+
+
 async function getEmoji(name) {
     const response = await axios.get('https://emoji-api.com/emojis', {
         params: {
@@ -116,5 +119,13 @@ async function getEmoji(name) {
             access_key: 'b8441a54d10349910152d879cd68f21074ee4482'
         }
     })
-    return response.data ? response.data : "no-icon"
+    return response.data ? response.data.splice(0, response.data.length / 2)
+        : [{
+            "slug": "face-savoring-food",
+            "character": "😋",
+            "unicodeName": "face savoring food",
+            "codePoint": "1F60B",
+            "group": "smileys-emotion",
+            "subGroup": "face-tongue"
+        }]
 }
