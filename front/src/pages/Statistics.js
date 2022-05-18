@@ -33,7 +33,7 @@ export default function Statistics() {
 
     return (
         <Transitions>
-            <h1>statistics</h1>
+            <h1 className='m2'>statistics</h1>
             <div className="section">{categories.map(category => (
                 <Category
                     key={category.name}

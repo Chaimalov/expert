@@ -7,7 +7,7 @@ export default function Account() {
     const { user } = useAuth()
     console.log(user)
     return (
-        <div className='center'>
+        <div className='center m2'>
             <h1>Account</h1>
             <img src={user.photoURL} alt="profile" />
             <h2>{user.displayName}</h2>
