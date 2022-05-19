@@ -4,7 +4,8 @@ const categories = [
     { name: "dairy", icon: "🧀" },
     { name: "meat", icon: "🥩" },
     { name: "pantry", icon: "🥫" },
-    { name: "wine", icon: "🍷" },
-    { name: "ice cream", icon: "🍧" }]
+    // { name: "wine", icon: "🍷" },
+    // { name: "ice cream", icon: "🍧" }
+]
 
 export default categories

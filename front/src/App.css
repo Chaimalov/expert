@@ -79,8 +79,11 @@ label {
 
 .item {
     --value: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: var(--gradient);
-    aspect-ratio: 1;
+    aspect-ratio: 10/11;
     padding: 1.2em;
     transition: 250ms;
 }
