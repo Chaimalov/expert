@@ -115,7 +115,7 @@ const categoryDays = {
 
     }, wine: {
         minDays: 720,
-        maxDays: 1800
+        maxDays: 1855
 
     }, ice_cream: {
         minDays: 1,

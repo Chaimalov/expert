@@ -16,6 +16,8 @@ export default function Item({ item, index }) {
   const [open, setOpen] = useState(false)
   const [icons, setIcons] = useState()
   const [emoji, setEmoji] = useState(item.icon)
+  const [minDays, set] = useState(item.icon)
+
 
 
   function calcExp() {
@@ -24,13 +26,24 @@ export default function Item({ item, index }) {
     return today.toLocaleDateString("en-US")
   }
 
-  function calcDays(days) {
-    if (days > 30) return parseInt(days / 30) + ((days % 30) > 0 ? (days % 30) + " days" : "")
-    return days
+  function displayDays(days) {
+    const date = calcDays(days)
+    if (date.years) return date.years + (date.years > 1 ? " years" : " year")
+    if (date.months) return date.months + (date.months > 1? " months":" month")
+    if (date.days) return date.days + " days"
   }
 
+  function calcDays(date) {
+
+    const days = parseInt(date % 30)
+    const months = parseInt((date / 30) % 12)
+    const years = parseInt(date / 30 / 12)
+    return { days, months, years }
+  }
+
+
   function handleEmoji(icon) {
-    setOpenOption(prev => !prev)
+    setOpenOption(false)
     setEmoji(icon)
     axios.post("/update/:id", {
       id: item.id,
@@ -52,6 +65,8 @@ export default function Item({ item, index }) {
     )))
   }
   function editDate() {
+    setOpen(false)
+    setOpenOption(true)
 
   }
   function deleteItem() {
@@ -98,7 +113,7 @@ export default function Item({ item, index }) {
     setOpenOption(false)
   })
 
-
+ 
   return (
     <div
       ref={domRef}
@@ -118,7 +133,7 @@ export default function Item({ item, index }) {
           <h2>{item.name}</h2>
         </Link>
         <h3>{item.category} </h3>
-        <h4>{calcDays(item.minDays)} - {calcDays(item.maxDays) + (item.maxDays > 30 ? " months" : " days")}<span>{item.refrigerator && "❄️"}</span></h4>
+        <h4>{displayDays(item.minDays)} - {displayDays(item.maxDays)}<span>{item.refrigerator && "❄️"}</span></h4>
         {/* <h4>exp: {calcExp()}</h4> */}
       </div>
     </div>
