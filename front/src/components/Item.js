@@ -6,6 +6,7 @@ import Options from './Options';
 import axios from "axios"
 import { useClickOutside } from '../utils/useClickOutside';
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 
 
 
@@ -29,8 +30,8 @@ export default function Item({ item, index }) {
   function displayDays(days) {
     const date = calcDays(days)
     if (date.years) return date.years + (date.years > 1 ? " years" : " year")
-    if (date.months) return date.months + (date.months > 1? " months":" month")
-    if (date.days) return date.days + " days"
+    if (date.months) return date.months + (date.months > 1 ? " months" : " month")
+    if (date.days) return date.days + (date.days > 1 ? " days" : " day")
   }
 
   function calcDays(date) {
@@ -113,29 +114,28 @@ export default function Item({ item, index }) {
     setOpenOption(false)
   })
 
- 
+
   return (
-    <div
-      ref={domRef}
-      className={'itemContainer ' + hide}
-      style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}
-    >
-      {<Options type="emoji" open={openOption} list={icons} />}
-      <Options open={open} list={list} />
-      <div className='item'>
-        <div className='top'>
-          {emoji && <div className='icon'>{emoji}</div>}
-          <button onClick={() => handleClick(true)} className="reset">
-            <IoEllipsisHorizontal className='ion' />
-          </button>
+    <motion.div layout >
+      <div className={'itemContainer ' + hide} ref={domRef}
+        style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}>
+        {<Options type="emoji" open={openOption} list={icons} />}
+        <Options open={open} list={list} />
+        <div className='item'>
+          <div className='top'>
+            {emoji && <div className='icon'>{emoji}</div>}
+            <button onClick={() => handleClick(true)} className="reset">
+              <IoEllipsisHorizontal className='ion' />
+            </button>
+          </div>
+          <Link to="/product" state={{ ...item }}>
+            <h2>{item.name}</h2>
+          </Link>
+          <h3>{item.category} </h3>
+          <h4>{displayDays((item.minDays + item.maxDays) / 2)}<span>{item.refrigerator && "❄️"}</span></h4>
+          {/* <h4>exp: {calcExp()}</h4> */}
         </div>
-        <Link to="/product" state={{ ...item }}>
-          <h2>{item.name}</h2>
-        </Link>
-        <h3>{item.category} </h3>
-        <h4>{displayDays(item.minDays)} - {displayDays(item.maxDays)}<span>{item.refrigerator && "❄️"}</span></h4>
-        {/* <h4>exp: {calcExp()}</h4> */}
       </div>
-    </div>
+    </motion.div>
   )
 }

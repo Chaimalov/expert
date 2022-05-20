@@ -72,8 +72,10 @@ app.use(express.json())
         return res.json("icon was updated")
     })
 
-    app.get("/", async (req, res) => {
-        return res.send(await getProducts())
+    app.get("/all", async (req, res) => {
+        return res.json((await getDocs(productsCol)).docs.map(doc => (
+            { ...doc.data(), id: doc.id }
+        )))
     })
 
     app.listen(PORT, () => console.log("listening on PORT " + PORT))

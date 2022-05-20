@@ -10,7 +10,7 @@ const Input = React.forwardRef(({ name, type, placeholder, onChange }, ref) => (
             name={name}
             placeholder={placeholder || ""}
             required
-            onChange={() => onChange(null) || ""}
+            onChange={() => onChange() || ""}
             ref={ref} />
     </div>
 ))

@@ -7,6 +7,7 @@ import Item from "../components/Item"
 import categories from "../utils/categories"
 import { BiSearchAlt2 } from "react-icons/bi"
 import Transitions from "../Transition"
+import { motion } from "framer-motion"
 
 
 function Home() {
@@ -16,6 +17,27 @@ function Home() {
     const [found, setFound] = useState(true)
     const [item, setItem] = useState()
     const [refrigerator, setRefrigerator] = useState(null)
+    const [itemsList, setItemsList] = useState()
+    const [filteredList, setFilteredList] = useState()
+
+    useEffect(() => {
+        axios.get("/all").then(({ data }) => {
+            const sorted = data.sort((a, b) => {
+                return a.name < b.name ? -1 : 1
+            })
+            setItemsList(sorted)
+            setFilteredList(sorted)
+        })
+    }, [found])
+
+    function filterList() {
+        setFilteredList(() => {
+            return itemsList.filter(item => (
+                item.name.indexOf(searchRef.current.value) !== -1
+            ))
+        })
+    }
+
 
     function sendData(e) {
         e.preventDefault()
@@ -59,10 +81,17 @@ function Home() {
                     <h2>expiry dates by the experts</h2>
                 </header>
                 {found ?
-                    <form onSubmit={e => searchItem(e)} className="search" >
-                        <Input name="search" ref={searchRef} placeholder="search for an item" onChange={setItem} />
-                        <Button value={<BiSearchAlt2 />} type="submit" />
-                    </form>
+                    <>
+                        <form onSubmit={e => searchItem(e)} className="search" >
+                            <Input name="search" ref={searchRef} placeholder="search for an item" onChange={filterList} />
+                            <Button value={<BiSearchAlt2 />} type="submit" />
+
+                        </form>
+                        <motion.div layout className="list">
+                            {filteredList && filteredList.map((prod, index) => (
+                                <Item key={prod.id} item={prod} index={index} />))}
+                        </motion.div>
+                    </>
                     :
                     <form onSubmit={e => sendData(e)}>
                         <h2><strong>{name}</strong> is in what Category?</h2>
