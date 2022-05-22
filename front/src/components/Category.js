@@ -1,4 +1,4 @@
-import { colorFromEmoji } from "../assets/color"
+import { colorFromEmoji } from "../utils/color"
 
 export default function Category({ group, category, value, icon, onClick }) {
 

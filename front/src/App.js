@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import React from "react";
 import { Route, useLocation, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
@@ -9,7 +9,7 @@ import Account from "./pages/Account";
 import Product from "./pages/Product";
 import Nav from "./components/Nav";
 import { AuthProvider } from "./context/AuthContext";
-import { ProductsProvider, useProducts } from "./context/ProductsContext";
+import { ProductsProvider } from "./context/ProductsContext";
 
 export default function App() {
   const location = useLocation();
@@ -24,7 +24,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/statistics" element={<Statistics />} />
               <Route path="/account" element={<Account />} />
-              <Route path="/product" element={<Product />} />
+              <Route path="/product/:id" element={<Product />} />
             </Routes>
           </AnimatePresence>
         </ProductsProvider>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Category from "../components/Category";
 import Item from "../components/Item";
 import categories from "../utils/categories";

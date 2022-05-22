@@ -7,7 +7,6 @@ import Item from "../components/Item";
 import categories from "../utils/categories";
 import { BiSearchAlt2 } from "react-icons/bi";
 import Transitions from "../Transition";
-import { motion } from "framer-motion";
 import ProductsList from "../components/ProductsList";
 import CategoriesList from "../components/CategoriesList";
 import { useProducts } from "../context/ProductsContext";

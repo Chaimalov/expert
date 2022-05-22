@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { colorFromEmoji } from "../assets/color";
+import { colorFromEmoji } from "../utils/color";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose } from "react-icons/ai";
 import Options from "./Options";
@@ -146,7 +146,7 @@ export default function Item({ item, index }) {
               <IoEllipsisHorizontal className="ion" />
             </button>
           </div>
-          <Link to="/product" state={{ ...item }}>
+          <Link to={`/product/${item.name}`} state={{ ...item }}>
             <h2>{item.name}</h2>
           </Link>
           <h3>{item.category} </h3>

@@ -3,6 +3,7 @@ import { database } from "../firebase";
 import { onSnapshot } from "firebase/firestore";
 
 const ProductsContext = createContext();
+
 export function ProductsProvider({ children }) {
   const [products, setProducts] = useState();
 
