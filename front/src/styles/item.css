@@ -12,6 +12,7 @@
 .top {
     display: flex;
     justify-content: space-between;
+    margin-bottom: auto;
 }
 
 .ion {
@@ -30,6 +31,7 @@
 .item a {
     text-decoration: none;
     color: var(--text-color);
+    margin-bottom: auto;
 }
 
 .item button {
