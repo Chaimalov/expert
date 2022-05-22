@@ -14,20 +14,14 @@ import EditDate from './EditDate';
 export default function Item({ item, index }) {
 
   const [hide, setHide] = useState("")
-  const [openOption, setOpenOption] = useState(false)
+  const [OpenEmoji, setOpenEmoji] = useState(false)
+  const [OpenDate, setOpenDate] = useState(false)
   const [open, setOpen] = useState(false)
   const [icons, setIcons] = useState()
   const [emoji, setEmoji] = useState(item.icon)
-  const [minDays, set] = useState(item.icon)
+  const [minDays, setMinDays] = useState(item.minDays)
+  const [maxDays, setMaxDays] = useState(item.maxDays)
   const [date, setDate] = useState()
-
-
-
-  function calcExp() {
-    const today = new Date()
-    today.setDate(today.getDate() + ((item.minDays + item.maxDays) / 2))
-    return today.toLocaleDateString("en-US")
-  }
 
   function displayDays(days) {
     const date = calcDays(days)
@@ -46,7 +40,7 @@ export default function Item({ item, index }) {
 
 
   function handleEmoji(icon) {
-    setOpenOption(false)
+    setOpenEmoji(false)
     setEmoji(icon)
     axios.post("/update/:id", {
       id: item.id,
@@ -57,7 +51,7 @@ export default function Item({ item, index }) {
 
   function editEmoji() {
     setOpen(false)
-    setOpenOption(true)
+    setOpenEmoji(true)
     setIcons(item.iconsList.map(icon => (
       {
         text: icon.character,
@@ -69,17 +63,18 @@ export default function Item({ item, index }) {
   }
   function editDate() {
     setOpen(false)
-    setOpenOption(true)
+    setOpenEmoji(false)
+    setOpenDate(true)
     setDate([{
-      text: <EditDate days="minDays" />,
+      text: <EditDate days="minDays" value={minDays} onChange={setMinDays} />,
       action: null,
       key: 1,
       send: null,
     },
     {
-      text: <EditDate days="maxDays" />,
+      text: <EditDate days="maxDays" value={maxDays} onChange={setMaxDays} />,
       action: null,
-      key: 1,
+      key: 2,
       send: null,
     }
     ])
@@ -101,7 +96,8 @@ export default function Item({ item, index }) {
     {
       text: <AiOutlineClose className='ion' />,
       action: handleClick,
-      key: 4
+      key: 4,
+      type: "ion"
     },
     {
       text: "edit emoji",
@@ -116,7 +112,8 @@ export default function Item({ item, index }) {
     {
       text: "delete",
       action: deleteItem,
-      key: 3
+      key: 3,
+      type: "delete"
     },
   ]
 
@@ -126,7 +123,8 @@ export default function Item({ item, index }) {
 
   const domRef = useClickOutside(() => {
     handleClick(false)
-    setOpenOption(false)
+    setOpenEmoji(false)
+    setOpenDate(false)
   })
 
 
@@ -134,8 +132,8 @@ export default function Item({ item, index }) {
     <motion.div layout >
       <div className={'itemContainer ' + hide} ref={domRef}
         style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}>
-        {<Options type="emoji" open={openOption} list={icons} />}
-        <Options open={openOption} list={date} />
+        {<Options type="emoji" open={OpenEmoji} list={icons} />}
+        <Options open={OpenDate} list={date} type="date" />
         <Options open={open} list={list} />
         <div className='item'>
           <div className='top'>
@@ -148,8 +146,7 @@ export default function Item({ item, index }) {
             <h2>{item.name}</h2>
           </Link>
           <h3>{item.category} </h3>
-          <h4>{displayDays(item.minDays)} - {displayDays(item.maxDays)} <span>{item.refrigerator && "❄️"}</span></h4>
-          {/* <h4>exp: {calcExp()}</h4> */}
+          <h4>{displayDays(minDays)} - {displayDays(maxDays)} <span>{item.refrigerator && "❄️"}</span></h4>
         </div>
       </div>
     </motion.div>

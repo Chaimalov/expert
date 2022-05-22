@@ -1,0 +1,43 @@
+label.date {
+    text-align: left;
+    /* display: inline; */
+
+}
+
+input.date {
+    width: 100%;
+    text-align: right;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.options button:is(.date):hover {
+    background: none;
+    color: black;
+}
+
+.options button input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.num-input-container {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.arrows {
+    display: flex;
+    flex-direction: column;
+}
+
+.arrows>* {
+    margin: -3px;
+}
+
+.arrows>*:hover {
+    color: rgba(0, 0, 0, .5)
+}

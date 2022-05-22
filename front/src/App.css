@@ -1,6 +1,7 @@
 @import "./assets/styles/style.css";
 @import "./nav.css";
 @import "./search.css";
+@import "./editDate.css";
 
 /* .App {} */
 
@@ -215,7 +216,6 @@ label {
     padding-block: .25em;
     grid-column: main-start / main-end;
     margin: 0;
-    width: 100%;
 }
 
 .options .emoji {
@@ -229,12 +229,12 @@ label {
 }
 
 .options .emoji:hover,
-.options button:not(:first-of-type):hover {
+.options button:not(.ion):hover {
     --value: 90%;
     background-color: var(--clr-primary);
 }
 
-.options button:last-of-type:hover {
+.options button.delete:hover {
     color: darkred;
 }
 
