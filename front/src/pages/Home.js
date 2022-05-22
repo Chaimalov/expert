@@ -3,7 +3,6 @@ import { useState, createRef, useEffect } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Category from "../components/Category";
-import Item from "../components/Item";
 import categories from "../utils/categories";
 import { BiSearchAlt2 } from "react-icons/bi";
 import Transitions from "../Transition";
@@ -16,7 +15,6 @@ function Home() {
   const searchRef = createRef();
   const [category, setCategory] = useState();
   const [found, setFound] = useState(true);
-  const [item, setItem] = useState();
   const [refrigerator, setRefrigerator] = useState(null);
   const [filteredList, setFilteredList] = useState();
 
@@ -25,7 +23,7 @@ function Home() {
   useEffect(() => {
     if (!products) return;
     setFilteredList(products);
-  }, [products]);
+  }, [products, found]);
 
   function filterList() {
     setFilteredList(() => {
@@ -59,20 +57,8 @@ function Home() {
 
   function searchItem(e) {
     e.preventDefault();
-    axios
-      .get("/search", {
-        params: {
-          item: searchRef.current.value,
-        },
-      })
-      .then(({ data }) => {
-        setName(searchRef.current.value);
-        if (data.length == 0) return setFound(false);
-        setItem(data[0]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    setName(searchRef.current.value)
+    setFound(products.find(item => item.name === searchRef.current.value) !== undefined)
   }
 
   return (
@@ -126,11 +112,6 @@ function Home() {
               <Button value="cancel" danger onClick={handleCancel} />
             </div>
           </form>
-        )}
-        {item && found && (
-          <div className="list">
-            <Item item={item} />
-          </div>
         )}
       </div>
     </Transitions>

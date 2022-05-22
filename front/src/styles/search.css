@@ -11,11 +11,13 @@
     border-color: hsl(0, 0%, 90%);
     width: clamp(10em, 90vw, 35em);
     justify-content: space-between;
+    transition: var(--transition);
     gap: 0;
 }
 
 .search:focus-within {
     border-color: var(--clr-primary-dark);
+    box-shadow: 0 .5em 1em hsl(0, 0%, 88%);
 }
 
 .search button {
