@@ -7,6 +7,7 @@ import axios from "axios"
 import { useClickOutside } from '../utils/useClickOutside';
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
+import EditDate from './EditDate';
 
 
 
@@ -18,6 +19,7 @@ export default function Item({ item, index }) {
   const [icons, setIcons] = useState()
   const [emoji, setEmoji] = useState(item.icon)
   const [minDays, set] = useState(item.icon)
+  const [date, setDate] = useState()
 
 
 
@@ -68,6 +70,19 @@ export default function Item({ item, index }) {
   function editDate() {
     setOpen(false)
     setOpenOption(true)
+    setDate([{
+      text: <EditDate days="minDays" />,
+      action: null,
+      key: 1,
+      send: null,
+    },
+    {
+      text: <EditDate days="maxDays" />,
+      action: null,
+      key: 1,
+      send: null,
+    }
+    ])
 
   }
   function deleteItem() {
@@ -120,6 +135,7 @@ export default function Item({ item, index }) {
       <div className={'itemContainer ' + hide} ref={domRef}
         style={{ "--hue": emoji && colorFromEmoji(emoji) || 50, "--i": index }}>
         {<Options type="emoji" open={openOption} list={icons} />}
+        <Options open={openOption} list={date} />
         <Options open={open} list={list} />
         <div className='item'>
           <div className='top'>
@@ -132,7 +148,7 @@ export default function Item({ item, index }) {
             <h2>{item.name}</h2>
           </Link>
           <h3>{item.category} </h3>
-          <h4>{displayDays((item.minDays + item.maxDays) / 2)}<span>{item.refrigerator && "❄️"}</span></h4>
+          <h4>{displayDays(item.minDays)} - {displayDays(item.maxDays)} <span>{item.refrigerator && "❄️"}</span></h4>
           {/* <h4>exp: {calcExp()}</h4> */}
         </div>
       </div>
