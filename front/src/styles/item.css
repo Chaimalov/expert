@@ -6,7 +6,7 @@
     background: var(--gradient);
     aspect-ratio: 10/11;
     padding: 1.2em;
-    transition: 250ms;
+    transition: var(--transition);
 }
 
 .top {

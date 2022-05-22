@@ -24,5 +24,6 @@
     --clr-primary-light-4: hsl(var(--hue), var(--saturation), calc(var(--value) * 1.4));
     --gradient: linear-gradient(to bottom right, var(--clr-primary-light), var(--clr-primary-dark));
 
-    --transition: 150ms ease;
+    --transition: 250ms;
+    --transition-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
 }
