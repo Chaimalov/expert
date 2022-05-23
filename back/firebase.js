@@ -10,7 +10,8 @@ import {
     where,
     deleteDoc,
     doc,
-    updateDoc
+    updateDoc,
+    setDoc
 } from 'firebase/firestore/lite';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -38,7 +39,18 @@ const db = {
 }
 
 
-export { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc }
+export {
+    collection
+    , getDocs
+    , db
+    , addDoc
+    , query
+    , where
+    , deleteDoc
+    , doc
+    , updateDoc
+    ,setDoc
+}
 
 
 
