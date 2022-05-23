@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         if (!userDetails) return
         const unsubscribe = onSnapshot(doc(database.users, userDetails.uid), (doc) => {
-            setUserPreferences(doc.data())
+            setUserPreferences({ ...doc.data(), uid: doc.id })
         });
 
         return () => unsubscribe();
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     useEffect(() => {
-        if (!userDetails) return
+        if (!userDetails || userDetails?.uid == userPreferences?.uid) return
         return addUser()
     }, [userDetails])
 
