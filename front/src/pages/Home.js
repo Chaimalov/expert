@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Category from "../components/Category";
 import categories from "../utils/categories";
 import { BiSearchAlt2 } from "react-icons/bi";
-import Transitions from "../Transition";
+import Transitions from "../context/Transition";
 import ProductsList from "../components/ProductsList";
 import CategoriesList from "../components/CategoriesList";
 import { useProducts } from "../context/ProductsContext";

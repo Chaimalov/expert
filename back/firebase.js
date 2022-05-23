@@ -30,7 +30,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(firebase);
-const db = getFirestore(firebase);
+const firestore = getFirestore(firebase);
+
+const db = {
+    products: collection(firestore, "products"),
+    users : collection(firestore, "users")
+}
+
 
 export { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc }
 

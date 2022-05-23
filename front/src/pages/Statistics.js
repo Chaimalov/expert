@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Category from "../components/Category";
 import categories from "../utils/categories";
 import { IoBasketOutline } from "react-icons/io5";
-import Transitions from "../Transition";
+import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
 import ProductsList from "../components/ProductsList";
 
