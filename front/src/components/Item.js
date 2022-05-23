@@ -8,6 +8,7 @@ import { useClickOutside } from "../utils/useClickOutside";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import EditDate from "./EditDate";
+import { useAuth } from "../context/AuthContext";
 
 export default function Item({ item, index }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
@@ -18,6 +19,7 @@ export default function Item({ item, index }) {
   const [minDays, setMinDays] = useState(item.minDays);
   const [maxDays, setMaxDays] = useState(item.maxDays);
   const [date, setDate] = useState();
+  const { user } = useAuth()
 
   function displayDays(days) {
     const date = calcDays(days);
@@ -90,6 +92,12 @@ export default function Item({ item, index }) {
         });
     }
   }
+  function addItem() {
+    axios.post("/users/addItem", {
+      userId: user.uid,
+      item: item.id,
+    })
+  }
 
   const list = [
     {
@@ -108,12 +116,18 @@ export default function Item({ item, index }) {
       action: editDate,
       key: 2,
     },
+    // {
+    //   text: "delete",
+    //   action: deleteItem,
+    //   key: 3,
+    //   type: "delete",
+    // },
     {
-      text: "delete",
-      action: deleteItem,
-      key: 3,
-      type: "delete",
-    },
+      text: "add item",
+      action: addItem,
+      key: 5,
+      type: "add",
+    }
   ];
 
   function handleClick(state) {

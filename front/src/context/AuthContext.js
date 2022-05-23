@@ -14,9 +14,10 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState()
 
     function addUser() {
+     
         axios.post("/users/create", {
-            id: user.uid,
-            name: user.displayName,
+            id: user?.uid,
+            name: user?.displayName,
         })
     }
     function logOut() {
@@ -26,11 +27,15 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            addUser()
             // alert(currentUser.email)
         })
         return unsubscribe
     }, [])
+
+    useEffect(() => {
+        if (!user) return
+        return addUser()
+    }, [user])
 
     return (
         <AuthContext.Provider value={{ signInWithGoogle, logOut, user }}>

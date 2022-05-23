@@ -1,6 +1,7 @@
 import express from "express"
-import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc } from "../firebase.js";
+import { db } from "../firebase.js";
 import axios from "axios"
+import { getDocs, updateDoc, deleteDoc, addDoc, doc, query, where } from "firebase/firestore/lite"
 
 const route = express.Router()
 export default route
