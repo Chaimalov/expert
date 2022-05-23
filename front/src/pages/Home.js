@@ -38,7 +38,7 @@ function Home() {
     if (!category || refrigerator === null) return;
 
     axios
-      .post("/add", {
+      .post("/products/add", {
         name,
         category,
         refrigerator,

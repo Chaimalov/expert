@@ -1,8 +1,13 @@
-import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc } from "./firebase.js";
+import express from "express"
+import { collection, getDocs, db, addDoc, query, where, deleteDoc, doc, updateDoc } from "../firebase.js";
 import axios from "axios"
+
+const route = express.Router()
+export default route
+
 //Routes
 
-app.post("/add", async (req, res) => {
+route.post("/add", async (req, res) => {
 
     if (await checkExist(req.body)) return res.status(405).end(`${req.body.name} already exists.`);
 
@@ -25,7 +30,7 @@ app.post("/add", async (req, res) => {
     })
 })
 
-app.get("/search", async (req, res) => {
+route.get("/search", async (req, res) => {
     const item = req.query.item
     if (!item) return res.json("query was empty")
     const searchRes = query(db.products, where("name", "==", item))
@@ -34,33 +39,23 @@ app.get("/search", async (req, res) => {
     )))
 })
 
-app.get("/search/:category", async (req, res) => {
+route.get("/search/:category", async (req, res) => {
     const searchRes = query(db.products, where("category", "==", req.query.category))
     return res.json((await getDocs(searchRes)).docs.map(doc => (
         { ...doc.data(), id: doc.id }
     )))
 })
 
-app.post("/delete", async (req, res) => {
+route.post("/delete", async (req, res) => {
     return res.send(await deleteDoc(doc(db.products, req.body.id)))
 })
 
-// app.get("/delete-all", async (req, res) => {
-//     const data = await getDocs(products)
-//     const foda = data.docs.map(doc => (
-//         { ...doc.data(), id: doc.id }))
-//     foda.forEach(async (item) => {
-//         await deleteDoc(doc(db, "products", item.id))
-//     })
-//     return res.send("all-was-deleted!")
-// })
-
-app.post("/update/:id", async (req, res) => {
+route.post("/update/:id", async (req, res) => {
     await updateDoc(doc(db.products, req.body.id), { icon: req.body.icon })
     return res.json("icon was updated")
 })
 
-app.get("/all", async (req, res) => {
+route.get("/all", async (req, res) => {
     return res.json((await getDocs(db.products)).docs.map(doc => (
         { ...doc.data(), id: doc.id }
     )))
@@ -109,9 +104,6 @@ const categoryDays = {
         maxDays: 45
     },
 }
-
-
-
 
 async function getEmoji(name) {
     const response = await axios.get('https://emoji-api.com/emojis', {

@@ -38,7 +38,7 @@ export default function Item({ item, index }) {
     setOpenEmoji(false);
     setEmoji(icon);
     axios
-      .post("/update/:id", {
+      .post("/products/update/:id", {
         id: item.id,
         icon,
       })
@@ -82,7 +82,7 @@ export default function Item({ item, index }) {
     handleClick();
     if (window.confirm(`would you like to delete ${item.name}?`)) {
       axios
-        .post("/delete", {
+        .post("/products/delete", {
           id: item.id,
         })
         .then(() => {
