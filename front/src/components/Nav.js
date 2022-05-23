@@ -15,7 +15,7 @@ export default function Nav() {
                 <Link to="/">home</Link>
                 <Link to="/statistics">statistics</Link>
                 <Login />
-                <Link to="/account">{user && <img src={user.photoURL} />}</Link>
+                <Link to="/account">{<img src={user?.photoURL} />}</Link>
             </div>
         </nav>
     )
