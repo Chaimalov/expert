@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../firebase'
+import { auth, database } from '../firebase'
 import axios from "axios"
+import { onSnapshot, doc } from 'firebase/firestore';
+
 
 const AuthContext = createContext()
 function signInWithGoogle() {
@@ -11,13 +13,23 @@ function signInWithGoogle() {
 
 export function AuthProvider({ children }) {
 
-    const [user, setUser] = useState()
+    const [userDetails, setUserDetails] = useState()
+    const [userPreferences, setUserPreferences] = useState()
+
+    useEffect(() => {
+        if (!userDetails) return
+        const unsubscribe = onSnapshot(doc(database.users, userDetails.uid), (doc) => {
+            setUserPreferences(doc.data())
+        });
+
+        return () => unsubscribe();
+    }, [userDetails]);
 
     function addUser() {
-     
+
         axios.post("/users/create", {
-            id: user?.uid,
-            name: user?.displayName,
+            id: userDetails?.uid,
+            name: userDetails?.displayName,
         })
     }
     function logOut() {
@@ -26,16 +38,21 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser)
+            setUserDetails(currentUser)
             // alert(currentUser.email)
         })
         return unsubscribe
     }, [])
 
     useEffect(() => {
-        if (!user) return
+        if (!userDetails) return
         return addUser()
-    }, [user])
+    }, [userDetails])
+
+    const user = {
+        ...userDetails,
+        ...userPreferences
+    }
 
     return (
         <AuthContext.Provider value={{ signInWithGoogle, logOut, user }}>
