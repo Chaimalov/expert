@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Category from "../components/Category";
-import Item from "../components/Item";
 import categories from "../utils/categories";
 import { IoBasketOutline } from "react-icons/io5";
 import Transitions from "../Transition";
 import { useProducts } from "../context/ProductsContext";
+import ProductsList from "../components/ProductsList";
 
 export default function Statistics() {
   const { products } = useProducts();
@@ -35,22 +35,18 @@ export default function Statistics() {
           />
         ))}
       </div>
-      <div className="list">
-        {categoryData ? (
-          categoryData.map((item, index) => (
-            <Item key={item.id} item={item} index={index} />
-          ))
-        ) : noData ? (
-          <div className="no-data">
-            <h1>no data</h1>
-          </div>
-        ) : (
-          <div className="loading">
-            <IoBasketOutline className="loadingLogo" />
-            loading...
-          </div>
-        )}
-      </div>
+      {categoryData ? (
+        <ProductsList list={categoryData} />
+      ) : noData ? (
+        <div className="no-data">
+          <h1>no data</h1>
+        </div>
+      ) : (
+        <div className="loading">
+          <IoBasketOutline className="loadingLogo" />
+          loading...
+        </div>
+      )}
     </Transitions>
   );
 }
