@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
 
     const [userDetails, setUserDetails] = useState()
     const [userPreferences, setUserPreferences] = useState()
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
         if (!userDetails) return
@@ -26,7 +27,6 @@ export function AuthProvider({ children }) {
     }, [userDetails]);
 
     function addUser() {
-
         axios.post("/users/create", {
             id: userDetails?.uid,
             name: userDetails?.displayName,
@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
     }
     function logOut() {
         signOut(auth)
+        setUserPreferences(null)
     }
 
     useEffect(() => {
@@ -45,7 +46,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     useEffect(() => {
-        if (!userDetails || userDetails?.uid == userPreferences?.uid) return
+        if (!userDetails || !userPreferences || userDetails.uid == userPreferences.uid) return
         return addUser()
     }, [userDetails])
 
@@ -54,8 +55,12 @@ export function AuthProvider({ children }) {
         ...userPreferences
     }
 
+    useEffect(() => {
+        setLoggedIn(userDetails && userPreferences)
+    }, [userDetails, userPreferences])
+
     return (
-        <AuthContext.Provider value={{ signInWithGoogle, logOut, user }}>
+        <AuthContext.Provider value={{ signInWithGoogle, logOut, user, loggedIn }}>
             {children}
         </AuthContext.Provider>
     )

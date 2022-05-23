@@ -10,10 +10,10 @@ export default function MyList() {
     const [items, setItems] = useState()
 
     useEffect(() => {
-        if (!user || !products) return
-        console.log(user)
-        // setItems(products.filter(item => user.itemsArray.some(item.id)))
+        if (!user.uid || !products) return
+        setItems(products.filter(item => user.itemsArray.some(list => list == item.id)))
     }, [user, products])
+
     if (items) return (
         <ProductsList list={items} />
     )

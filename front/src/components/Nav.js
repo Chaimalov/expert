@@ -7,16 +7,18 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Nav() {
 
-    const { user } = useAuth()
+    const { user, loggedIn } = useAuth()
 
     return (
         <nav>
-            <div>
+            <div className='right'>
                 <Link to="/">home</Link>
                 <Link to="/statistics">statistics</Link>
-                <Link to="/mylist">My list</Link>
+                {loggedIn && <Link to="/mylist">My list</Link>}
+            </div>
+            <div className='left'>
                 <Login />
-                <Link to="/account">{<img src={user?.photoURL} />}</Link>
+                {user?.photoURL && <Link to="/account">{<img src={user.photoURL} />}</Link>}
             </div>
         </nav>
     )

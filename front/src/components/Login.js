@@ -19,22 +19,18 @@ export default function Login() {
   async function signOut() {
     try {
       await logOut()
+
     } catch (error) {
       console.error(error)
     }
   }
 
   return (
-    <div className='center'>
+    <div className='sign'>
       {user.uid ?
-        <>
-          <Button value="sign out" onClick={signOut} />
-        </>
+        <Button value="sign out" onClick={signOut} />
         :
-        <>
-          <Button value="sign in with google" onClick={signin} />
-          {/* <GoogleButton onClick={signin}/> */}
-        </>
+        <Button value="sign in with google" onClick={signin} />
       }
     </div>
   );

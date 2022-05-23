@@ -93,6 +93,7 @@ export default function Item({ item, index }) {
     }
   }
   function addItem() {
+    setOpen(false)
     axios.post("/users/addItem", {
       userId: user.uid,
       item: item.id,

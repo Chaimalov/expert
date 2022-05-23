@@ -1,6 +1,9 @@
 nav {
     background-color: var(--clr-primary-dark);
     position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     top: 0;
     z-index: 999;
     padding-inline: 2em;
@@ -15,7 +18,7 @@ nav a {
     line-height: 1;
 }
 
-nav a:not(:last-of-type)::before {
+nav .right a::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -36,14 +39,15 @@ nav a:hover::before {
     transform: scaleX(1);
 }
 
-
-nav div {
+nav .right,
+nav .left {
     display: flex;
     align-items: center;
+    gap: 1.5em;
 }
 
-nav div:nth-last-child(2) {
-    margin-left: auto;
+nav div span {
+    margin: auto;
 }
 
 nav .user {
