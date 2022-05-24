@@ -35,18 +35,7 @@ export default function Statistics() {
           />
         ))}
       </div>
-      {categoryData ? (
-        <ProductsList list={categoryData} />
-      ) : noData ? (
-        <div className="no-data">
-          <h1>no data</h1>
-        </div>
-      ) : (
-        <div className="loading">
-          <IoBasketOutline className="loadingLogo" />
-          loading...
-        </div>
-      )}
+      {categoryData && <ProductsList list={categoryData} />}
     </Transitions>
   );
 }

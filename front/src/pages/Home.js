@@ -57,8 +57,11 @@ function Home() {
 
   function searchItem(e) {
     e.preventDefault();
-    setName(searchRef.current.value)
-    setFound(products.find(item => item.name === searchRef.current.value) !== undefined)
+    setName(searchRef.current.value);
+    setFound(
+      products.find((item) => item.name === searchRef.current.value) !==
+        undefined
+    );
   }
 
   return (
@@ -72,6 +75,7 @@ function Home() {
           <>
             <form onSubmit={(e) => searchItem(e)} className="search">
               <Input
+                type="search"
                 name="search"
                 ref={searchRef}
                 placeholder="search for an item"
