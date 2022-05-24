@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import EditDate from "./EditDate";
 import { useAuth } from "../context/AuthContext";
 
+
 export default function Item({ item, index }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
@@ -19,7 +20,8 @@ export default function Item({ item, index }) {
   const [minDays, setMinDays] = useState(item.minDays);
   const [maxDays, setMaxDays] = useState(item.maxDays);
   const [date, setDate] = useState();
-  const { user } = useAuth()
+  const { user, loggedIn } = useAuth()
+  const [inList, setInList] = useState(false)
 
   function displayDays(days) {
     const date = calcDays(days);
@@ -99,6 +101,18 @@ export default function Item({ item, index }) {
       item: item.id,
     })
   }
+  function removeItem() {
+    setOpen(false)
+    axios.post("/users/removeItem", {
+      userId: user.uid,
+      item: item.id,
+    })
+  }
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    setInList(user.itemsArray.some(id => id == item.id))
+  }, [user])
 
   const list = [
     {
@@ -123,11 +137,12 @@ export default function Item({ item, index }) {
     //   key: 3,
     //   type: "delete",
     // },
+
     {
-      text: "add item",
-      action: addItem,
+      text: !inList ? "add item" : "remove item",
+      action: !inList ? addItem : removeItem,
       key: 5,
-      type: "add",
+      type: !inList ? "add" : "delete",
     }
   ];
 

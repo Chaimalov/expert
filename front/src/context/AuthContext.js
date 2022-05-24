@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     useEffect(() => {
-        if (!userDetails || !userPreferences || userDetails.uid == userPreferences.uid) return
+        if (!loggedIn || userDetails.uid == userPreferences.uid) return
         return addUser()
     }, [userDetails])
 
