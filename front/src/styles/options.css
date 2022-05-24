@@ -2,7 +2,7 @@
     --value: 85%;
     position: absolute;
     inset: 10px;
-    padding: .5em;
+    padding: .25em;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(2, minmax(0em, max-content));

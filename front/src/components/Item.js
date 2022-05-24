@@ -130,18 +130,18 @@ export default function Item({ item, index }) {
       action: editDate,
       key: 2,
     },
-    // {
-    //   text: "delete",
-    //   action: deleteItem,
-    //   key: 3,
-    //   type: "delete",
-    // },
     {
       text: inList ? "remove item" : "add item",
       action: inList ? removeItem : addItem,
       key: 5,
       type: inList ? "delete" : "add",
     },
+    // {
+    //   text: "delete",
+    //   action: deleteItem,
+    //   key: 3,
+    //   type: "delete",
+    // },
   ];
 
   function handleClick(state) {
