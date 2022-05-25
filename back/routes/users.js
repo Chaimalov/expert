@@ -23,5 +23,5 @@ route.post("/removeItem", async (req, res) => {
     await updateDoc(doc(db.users, req.body.userId), {
         itemsArray: arrayRemove(req.body.item)
     })
-    return res.json("item was remove")
+    return res.json("item was removed")
 })
