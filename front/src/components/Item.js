@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { IoEllipsisHorizontal } from "react-icons/io5";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { Options, EditDate } from "./index";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -35,6 +35,11 @@ export function Item({ item, index }) {
     return { days, months, years };
   }
 
+  function addEmoji() {
+    setOpenEmoji(false);
+    notify("would be added", types.ERROR);
+  }
+
   function handleEmoji(icon) {
     setOpenEmoji(false);
     setEmoji(icon);
@@ -44,20 +49,26 @@ export function Item({ item, index }) {
         icon,
       })
       .then(({ data }) => {
-        notify(data, types.SUCCESS)
+        notify(data, types.SUCCESS);
       });
   }
   function editEmoji() {
     setOpen(false);
     setOpenEmoji(true);
-    setIcons(
-      item.iconsList.map((icon) => ({
+    setIcons([
+      ...item.iconsList.map((icon) => ({
         text: icon.character,
         action: handleEmoji,
         key: icon.slug,
         send: icon.character,
-      }))
-    );
+      })),
+      {
+        text: <AiFillPlusCircle />,
+        action: addEmoji,
+        key: 90,
+        send: null,
+      },
+    ]);
   }
   function editDate() {
     setOpen(false);
@@ -86,27 +97,31 @@ export function Item({ item, index }) {
           id: item.id,
         })
         .then(({ data }) => {
-          notify(data, types.SUCCESS)
+          notify(data, types.SUCCESS);
         });
     }
   }
   function addItem() {
     setOpen(false);
-    axios.post("/users/addItem", {
-      userId: user.uid,
-      item: item.id,
-    }).then(({ data }) => {
-      notify(data, types.SUCCESS)
-    })
+    axios
+      .post("/users/addItem", {
+        userId: user.uid,
+        item: item.id,
+      })
+      .then(({ data }) => {
+        notify(data, types.SUCCESS);
+      });
   }
   function removeItem() {
     setOpen(false);
-    axios.post("/users/removeItem", {
-      userId: user.uid,
-      item: item.id,
-    }).then(({ data }) => {
-      notify(data, types.SUCCESS)
-    })
+    axios
+      .post("/users/removeItem", {
+        userId: user.uid,
+        item: item.id,
+      })
+      .then(({ data }) => {
+        notify(data, types.SUCCESS);
+      });
   }
 
   useEffect(() => {
@@ -146,7 +161,7 @@ export function Item({ item, index }) {
   ];
 
   const domRef = useClickOutside(() => {
-    setOpen(false);;
+    setOpen(false);
     setOpenEmoji(false);
     setOpenDate(false);
   });

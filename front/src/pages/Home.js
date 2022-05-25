@@ -3,9 +3,15 @@ import { useState, createRef, useEffect } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
-import toast from 'react-hot-toast';
-import { notify, types, categories } from "../utils"
-import { Category, CategoriesList, ProductsList, Button, Input } from "../components"
+import toast from "react-hot-toast";
+import { notify, types, categories } from "../utils";
+import {
+  Category,
+  CategoriesList,
+  ProductsList,
+  Button,
+  Input,
+} from "../components";
 
 export function Home() {
   const [name, setName] = useState("");
@@ -33,20 +39,20 @@ export function Home() {
   function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
-    const toastId = toast.loading('Loading...');
+    const toastId = toast.loading("Loading...");
     axios
       .post("/products/add", {
-        name,
+        name: name.toLowerCase().trim(),
         category,
         refrigerator,
       })
       .then(({ data }) => {
         e.target.reset();
-        notify(data.message, types.SUCCESS)
+        notify(data.message, types.SUCCESS);
         setFound(true);
       })
       .catch((error) => notify(error.response.data, types.ERROR))
-      .finally(() => toast.dismiss(toastId))
+      .finally(() => toast.dismiss(toastId));
   }
 
   function handleCancel(f) {
@@ -58,7 +64,7 @@ export function Home() {
     setName(searchRef.current.value);
     setFound(
       products.find((item) => item.name === searchRef.current.value) !==
-      undefined
+        undefined
     );
   }
 
@@ -119,4 +125,3 @@ export function Home() {
     </Transitions>
   );
 }
-
