@@ -16,7 +16,6 @@ export function Login() {
   async function signOut() {
     try {
       await logOut()
-
     } catch (error) {
       console.error(error)
     }
