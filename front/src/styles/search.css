@@ -15,6 +15,8 @@
     gap: 0;
 }
 
+.search {}
+
 .search:focus-within {
     border-color: var(--clr-primary-dark);
     box-shadow: 0 .5em 1em hsl(0, 0%, 88%);
@@ -30,6 +32,11 @@
 
 .search .input {
     margin: 0;
+}
+
+.search .input input::-webkit-search-cancel-button {
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .search .input input {

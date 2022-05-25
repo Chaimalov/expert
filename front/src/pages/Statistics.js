@@ -10,15 +10,13 @@ export default function Statistics() {
   const { products } = useProducts();
   const [category, setCategory] = useState();
   const [categoryData, setCategoryData] = useState();
-  const [noData, setNoData] = useState(true);
 
   useEffect(() => {
     if (!category || !products) return;
-    setNoData(false);
-    setCategoryData(() =>
+    setCategoryData(
       products.filter((item) => item.category.indexOf(category) !== -1)
     );
-  }, [category]);
+  }, [category, products]);
 
   return (
     <Transitions>

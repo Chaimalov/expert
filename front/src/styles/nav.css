@@ -12,7 +12,7 @@ nav {
 nav a {
     position: relative;
     text-decoration: none;
-    color: aliceblue;
+    color: white;
     transition: 150ms;
     font-size: 1.25em;
     line-height: 1;
@@ -33,10 +33,15 @@ nav .right a::before {
     z-index: -1;
 }
 
+nav a.active::before,
 nav a:focus::before,
 nav a:hover::before {
     transform-origin: left;
     transform: scaleX(1);
+}
+
+nav a.active::before {
+    background-color: white;
 }
 
 nav .right,

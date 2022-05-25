@@ -9,6 +9,9 @@ import Transitions from "../context/Transition";
 import ProductsList from "../components/ProductsList";
 import CategoriesList from "../components/CategoriesList";
 import { useProducts } from "../context/ProductsContext";
+import toast, { Toaster } from 'react-hot-toast';
+import { notify, types } from "../utils/notify"
+
 
 function Home() {
   const [name, setName] = useState("");
@@ -36,7 +39,7 @@ function Home() {
   function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
-
+    const toastId = toast.loading('Loading...');
     axios
       .post("/products/add", {
         name,
@@ -45,10 +48,11 @@ function Home() {
       })
       .then(({ data }) => {
         e.target.reset();
-        alert(data.message);
+        notify(data.message, types.SUCCESS)
         setFound(true);
       })
-      .catch((error) => console.error(error.response.data));
+      .catch((error) => notify(error.response.data, types.ERROR))
+      .finally(() => toast.dismiss(toastId))
   }
 
   function handleCancel(f) {
@@ -60,7 +64,7 @@ function Home() {
     setName(searchRef.current.value);
     setFound(
       products.find((item) => item.name === searchRef.current.value) !==
-        undefined
+      undefined
     );
   }
 
@@ -118,6 +122,7 @@ function Home() {
           </form>
         )}
       </div>
+      <Toaster />
     </Transitions>
   );
 }

@@ -48,7 +48,12 @@ route.get("/search/:category", async (req, res) => {
 })
 
 route.post("/delete", async (req, res) => {
-    return res.send(await deleteDoc(doc(db.products, req.body.id)))
+    try {
+        await deleteDoc(doc(db.products, req.body.id))
+        return res.json("item was deleted successfully")
+    } catch (err) {
+        return res.json(err)
+    }
 })
 
 route.post("/update/:id", async (req, res) => {

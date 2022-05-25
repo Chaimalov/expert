@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import EditDate from "./EditDate";
 import { useAuth } from "../context/AuthContext";
+import { Toaster } from 'react-hot-toast';
+import { notify, types } from "../utils/notify";
 
 export default function Item({ item, index }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
@@ -46,7 +48,7 @@ export default function Item({ item, index }) {
         icon,
       })
       .then(({ data }) => {
-        console.log(data);
+        notify(data, types.SUCCESS)
       });
   }
 
@@ -88,8 +90,8 @@ export default function Item({ item, index }) {
         .post("/products/delete", {
           id: item.id,
         })
-        .then(() => {
-          alert("deleted");
+        .then(({ data }) => {
+          notify(data, types.SUCCESS)
         });
     }
   }
@@ -98,14 +100,19 @@ export default function Item({ item, index }) {
     axios.post("/users/addItem", {
       userId: user.uid,
       item: item.id,
-    });
+    }).then(({ data }) => {
+      notify(data, types.SUCCESS)
+    })
   }
+
   function removeItem() {
     setOpen(false);
     axios.post("/users/removeItem", {
       userId: user.uid,
       item: item.id,
-    });
+    }).then(({ data }) => {
+      notify(data, types.SUCCESS)
+    })
   }
 
   useEffect(() => {
@@ -136,12 +143,12 @@ export default function Item({ item, index }) {
       key: 5,
       type: inList ? "delete" : "add",
     },
-    // {
-    //   text: "delete",
-    //   action: deleteItem,
-    //   key: 3,
-    //   type: "delete",
-    // },
+    {
+      text: "delete",
+      action: deleteItem,
+      key: 3,
+      type: "delete",
+    },
   ];
 
   function handleClick(state) {
@@ -184,6 +191,12 @@ export default function Item({ item, index }) {
           </h4>
         </div>
       </div>
+      <Toaster
+        toastOptions={{
+          style: {
+            boxShadow: "none"
+          }
+        }} />
     </motion.div>
   );
 }

@@ -16,7 +16,7 @@ route.post("/addItem", async (req, res) => {
     await updateDoc(doc(db.users, req.body.userId), {
         itemsArray: arrayUnion(req.body.item)
     })
-    return res.json("item was updated")
+    return res.json("item was added")
 })
 
 route.post("/removeItem", async (req, res) => {
