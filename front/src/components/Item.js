@@ -47,7 +47,6 @@ export function Item({ item, index }) {
         notify(data, types.SUCCESS)
       });
   }
-
   function editEmoji() {
     setOpen(false);
     setOpenEmoji(true);
@@ -79,7 +78,6 @@ export function Item({ item, index }) {
       },
     ]);
   }
-
   function deleteItem() {
     setOpen(false);
     if (window.confirm(`would you like to delete ${item.name}?`)) {
@@ -92,7 +90,6 @@ export function Item({ item, index }) {
         });
     }
   }
-
   function addItem() {
     setOpen(false);
     axios.post("/users/addItem", {
@@ -102,7 +99,6 @@ export function Item({ item, index }) {
       notify(data, types.SUCCESS)
     })
   }
-
   function removeItem() {
     setOpen(false);
     axios.post("/users/removeItem", {
@@ -148,7 +144,6 @@ export function Item({ item, index }) {
       type: "delete",
     },
   ];
-
 
   const domRef = useClickOutside(() => {
     setOpen(false);;
