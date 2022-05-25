@@ -172,7 +172,7 @@ export function Item({ item, index }) {
   });
 
   return (
-    <motion.div layout>
+    <motion.div layout transition={{ ease: "anticipate" }} >
       <div
         className="itemContainer"
         ref={domRef}
