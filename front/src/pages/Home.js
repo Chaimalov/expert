@@ -9,7 +9,7 @@ import Transitions from "../context/Transition";
 import ProductsList from "../components/ProductsList";
 import CategoriesList from "../components/CategoriesList";
 import { useProducts } from "../context/ProductsContext";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { notify, types } from "../utils/notify"
 
 
@@ -122,7 +122,6 @@ function Home() {
           </form>
         )}
       </div>
-      <Toaster />
     </Transitions>
   );
 }

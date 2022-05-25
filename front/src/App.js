@@ -2,6 +2,7 @@ import "./styles/App.css";
 import React from "react";
 import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 
 import Home from "./pages/Home";
 import Statistics from "./pages/Statistics";
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/product/:id" element={<Product />} />
           </Routes>
+          <Toaster />
         </AnimatePresence>
       </ProductsProvider>
     </div>

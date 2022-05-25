@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { colorFromEmoji } from "../utils/color";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose } from "react-icons/ai";
@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import EditDate from "./EditDate";
 import { useAuth } from "../context/AuthContext";
-import { Toaster } from 'react-hot-toast';
 import { notify, types } from "../utils/notify";
 
 export default function Item({ item, index }) {
@@ -83,8 +82,9 @@ export default function Item({ item, index }) {
       },
     ]);
   }
+
   function deleteItem() {
-    handleClick();
+    setOpen(false);
     if (window.confirm(`would you like to delete ${item.name}?`)) {
       axios
         .post("/products/delete", {
@@ -95,6 +95,7 @@ export default function Item({ item, index }) {
         });
     }
   }
+
   function addItem() {
     setOpen(false);
     axios.post("/users/addItem", {
@@ -123,7 +124,7 @@ export default function Item({ item, index }) {
   const list = [
     {
       text: <AiOutlineClose className="ion" />,
-      action: handleClick,
+      action: () => setOpen(false),
       key: 4,
       type: "ion",
     },
@@ -151,52 +152,45 @@ export default function Item({ item, index }) {
     },
   ];
 
-  function handleClick(state) {
-    setOpen(state);
-  }
 
   const domRef = useClickOutside(() => {
-    handleClick(false);
+    setOpen(false);;
     setOpenEmoji(false);
     setOpenDate(false);
   });
 
   return (
-    <motion.div layout>
-      <div
-        className={"itemContainer"}
-        ref={domRef}
-        style={{
-          "--hue": (emoji && colorFromEmoji(emoji)) || 50,
-          "--i": index,
-        }}
-      >
-        {<Options type="emoji" open={OpenEmoji} list={icons} />}
-        <Options open={OpenDate} list={date} type="date" />
-        <Options open={open} list={list} />
-        <div className="item">
-          <div className="top">
-            {emoji && <div className="icon">{emoji}</div>}
-            <button onClick={() => handleClick(true)} className="reset">
-              <IoEllipsisHorizontal className="ion" />
-            </button>
+    <>
+      <motion.div layout>
+        <div
+          className={"itemContainer"}
+          ref={domRef}
+          style={{
+            "--hue": (emoji && colorFromEmoji(emoji)) || 50,
+            "--i": index,
+          }}
+        >
+          {<Options type="emoji" open={OpenEmoji} list={icons} />}
+          <Options open={OpenDate} list={date} type="date" />
+          <Options open={open} list={list} />
+          <div className="item">
+            <div className="top">
+              {emoji && <div className="icon">{emoji}</div>}
+              <button onClick={() => setOpen(true)} className="reset">
+                <IoEllipsisHorizontal className="ion" />
+              </button>
+            </div>
+            <Link to={`/product/${item.name}`} state={{ ...item }}>
+              <h2>{item.name}</h2>
+            </Link>
+            <h3>{item.category} </h3>
+            <h4>
+              {displayDays(minDays)} - {displayDays(maxDays)}{" "}
+              <span>{item.refrigerator && "❄️"}</span>
+            </h4>
           </div>
-          <Link to={`/product/${item.name}`} state={{ ...item }}>
-            <h2>{item.name}</h2>
-          </Link>
-          <h3>{item.category} </h3>
-          <h4>
-            {displayDays(minDays)} - {displayDays(maxDays)}{" "}
-            <span>{item.refrigerator && "❄️"}</span>
-          </h4>
         </div>
-      </div>
-      <Toaster
-        toastOptions={{
-          style: {
-            boxShadow: "none"
-          }
-        }} />
-    </motion.div>
+      </motion.div>
+    </>
   );
 }
