@@ -4,14 +4,11 @@ import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 
-import Home from "./pages/Home";
-import Statistics from "./pages/Statistics";
-import Account from "./pages/Account";
-import Product from "./pages/Product";
-import Nav from "./components/Nav";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { Home, Statistics, Account, MyList, Product } from "./pages";
+
+import { Nav } from "./components";
+import { useAuth } from "./context/AuthContext";
 import { ProductsProvider } from "./context/ProductsContext";
-import MyList from "./pages/MyList";
 
 export default function App() {
   const location = useLocation();
@@ -19,8 +16,8 @@ export default function App() {
 
   return (
     <div className="App">
+      <Nav />
       <ProductsProvider>
-        <Nav />
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
@@ -29,8 +26,8 @@ export default function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/product/:id" element={<Product />} />
           </Routes>
-          <Toaster />
         </AnimatePresence>
+        <Toaster />
       </ProductsProvider>
     </div>
   );

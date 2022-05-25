@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa"
-import Login from './Login';
+import { Login } from './Login';
 import { useAuth } from '../context/AuthContext';
 
 
-export default function Nav() {
+export function Nav() {
 
     const { user, loggedIn } = useAuth()
 
@@ -18,7 +18,10 @@ export default function Nav() {
             </div>
             <div className='left'>
                 <Login />
-                {user?.photoURL && <NavLink to="/account">{<img src={user.photoURL} />}</NavLink>}
+                {!loggedIn
+                    ? <></>
+                    : user?.photoURL ? <NavLink to="/account"><img src={user.photoURL} /></NavLink>
+                        : <FaUserAlt className='ion' />}
             </div>
         </nav>
     )

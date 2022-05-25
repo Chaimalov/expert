@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Category from "./Category";
+import { Category } from "./Category";
 
-export default function CategoriesList({ categories, onClick, group }) {
+export function CategoriesList({ categories, onClick, group }) {
   return (
     <div className="section">
       {categories.map((category) => (

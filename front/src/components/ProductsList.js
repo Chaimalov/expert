@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Item from "./Item";
 
-export default function ProductsList({ list }) {
+export function ProductsList({ list }) {
   return (
     <motion.div layout className="list">
       {list &&

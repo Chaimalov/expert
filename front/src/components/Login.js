@@ -1,10 +1,7 @@
-import React, { createRef, useState, useEffect, useContext } from 'react'
-import { firebase, createUserWithEmailAndPassword } from "../firebase";
-import { AuthProvider, useAuth } from '../context/AuthContext';
-import { GoogleButton } from "react-google-button"
-import Button from "./Button"
+import { useAuth } from '../context/AuthContext';
+import { Button } from "./Button"
 
-export default function Login() {
+export function Login() {
 
   const { signInWithGoogle, user, logOut } = useAuth()
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from "../context/AuthContext"
 
 
-export default function Account() {
+export function Account() {
 
     const { user } = useAuth()
     return (

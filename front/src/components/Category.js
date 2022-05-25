@@ -1,6 +1,6 @@
 import { colorFromEmoji } from "../utils/color"
 
-export default function Category({ group, category, value, icon, onClick }) {
+export function Category({ group, category, value, icon, onClick }) {
 
     const color = colorFromEmoji(icon)
     return (

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Button({ value, danger, secondary, type, onClick }) {
+export function Button({ value, danger, secondary, type, onClick }) {
     return (
         <button
             className={"btn " + (danger ? "danger" : secondary ? "secondary" : "")}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
-import ProductsList from "../components/ProductsList";
+import { ProductsList } from "../components";
 
-export default function MyList() {
+export function MyList() {
     const { user, loggedIn } = useAuth();
     const { products } = useProducts();
     const [items, setItems] = useState();

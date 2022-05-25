@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Category from "../components/Category";
+import { Category } from "../components";
 import categories from "../utils/categories";
-import { IoBasketOutline } from "react-icons/io5";
 import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
-import ProductsList from "../components/ProductsList";
+import { ProductsList } from "../components";
 
-export default function Statistics() {
+export function Statistics() {
   const { products } = useProducts();
   const [category, setCategory] = useState();
   const [categoryData, setCategoryData] = useState();

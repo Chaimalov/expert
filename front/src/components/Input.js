@@ -1,6 +1,6 @@
-import React from 'react'
+import { forwardRef } from 'react'
 
-const Input = React.forwardRef(({ name, type, placeholder, onChange }, ref) => (
+export const Input = forwardRef(({ name, type, placeholder, onChange }, ref) => (
     <div className='input'>
 
         <label htmlFor={name}><h3>{name}:</h3></label>
@@ -15,5 +15,5 @@ const Input = React.forwardRef(({ name, type, placeholder, onChange }, ref) => (
     </div>
 ))
 
-export default Input
+
 
