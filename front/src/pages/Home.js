@@ -39,7 +39,7 @@ export function Home() {
   function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
-    const toastId = toast.loading("Loading...");
+    const toastId = toast.loading("sending data...");
     axios
       .post("/products/add", {
         name: name.toLowerCase().trim(),
