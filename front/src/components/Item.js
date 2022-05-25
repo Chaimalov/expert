@@ -17,8 +17,8 @@ export function Item({ item, index }) {
   const [minDays, setMinDays] = useState(item.minDays);
   const [maxDays, setMaxDays] = useState(item.maxDays);
   const [date, setDate] = useState();
-  const { user, loggedIn } = useAuth();
   const [inList, setInList] = useState(false);
+  const { user, loggedIn } = useAuth();
 
   function displayDays(days) {
     const date = calcDays(days);
@@ -52,6 +52,7 @@ export function Item({ item, index }) {
         notify(data, types.SUCCESS);
       });
   }
+
   function editEmoji() {
     setOpen(false);
     setOpenEmoji(true);
@@ -70,6 +71,7 @@ export function Item({ item, index }) {
       },
     ]);
   }
+
   function editDate() {
     setOpen(false);
     setOpenEmoji(false);
@@ -89,6 +91,7 @@ export function Item({ item, index }) {
       },
     ]);
   }
+
   function deleteItem() {
     setOpen(false);
     if (window.confirm(`would you like to delete ${item.name}?`)) {
@@ -101,6 +104,7 @@ export function Item({ item, index }) {
         });
     }
   }
+
   function addItem() {
     setOpen(false);
     axios
@@ -112,6 +116,7 @@ export function Item({ item, index }) {
         notify(data, types.SUCCESS);
       });
   }
+
   function removeItem() {
     setOpen(false);
     axios
