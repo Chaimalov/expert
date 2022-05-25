@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useState, createRef, useEffect } from "react";
-import categories from "../utils/categories";
 import { BiSearchAlt2 } from "react-icons/bi";
 import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
 import toast from 'react-hot-toast';
-import { notify, types } from "../utils/notify"
+import { notify, types, categories } from "../utils"
 import { Category, CategoriesList, ProductsList, Button, Input } from "../components"
 
 export function Home() {

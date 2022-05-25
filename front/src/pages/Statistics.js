@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Category } from "../components";
-import categories from "../utils/categories";
+import { categories } from "../utils/categories";
 import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
 import { ProductsList } from "../components";

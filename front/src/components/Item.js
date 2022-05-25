@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { colorFromEmoji } from "../utils/color";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose } from "react-icons/ai";
-import Options from "./Options";
-import axios from "axios";
-import { useClickOutside } from "../utils/useClickOutside";
+import { Options, EditDate } from "./index";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import EditDate from "./EditDate";
 import { useAuth } from "../context/AuthContext";
-import { notify, types } from "../utils/notify";
+import { notify, types, useClickOutside, colorFromEmoji } from "../utils";
 
-export default function Item({ item, index }) {
+export function Item({ item, index }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
@@ -160,37 +157,35 @@ export default function Item({ item, index }) {
   });
 
   return (
-    <>
-      <motion.div layout>
-        <div
-          className={"itemContainer"}
-          ref={domRef}
-          style={{
-            "--hue": (emoji && colorFromEmoji(emoji)) || 50,
-            "--i": index,
-          }}
-        >
-          {<Options type="emoji" open={OpenEmoji} list={icons} />}
-          <Options open={OpenDate} list={date} type="date" />
-          <Options open={open} list={list} />
-          <div className="item">
-            <div className="top">
-              {emoji && <div className="icon">{emoji}</div>}
-              <button onClick={() => setOpen(true)} className="reset">
-                <IoEllipsisHorizontal className="ion" />
-              </button>
-            </div>
-            <Link to={`/product/${item.name}`} state={{ ...item }}>
-              <h2>{item.name}</h2>
-            </Link>
-            <h3>{item.category} </h3>
-            <h4>
-              {displayDays(minDays)} - {displayDays(maxDays)}{" "}
-              <span>{item.refrigerator && "❄️"}</span>
-            </h4>
+    <motion.div layout>
+      <div
+        className="itemContainer"
+        ref={domRef}
+        style={{
+          "--hue": (emoji && colorFromEmoji(emoji)) || 50,
+          "--i": index,
+        }}
+      >
+        {<Options type="emoji" open={OpenEmoji} list={icons} />}
+        <Options open={OpenDate} list={date} type="date" />
+        <Options open={open} list={list} />
+        <div className="item">
+          <div className="top">
+            {emoji && <div className="icon">{emoji}</div>}
+            <button onClick={() => setOpen(true)} className="reset">
+              <IoEllipsisHorizontal className="ion" />
+            </button>
           </div>
+          <Link to={`/product/${item.name}`} state={{ ...item }}>
+            <h2>{item.name}</h2>
+          </Link>
+          <h3>{item.category} </h3>
+          <h4>
+            {displayDays(minDays)} - {displayDays(maxDays)}{" "}
+            <span>{item.refrigerator && "❄️"}</span>
+          </h4>
         </div>
-      </motion.div>
-    </>
+      </div>
+    </motion.div>
   );
 }

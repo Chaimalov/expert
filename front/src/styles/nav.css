@@ -5,6 +5,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     top: 0;
+    gap: 1em;
     z-index: 999;
     padding-inline: 2em;
 }
@@ -18,7 +19,7 @@ nav a {
     line-height: 1;
 }
 
-nav .right a::before {
+nav a:not(:last-of-type)::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -44,11 +45,8 @@ nav a.active::before {
     background-color: white;
 }
 
-nav .right,
-nav .left {
-    display: flex;
-    align-items: center;
-    gap: 1.5em;
+nav .sep {
+    margin: auto;
 }
 
 nav div span {

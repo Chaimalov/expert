@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { GoTriangleUp, GoTriangleDown } from "react-icons/go"
 
-export default function EditDate({ days, value, onChange }) {
+export function EditDate({ days, value, onChange }) {
     const numberRef = useRef()
     const [number, setNumber] = useState(value)
 

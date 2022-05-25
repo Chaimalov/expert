@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Options({ open, list, type }) {
+export function Options({ open, list, type }) {
 
     return (
         <div className={'options' + (open ? " open" : "")}>

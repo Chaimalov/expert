@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Item from "./Item";
+import { Item } from "./Item";
 
 export function ProductsList({ list }) {
   return (

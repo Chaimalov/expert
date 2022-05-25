@@ -11,18 +11,15 @@ export function Nav() {
 
     return (
         <nav>
-            <div className='right'>
-                <NavLink to="/">home</NavLink>
-                <NavLink to="/statistics">statistics</NavLink>
-                {loggedIn && <NavLink to="/mylist">My list</NavLink>}
-            </div>
-            <div className='left'>
-                <Login />
-                {!loggedIn
-                    ? <></>
-                    : user?.photoURL ? <NavLink to="/account"><img src={user.photoURL} /></NavLink>
-                        : <FaUserAlt className='ion' />}
-            </div>
+            <NavLink to="/">home</NavLink>
+            <NavLink to="/statistics">statistics</NavLink>
+            {loggedIn && <NavLink to="/mylist">My list</NavLink>}
+            <div className='sep'></div>
+            <Login />
+            {!loggedIn
+                ? <></>
+                : user?.photoURL ? <NavLink to="/account"><img src={user.photoURL} /></NavLink>
+                    : <FaUserAlt className='ion' />}
         </nav>
     )
 }

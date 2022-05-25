@@ -1,5 +1,3 @@
-
-
 export function colorFromEmoji(icon) {
     const canvas = document.createElement("canvas")
     canvas.width = 30;

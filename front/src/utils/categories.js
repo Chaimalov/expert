@@ -1,4 +1,4 @@
-const categories = [
+export const categories = [
     { name: "fruits", icon: "🍉" },
     { name: "vegetables", icon: "🥑" },
     { name: "dairy", icon: "🧀" },
@@ -6,4 +6,3 @@ const categories = [
     { name: "pantry", icon: "🥫" },
 ]
 
-export default categories
