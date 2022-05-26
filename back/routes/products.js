@@ -10,6 +10,7 @@ import {
   query,
   where,
 } from "firebase/firestore/lite";
+import { searchByName, searchByCategory } from "../searchEmoji.js";
 
 const route = express.Router();
 export default route;
@@ -22,7 +23,7 @@ route.post("/add", async (req, res) => {
 
   const category = req.body.category.replace(" ", "_");
   // Add a new document with a generated id.
-  const iconsList = await getEmoji(req.body.name);
+  const iconsList = await getEmoji(req.body.name, category);
   const docRef = await addDoc(db.products, {
     name: req.body.name,
     category: category,
@@ -134,21 +135,8 @@ const categoryDays = {
   },
 };
 
-async function getEmoji(name) {
-  let response = await axios.get("https://emoji-api.com/emojis", {
-    params: {
-      search: name,
-      access_key: "b8441a54d10349910152d879cd68f21074ee4482",
-    },
-  });
-  if (response.data) {
-    return response.data.splice(0, response.data.length / 2);
-  }
-
-  response = await axios.get("https://emoji-api.com/categories/food-drink", {
-    params: {
-      access_key: "b8441a54d10349910152d879cd68f21074ee4482",
-    },
-  });
-  return response.data.splice(0, response.data.length / 2);
+function getEmoji(name, category) {
+  const resName = searchByName(name)
+  if (resName.length) return resName
+  return searchByCategory(category)
 }

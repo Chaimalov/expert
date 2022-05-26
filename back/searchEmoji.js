@@ -14,9 +14,11 @@ export function searchByCategory(category) {
     return emojis.filter(emoji => emoji.subGroup.match(reg))
 }
 
+
 function levenshtein(s, t) {
     if (!s.length) return t.length;
     if (!t.length) return s.length;
+
 
     return Math.min(
         levenshtein(s.substring(1), t) + 1,

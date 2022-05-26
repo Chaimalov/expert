@@ -64,7 +64,7 @@ export function Home() {
     setName(searchRef.current.value);
     setFound(
       products.find((item) => item.name === searchRef.current.value) !==
-        undefined
+      undefined
     );
   }
 
