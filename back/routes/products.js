@@ -136,7 +136,7 @@ const categoryDays = {
 };
 
 function getEmoji(name, category) {
-  const resName = searchByName(name)
-  if (resName.length) return resName
-  return searchByCategory(category)
+  const resName = searchByName(name, category);
+  if (resName.length) return resName;
+  return searchByCategory(category);
 }
