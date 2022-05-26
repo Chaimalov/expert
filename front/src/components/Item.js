@@ -50,7 +50,10 @@ export function Item({ item, index }) {
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
-      });
+      })
+      .catch(({data}) => {
+        notify(data, types.ERROR);
+      })
   }
 
   function editEmoji() {

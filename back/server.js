@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors"
+import { searchByName } from "./searchEmoji.js";
 
 import productsRoute from "./routes/products.js"
 import usersRoute from "./routes/users.js"
@@ -14,5 +15,9 @@ app.use("/products", productsRoute)
 app.use("/users", usersRoute)
 
 app.listen(PORT, () => console.log("listening on PORT " + PORT))
+
+app.get("/", (req, res) => {
+    res.send(searchByName)
+})
 
 
