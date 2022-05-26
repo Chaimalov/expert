@@ -17,7 +17,7 @@ app.use("/users", usersRoute)
 app.listen(PORT, () => console.log("listening on PORT " + PORT))
 
 app.get("/", (req, res) => {
-    res.send(searchByName)
+    res.send(searchByName(req.query.s))
 })
 
 
