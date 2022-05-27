@@ -51,7 +51,7 @@ export function Item({ item, index }) {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({data}) => {
+      .catch(({ data }) => {
         notify(data, types.ERROR);
       })
   }
@@ -134,7 +134,7 @@ export function Item({ item, index }) {
 
   useEffect(() => {
     if (!loggedIn) return;
-    setInList(user?.itemsArray?.some((id) => id == item.id));
+    setInList(user?.itemsArray?.some((id) => id === item.id));
   }, [user?.itemsArray]);
 
   const list = [
