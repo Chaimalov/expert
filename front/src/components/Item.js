@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
@@ -18,6 +18,7 @@ export function Item({ item, index }) {
   const [date, setDate] = useState();
   const [inList, setInList] = useState(false);
   const { user, loggedIn } = useAuth();
+  const dateRef = useRef(expiryDate)
 
   function displayDays(days) {
     const date = calcDays(days);
@@ -80,13 +81,22 @@ export function Item({ item, index }) {
     setOpenDate(true);
     setDate([
       {
-        text: <EditDate days="expiryDate" value={expiryDate} onChange={setExpiryDate
-        } />,
+        text: <EditDate days="expiry date" value={expiryDate} ref={dateRef} />,
         action: null,
         key: 1,
         send: null,
-      }
+      },
+      {
+        text: "save",
+        action: () => saveDate(),
+        key: 2,
+      },
     ]);
+  }
+
+  function saveDate() {
+    setOpenDate(false)
+    setExpiryDate(dateRef.current.value)
   }
 
   function deleteItem() {
@@ -128,7 +138,7 @@ export function Item({ item, index }) {
 
   useEffect(() => {
     if (!loggedIn) return;
-    setInList(user?.itemsArray?.some((id) => id === item.id));
+    setInList(Object.keys(user.itemsArray).some((id) => id === item.id));
   }, [user?.itemsArray]);
 
   const list = [

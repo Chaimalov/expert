@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, forwardRef } from 'react'
 import { GoTriangleUp, GoTriangleDown } from "react-icons/go"
 
-export function EditDate({ days, value, onChange }) {
+export const EditDate = forwardRef(({ days, value }, ref) => {
     const numberRef = useRef()
     const [number, setNumber] = useState(value)
 
     function updateNumber(num) {
-        const current = parseInt(numberRef.current.value) + num
+        const current = parseInt(ref.current.value) + num
         return current < 1 ? 1 : current
     }
 
@@ -19,26 +19,23 @@ export function EditDate({ days, value, onChange }) {
             <div className='num-input-container'>
                 <input
                     min="1"
-                    ref={numberRef}
+                    ref={ref}
                     type="number"
                     className='date'
                     value={number}
                     onChange={() => {
-                        setNumber(numberRef.current.value)
-                        onChange(numberRef.current.value)
+                        setNumber(ref.current.value)
                     }}
                 />
                 <div className='arrows'>
                     <GoTriangleUp onClick={() => {
                         setNumber(updateNumber(+1))
-                        onChange(updateNumber(+1))
                     }} />
                     <GoTriangleDown onClick={() => {
                         setNumber(updateNumber(-1))
-                        onChange(updateNumber(-1))
                     }} />
                 </div>
             </div>
         </div>
     )
-}
+})

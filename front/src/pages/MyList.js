@@ -10,8 +10,9 @@ export function MyList() {
 
   useMemo(() => {
     if (!loggedIn) return;
+
     setItems(
-      products.filter((item) => user.itemsArray.some((list) => list == item.id))
+      products.filter((item) => Object.keys(user.itemsArray).some((list) => list == item.id))
     );
   }, [user, products]);
 
