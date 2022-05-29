@@ -20,29 +20,29 @@ export function AuthProvider({ children }) {
   const [userPreferences, setUserPreferences] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
+  function addUser() {
+    axios.post("/users/create", {
+      id: userDetails.uid,
+      name: userDetails.displayName,
+    });
+  }
+
   useEffect(() => {
     if (!userDetails) return;
     const checkExist = async () => {
       const doc = await getDoc(database.users, userDetails.uid);
       if (!doc.exists()) addUser()
-      setUserPreferences({ ...doc.data(), uid: doc.id });
     }
     return () => checkExist()
   }, [userDetails]);
 
-  function addUser() {
-    axios.post("/users/create", {
-      id: userDetails?.uid,
-      name: userDetails?.displayName,
-    });
-  }
   useEffect(() => {
     if (!userDetails) return;
     const unsubscribe = onSnapshot(doc(database.users, userDetails.uid), (doc) => {
       setUserPreferences({ ...doc.data(), uid: doc.id });
     })
     return () => unsubscribe()
-  })
+  }, [userDetails])
 
   function logOut() {
     signOut(auth);

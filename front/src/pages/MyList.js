@@ -9,7 +9,7 @@ export function MyList() {
   const [items, setItems] = useState();
 
   useMemo(() => {
-    if (!loggedIn || !user.itemsArray) return;
+    if (!loggedIn) return;
     setItems(
       products.filter((item) => user.itemsArray.some((list) => list == item.id))
     );
