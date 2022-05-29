@@ -22,20 +22,15 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!userDetails) return;
-    async function checkExist() {
-
-      const userRef = doc(database.users, userDetails.uid)
-      const snapshot = await getDoc(userRef);
-
-      if (snapshot.exists)
-        setUserPreferences({ ...snapshot.data(), uid: snapshot.id });
-      else addUser()
+    const checkExist = async () => {
+      const doc = await getDoc(database.users, userDetails.uid);
+      if (!doc.exists()) addUser()
+      setUserPreferences({ ...doc.data(), uid: doc.id });
     }
     return () => checkExist()
-  });
+  }, [userDetails]);
 
   function addUser() {
-
     axios.post("/users/create", {
       id: userDetails?.uid,
       name: userDetails?.displayName,
@@ -48,6 +43,7 @@ export function AuthProvider({ children }) {
     })
     return () => unsubscribe()
   })
+
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
