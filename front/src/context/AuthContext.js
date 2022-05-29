@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, database } from "../firebase";
 import axios from "axios";
-import { onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, doc, getDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 function signInWithGoogle() {
@@ -22,22 +22,32 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!userDetails) return;
-    const unsubscribe = onSnapshot(
-      doc(database.users, userDetails.uid),
-      (doc) => {
-        setUserPreferences({...doc.data(), uid: doc.id });
-      }
-    );
+    async function checkExist() {
 
-    return () => unsubscribe();
-  }, [userDetails]);
+      const userRef = doc(database.users, userDetails.uid)
+      const snapshot = await getDoc(userRef);
+
+      if (snapshot.exists)
+        setUserPreferences({ ...snapshot.data(), uid: snapshot.id });
+      else addUser()
+    }
+    return () => checkExist()
+  });
 
   function addUser() {
+
     axios.post("/users/create", {
       id: userDetails?.uid,
       name: userDetails?.displayName,
     });
   }
+  useEffect(() => {
+    if (!userDetails) return;
+    const unsubscribe = onSnapshot(doc(database.users, userDetails.uid), (doc) => {
+      setUserPreferences({ ...doc.data(), uid: doc.id });
+    })
+    return () => unsubscribe()
+  })
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
@@ -49,10 +59,6 @@ export function AuthProvider({ children }) {
     });
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    if() addUser()
-  }, [userDetails]);
 
   const user = {
     ...userDetails,
