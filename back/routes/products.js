@@ -28,9 +28,8 @@ route.post("/add", async (req, res) => {
     name: req.body.name,
     category: category,
     iconsList: iconsList,
+    expiryDate: categoryDays[category].expiryDate,
     icon: iconsList[0].character,
-    minDays: categoryDays[category].minDays,
-    maxDays: categoryDays[category].maxDays,
     supportRate: 1,
     createdBy: "",
     refrigerator: req.body.refrigerator,
@@ -106,32 +105,25 @@ async function checkExist(item) {
 
 const categoryDays = {
   fruits: {
-    minDays: 4,
-    maxDays: 30,
+    expiryDate: 30,
   },
   vegetables: {
-    minDays: 1,
-    maxDays: 14,
+    expiryDate: 14,
   },
   dairy: {
-    minDays: 7,
-    maxDays: 10,
+    expiryDate: 10,
   },
   meat: {
-    minDays: 120,
-    maxDays: 360,
+    expiryDate: 360,
   },
   pantry: {
-    minDays: 240,
-    maxDays: 360,
+    expiryDate: 360,
   },
   wine: {
-    minDays: 720,
-    maxDays: 1855,
+    expiryDate: 1855,
   },
   ice_cream: {
-    minDays: 1,
-    maxDays: 45,
+    expiryDate: 45,
   },
 };
 

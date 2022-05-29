@@ -8,7 +8,8 @@ export default route
 
 route.post("/create", async (req, res) => {
     const docRef = await setDoc(doc(db.users, req.body.id), {
-        name: req.body.name
+        name: req.body.name,
+        itemsArray: [],
     })
 })
 

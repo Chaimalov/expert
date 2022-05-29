@@ -16,5 +16,5 @@ export function MyList() {
   }, [user, products]);
 
   if (items) return <ProductsList list={items} />;
-  return <div></div>;
+  return <div>my list</div>;
 }

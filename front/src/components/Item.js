@@ -14,8 +14,7 @@ export function Item({ item, index }) {
   const [open, setOpen] = useState(false);
   const [icons, setIcons] = useState();
   const [emoji, setEmoji] = useState(item.icon);
-  const [minDays, setMinDays] = useState(item.minDays);
-  const [maxDays, setMaxDays] = useState(item.maxDays);
+  const [expiryDate, setExpiryDate] = useState(item.expiryDate);
   const [date, setDate] = useState();
   const [inList, setInList] = useState(false);
   const { user, loggedIn } = useAuth();
@@ -51,7 +50,7 @@ export function Item({ item, index }) {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({data}) => {
+      .catch(({ data }) => {
         notify(data, types.ERROR);
       })
   }
@@ -81,17 +80,12 @@ export function Item({ item, index }) {
     setOpenDate(true);
     setDate([
       {
-        text: <EditDate days="minDays" value={minDays} onChange={setMinDays} />,
+        text: <EditDate days="expiryDate" value={expiryDate} onChange={setExpiryDate
+        } />,
         action: null,
         key: 1,
         send: null,
-      },
-      {
-        text: <EditDate days="maxDays" value={maxDays} onChange={setMaxDays} />,
-        action: null,
-        key: 2,
-        send: null,
-      },
+      }
     ]);
   }
 
@@ -199,7 +193,7 @@ export function Item({ item, index }) {
           </Link>
           <h3>{item.category} </h3>
           <h4>
-            {displayDays(minDays)} - {displayDays(maxDays)}{" "}
+            {displayDays(expiryDate)}{" "}
             <span>{item.refrigerator && "❄️"}</span>
           </h4>
         </div>
