@@ -23,15 +23,18 @@ export function Item({ item, index }) {
   function displayDays(days) {
     const date = calcDays(days);
     if (date.years) return date.years + (date.years > 1 ? " years" : " year");
-    if (date.months)
+    if (date.months) {
+      if (date.days > 15) date.months++
       return date.months + (date.months > 1 ? " months" : " month");
-    if (date.days) return date.days + (date.days > 1 ? " days" : " day");
+    }
+    return date.days + (date.days > 1 ? " days" : " day");
   }
 
   function calcDays(date) {
     const days = parseInt(date % 30);
-    const months = parseInt((date / 30) % 12);
+    let months = parseInt((date / 30) % 12);
     const years = parseInt(date / 30 / 12);
+
     return { days, months, years };
   }
 
@@ -43,28 +46,18 @@ export function Item({ item, index }) {
   function handleEmoji(icon) {
     setOpenEmoji(false);
     setEmoji(icon);
-    axios
-      .post("/products/update/:id", {
-        id: item.id,
-        icon,
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ data }) => {
-        notify(data, types.ERROR);
-      })
+    addItem(icon)
   }
 
   function editEmoji() {
     setOpen(false);
     setOpenEmoji(true);
     setIcons([
-      ...item.iconsList.map((icon) => ({
-        text: icon.character,
+      ...item.emojiList.map((emoji) => ({
+        text: emoji.character,
         action: handleEmoji,
-        key: icon.slug,
-        send: icon.character,
+        key: emoji.slug,
+        send: emoji.character,
       })),
       {
         text: <AiFillPlusCircle />,
@@ -97,6 +90,7 @@ export function Item({ item, index }) {
   function saveDate() {
     setOpenDate(false)
     setExpiryDate(dateRef.current.value)
+    addItem()
   }
 
   function deleteItem() {
@@ -112,14 +106,14 @@ export function Item({ item, index }) {
     }
   }
 
-  function addItem() {
+  function addItem(icon = emoji) {
     setOpen(false);
     axios
       .post("/users/addItem", {
         userId: user.uid,
         item: item.id,
         days: expiryDate,
-        emoji: emoji,
+        emoji: icon,
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
