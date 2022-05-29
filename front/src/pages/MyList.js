@@ -9,10 +9,12 @@ export function MyList() {
   const [items, setItems] = useState();
 
   useMemo(() => {
-    if (!loggedIn) return;
-
+    if (!loggedIn || !user.itemsArray) return;
+    const list = products.filter((item) => Object.keys(user.itemsArray).some((list) => list == item.id))
     setItems(
-      products.filter((item) => Object.keys(user.itemsArray).some((list) => list == item.id))
+      list.map(item => (
+        { ...item, ...user.itemsArray[item.id] }
+      ))
     );
   }, [user, products]);
 

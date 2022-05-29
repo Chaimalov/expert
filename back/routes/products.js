@@ -27,9 +27,9 @@ route.post("/add", async (req, res) => {
   const docRef = await addDoc(db.products, {
     name: req.body.name,
     category: category,
-    iconsList: iconsList,
-    expiryDate: categoryDays[category].expiryDate,
-    icon: iconsList[0].character,
+    emojiList: iconsList,
+    expiryDays: categoryDays[category].expiryDate,
+    emoji: iconsList[0].character,
     supportRate: 1,
     createdBy: "",
     refrigerator: req.body.refrigerator,

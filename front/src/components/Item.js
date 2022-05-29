@@ -13,8 +13,8 @@ export function Item({ item, index }) {
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
   const [icons, setIcons] = useState();
-  const [emoji, setEmoji] = useState(item.icon);
-  const [expiryDate, setExpiryDate] = useState(item.expiryDate);
+  const [emoji, setEmoji] = useState(item.emoji);
+  const [expiryDate, setExpiryDate] = useState(item.expiryDays);
   const [date, setDate] = useState();
   const [inList, setInList] = useState(false);
   const { user, loggedIn } = useAuth();
@@ -118,9 +118,12 @@ export function Item({ item, index }) {
       .post("/users/addItem", {
         userId: user.uid,
         item: item.id,
+        days: expiryDate,
+        emoji: emoji,
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
+        console.log(user.itemsArray)
       });
   }
 
@@ -137,9 +140,9 @@ export function Item({ item, index }) {
   }
 
   useEffect(() => {
-    if (!loggedIn) return;
+    if (!loggedIn || !user.itemsArray) return;
     setInList(Object.keys(user.itemsArray).some((id) => id === item.id));
-  }, [user?.itemsArray]);
+  }, [user.itemsArray]);
 
   const list = [
     {

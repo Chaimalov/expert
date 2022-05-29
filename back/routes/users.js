@@ -9,7 +9,7 @@ export default route
 route.post("/create", async (req, res) => {
     const docRef = await setDoc(doc(db.users, req.body.id), {
         name: req.body.name,
-        itemsArray: [],
+        itemsArray: {},
     })
 })
 
@@ -27,9 +27,8 @@ route.post("/addItem", async (req, res) => {
         itemsArray: {
             [req.body.item]: {
                 id: req.body.item,
-                date: "",
-                emoji: "",
-                refrigerator: "",
+                expiryDays: req.body.days,
+                emoji: req.body.emoji,
                 createdAt: serverTimestamp()
             }
         }
