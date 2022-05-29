@@ -129,14 +129,6 @@ export const emojis = {
       subGroup: "food-fruit",
     },
     {
-      slug: "tomato",
-      character: "🍅",
-      unicodeName: "tomato",
-      codePoint: "1F345",
-      group: "food-drink",
-      subGroup: "food-fruit",
-    },
-    {
       slug: "olive",
       character: "🫒",
       unicodeName: "olive",
@@ -169,6 +161,14 @@ export const emojis = {
       codePoint: "1F346",
       group: "food-drink",
       subGroup: "food-vegetable",
+    },
+    {
+      slug: "tomato",
+      character: "🍅",
+      unicodeName: "tomato",
+      codePoint: "1F345",
+      group: "food-drink",
+      subGroup: "food-fruit",
     },
     {
       slug: "potato",
