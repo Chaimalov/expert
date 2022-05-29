@@ -36,6 +36,17 @@ route.post("/addItem", async (req, res) => {
     return res.json("item was added")
 })
 
+route.post("/updateItem", async (req, res) => {
+    await setDoc(doc(db.users, req.body.userId), {
+        itemsArray: {
+            [req.body.item]: {
+                [req.body.key]: req.body.value
+            }
+        }
+    }, { merge: true })
+    return res.json(req.body.key + " was updated")
+})
+
 route.post("/removeItem", async (req, res) => {
     await updateDoc(doc(db.users, req.body.userId), {
         [`itemsArray.${req.body.item}`]: deleteField()

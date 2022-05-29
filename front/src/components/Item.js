@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
@@ -45,8 +45,8 @@ export function Item({ item, index }) {
 
   function handleEmoji(icon) {
     setOpenEmoji(false);
-    setEmoji(icon);
-    addItem(icon)
+    setEmoji(icon)
+    updateItem("emoji", icon)
   }
 
   function editEmoji() {
@@ -90,7 +90,7 @@ export function Item({ item, index }) {
   function saveDate() {
     setOpenDate(false)
     setExpiryDate(dateRef.current.value)
-    addItem()
+    updateItem("expiryDays", dateRef.current.value)
   }
 
   function deleteItem() {
@@ -105,15 +105,28 @@ export function Item({ item, index }) {
         });
     }
   }
+  function updateItem(key, value) {
+    setOpen(false);
+    axios
+      .post("/users/updateItem", {
+        userId: user.uid,
+        item: item.id,
+        key,
+        value
+      })
+      .then(({ data }) => {
+        notify(data, types.SUCCESS);
+      });
+  }
 
-  function addItem(icon = emoji) {
+  function addItem() {
     setOpen(false);
     axios
       .post("/users/addItem", {
         userId: user.uid,
         item: item.id,
         days: expiryDate,
-        emoji: icon,
+        emoji: emoji,
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
