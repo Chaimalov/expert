@@ -128,7 +128,7 @@ export function Item({ item, index }) {
 
   useEffect(() => {
     if (!loggedIn) return;
-    setInList(user?.itemsArray?.some((id) => id == item.id));
+    setInList(user?.itemsArray?.some((id) => id === item.id));
   }, [user?.itemsArray]);
 
   const list = [
