@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { notify, types, useClickOutside, colorFromEmoji } from "../utils";
+import { displayDays } from "../utils";
 
 export function Item({ item, index }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
@@ -19,24 +20,6 @@ export function Item({ item, index }) {
   const [inList, setInList] = useState(false);
   const { user, loggedIn } = useAuth();
   const dateRef = useRef(expiryDate)
-
-  function displayDays(days) {
-    const date = calcDays(days);
-    if (date.years) return date.years + (date.years > 1 ? " years" : " year");
-    if (date.months) {
-      if (date.days > 15) date.months++
-      return date.months + (date.months > 1 ? " months" : " month");
-    }
-    return date.days + (date.days > 1 ? " days" : " day");
-  }
-
-  function calcDays(date) {
-    const days = parseInt(date % 30);
-    let months = parseInt((date / 30) % 12);
-    const years = parseInt(date / 30 / 12);
-
-    return { days, months, years };
-  }
 
   function addEmoji() {
     setOpenEmoji(false);
@@ -90,6 +73,7 @@ export function Item({ item, index }) {
   function saveDate() {
     setOpenDate(false)
     setExpiryDate(dateRef.current.value)
+    setOpen(false);
     updateItem("expiryDays", dateRef.current.value)
   }
 
@@ -106,7 +90,6 @@ export function Item({ item, index }) {
     }
   }
   function updateItem(key, value) {
-    setOpen(false);
     axios
       .post("/users/updateItem", {
         userId: user.uid,
@@ -120,7 +103,6 @@ export function Item({ item, index }) {
   }
 
   function addItem() {
-    setOpen(false);
     axios
       .post("/users/addItem", {
         userId: user.uid,
@@ -134,7 +116,6 @@ export function Item({ item, index }) {
   }
 
   function removeItem() {
-    setOpen(false);
     axios
       .post("/users/removeItem", {
         userId: user.uid,
