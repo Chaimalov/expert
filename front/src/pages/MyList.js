@@ -11,10 +11,10 @@ export function MyList() {
   useMemo(() => {
     if (!loggedIn || !user.itemsArray) return;
     const list = products.filter((item) => Object.keys(user.itemsArray).some((list) => list == item.id))
-    setItems(
-      list.map(item => (
-        { ...item, ...user.itemsArray[item.id] }
-      ))
+    setItems(list
+      // list.map(item => (
+      //   { ...item, ...user.itemsArray[item.id] }
+      // ))
     );
   }, [user, products]);
 

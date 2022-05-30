@@ -17,8 +17,8 @@ export default function App() {
   return (
     <div className="App">
       <Nav />
-      <ProductsProvider>
-        <AnimatePresence exitBeforeEnter>
+      <AnimatePresence exitBeforeEnter>
+        <ProductsProvider>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/statistics" element={<Statistics />} />
@@ -26,9 +26,9 @@ export default function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/product/:id" element={<Product />} />
           </Routes>
-        </AnimatePresence>
-        <Toaster />
-      </ProductsProvider>
+        </ProductsProvider>
+      </AnimatePresence>
+      <Toaster />
     </div>
   );
 }
