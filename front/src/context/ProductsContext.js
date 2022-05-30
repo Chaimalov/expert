@@ -9,9 +9,11 @@ export function ProductsProvider({ children }) {
   const [products, setProducts] = useState();
 
   useEffect(() => {
-    if (!user.itemsArray) return
+
     const unsubscribe = onSnapshot(database.products, (snap) => {
       const data = snap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setProducts(data)
+      if (!user.itemsArray) return
       const list = []
       data.forEach(item => {
         if (user.itemsArray[item.id]) {
