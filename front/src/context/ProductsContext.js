@@ -1,22 +1,20 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { database } from "../firebase";
 import { onSnapshot } from "firebase/firestore";
 import { useAuth } from "./AuthContext"
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
-  const { user } = useAuth()
+  const { user, loggedIn } = useAuth()
   const [products, setProducts] = useState();
 
   useEffect(() => {
-
+    if (Object.entries(user).length && !loggedIn) return
     const unsubscribe = onSnapshot(database.products, (snap) => {
       const data = snap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setProducts(data)
-      if (!user.itemsArray) return
       const list = []
       data.forEach(item => {
-        if (user.itemsArray[item.id]) {
+        if (loggedIn && user.itemsArray && user.itemsArray[item.id]) {
           list.push({ ...item, ...user.itemsArray[item.id] })
         }
         else {
@@ -30,7 +28,7 @@ export function ProductsProvider({ children }) {
       );
     });
     return () => unsubscribe();
-  }, [user]);
+  }, [user, loggedIn]);
 
   return (
     <ProductsContext.Provider value={{ products }}>
