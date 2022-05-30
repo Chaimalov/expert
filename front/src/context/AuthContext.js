@@ -49,6 +49,9 @@ export function AuthProvider({ children }) {
     signOut(auth);
     setUserPreferences(null);
     setLoggedIn(false)
+    setTimeout(() => {
+      window.location.reload()
+    }, 250)
   }
 
   useEffect(() => {
