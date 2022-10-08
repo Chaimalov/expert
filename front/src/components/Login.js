@@ -5,7 +5,7 @@ export function Login() {
 
   const { signInWithGoogle, user, logOut } = useAuth()
 
-  async function signin() {
+  async function signIn() {
     try {
       await signInWithGoogle()
     } catch (error) {
@@ -26,7 +26,7 @@ export function Login() {
       {user.uid ?
         <Button value="sign out" onClick={signOut} />
         :
-        <Button value="sign in with google" onClick={signin} />
+        <Button value="sign in with google" onClick={signIn} />
       }
     </div>
   );
