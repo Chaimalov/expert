@@ -14,14 +14,13 @@ export function Product() {
         setItem(products.find(item => item.name === id))
     }, [products])
 
-
-    const color = colorFromEmoji(item?.icon)
+    const color = colorFromEmoji(item?.emoji)
 
     return (
 
         <>
             {item && <div className='center m2' style={{ "--hue": color }}>
-                <h1>{item.icon} {item.name}</h1>
+                <h1>{item.emoji} {item.name}</h1>
                 <h2>{item.category}</h2>
             </div>}
         </>
