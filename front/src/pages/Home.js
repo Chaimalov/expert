@@ -12,6 +12,7 @@ import {
   Button,
   Input,
 } from "../components";
+import { useAuth } from "../context/AuthContext";
 
 export function Home() {
   const [name, setName] = useState("");
@@ -21,12 +22,13 @@ export function Home() {
   const [refrigerator, setRefrigerator] = useState(null);
   const [filteredList, setFilteredList] = useState();
 
+  const { user, loggedIn } = useAuth()
   const { products } = useProducts();
 
   useEffect(() => {
     if (!products) return;
     setFilteredList(products);
-  }, [products, found]);
+  }, [products, found, user]);
 
   function filterList() {
     setFilteredList(() => {

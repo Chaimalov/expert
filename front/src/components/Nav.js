@@ -18,7 +18,7 @@ export function Nav() {
             <Login />
             {!loggedIn
                 ? <></>
-                : user?.photoURL ? <NavLink to="/account"><img src={user.photoURL} /></NavLink>
+                : user.photoURL ? <NavLink to="/account"><img src={user.photoURL} alt="" referrerPolicy='no-referrer' /></NavLink>
                     : <FaUserAlt className='ion' />}
         </nav>
     )

@@ -30,6 +30,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (!userDetails) return;
     const checkExist = async () => {
+      if (!userDetails) return
       const doc = await getDoc(database.users, userDetails.uid);
       if (!doc.exists()) addUser()
     }
@@ -47,6 +48,10 @@ export function AuthProvider({ children }) {
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
+    setLoggedIn(false)
+    setTimeout(() => {
+      window.location.reload()
+    }, 250)
   }
 
   useEffect(() => {
@@ -62,7 +67,8 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    setLoggedIn(userDetails && userPreferences);
+    if (userDetails && userPreferences)
+      setLoggedIn(true);
   }, [userDetails, userPreferences]);
 
   return (
