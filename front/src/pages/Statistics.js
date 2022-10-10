@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Category } from "../components";
 import { categories } from "../utils/categories";
-import Transitions from "../context/Transition";
 import { useProducts } from "../context/ProductsContext";
 import { ProductsList } from "../components";
 
@@ -18,7 +17,7 @@ export function Statistics() {
   }, [category, products]);
 
   return (
-    <Transitions>
+    <>
       <h1 className="m2">statistics</h1>
       <div className="section">
         {categories.map((category) => (
@@ -33,6 +32,6 @@ export function Statistics() {
         ))}
       </div>
       {categoryData && <ProductsList list={categoryData} />}
-    </Transitions>
+    </>
   );
 }

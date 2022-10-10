@@ -63,7 +63,7 @@ route.get("/search/:category", async (req, res) => {
   );
 });
 
-route.post("/delete", async (req, res) => {
+route.delete("/", async (req, res) => {
   try {
     await deleteDoc(doc(db.products, req.body.id));
     return res.json("item was deleted successfully");

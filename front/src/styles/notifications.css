@@ -1,0 +1,35 @@
+.notifications-bar .list {
+  grid-template-columns: repeat(1, 20ch);
+}
+
+.notifications-bar {
+  position: sticky;
+  background-color: white;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid grey;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+}
+
+.date {
+  position: relative;
+  text-align: center;
+  color: grey;
+  border-block: 1px dashed grey;
+}
+
+.notifications-bar::-webkit-scrollbar,
+.notifications-bar::-webkit-scrollbar-thumb {
+  width: 12px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.notifications-bar:hover::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px #00000070;
+}

@@ -30,28 +30,31 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (!userDetails) return;
     const checkExist = async () => {
-      if (!userDetails) return
+      if (!userDetails) return;
       const doc = await getDoc(database.users, userDetails.uid);
-      if (!doc.exists()) addUser()
-    }
-    return () => checkExist()
+      if (!doc.exists()) addUser();
+    };
+    return () => checkExist();
   }, [userDetails]);
 
   useEffect(() => {
     if (!userDetails) return;
-    const unsubscribe = onSnapshot(doc(database.users, userDetails.uid), (doc) => {
-      setUserPreferences({ ...doc.data(), uid: doc.id });
-    })
-    return () => unsubscribe()
-  }, [userDetails])
+    const unsubscribe = onSnapshot(
+      doc(database.users, userDetails.uid),
+      (doc) => {
+        setUserPreferences({ ...doc.data(), uid: doc.id });
+      }
+    );
+    return () => unsubscribe();
+  }, [userDetails]);
 
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
-    setLoggedIn(false)
+    setLoggedIn(false);
     setTimeout(() => {
-      window.location.reload()
-    }, 250)
+      window.location.reload();
+    }, 250);
   }
 
   useEffect(() => {
@@ -67,8 +70,7 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    if (userDetails && userPreferences)
-      setLoggedIn(true);
+    if (userDetails && userPreferences) setLoggedIn(true);
   }, [userDetails, userPreferences]);
 
   return (

@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
 
 const animationConfiguration = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 const Transitions = ({ children }) => {
-    return (
-        <motion.div
-            variants={animationConfiguration}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: .25 }}
-        >
-            {children}
-        </motion.div>
-    );
+  return (
+    <motion.main
+      variants={animationConfiguration}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 0.25 }}
+    >
+      {children}
+    </motion.main>
+  );
 };
 export default Transitions;
