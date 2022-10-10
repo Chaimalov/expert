@@ -21,7 +21,6 @@ export function ProductsProvider({ children }) {
     const unsubscribe = onSnapshot(database.products, (snap) => {
       const data = snap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       const list = [];
-      console.log(user.itemsArray);
       data.forEach((item) => {
         if (loggedIn && user.itemsArray && user.itemsArray[item.id]) {
           list.push({ ...item, ...user.itemsArray[item.id] });
