@@ -10,6 +10,7 @@
 }
 
 .notifications-bar {
+  --value: 45%;
   position: sticky;
   background-color: var(--clr-primary-dark);
   padding-block: 5em;
@@ -19,8 +20,6 @@
   overflow-y: scroll;
   overflow-x: hidden;
   border-left: 1px solid grey;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
 }
 
 .date {
