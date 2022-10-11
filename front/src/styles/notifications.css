@@ -1,5 +1,4 @@
 .notifications-bar .list {
-  grid-template-columns: repeat(1, 20ch);
   background-color: white;
   border-radius: 2em;
   margin: 2em;

@@ -88,6 +88,7 @@ button:active {
 
 .btn {
   --value: 40%;
+  position: relative;
   background-color: var(--clr-primary-dark);
   width: max-content;
   display: grid;
@@ -96,6 +97,20 @@ button:active {
 
 .btn:has(svg) {
   padding: 0.5em;
+}
+
+.bubble::after {
+  content: attr(data-count);
+  font-size: small;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  top: -25%;
+  right: -25%;
+  width: 2em;
+  height: 2em;
+  background-color: red;
+  border-radius: 100vh;
 }
 
 svg.large {

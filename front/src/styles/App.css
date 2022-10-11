@@ -87,13 +87,12 @@ label {
 
 .list {
   position: relative;
-  max-width: 1200px;
+  width: min(1200px, auto);
   justify-content: center;
   align-content: flex-start;
   padding: 2em clamp(2vw, 2vw, 2em);
   display: grid;
-  flex-grow: 1;
-  grid-template-columns: repeat(auto-fit, 20ch);
+  grid-template-columns: repeat(auto-fit, minmax(1em, 20ch));
   margin: auto;
   gap: 1em;
   border-radius: 0.5em;

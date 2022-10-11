@@ -39,7 +39,7 @@ const sideVariants = {
   },
 };
 
-export function NotificationsMenu() {
+export function NotificationsMenu({ setExpireAlertCount }) {
   const [items, setItems] = useState();
   const { products } = useProducts();
   const { user, loggedIn } = useAuth();
@@ -55,6 +55,7 @@ export function NotificationsMenu() {
         const date = new Date(
           addDays(item.createdAt.toDate(), item.expiryDays).setHours(0, 0, 0, 0)
         );
+
         if (!groups[date]) {
           groups[date] = [];
         }

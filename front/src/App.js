@@ -16,13 +16,14 @@ export default function App() {
   const location = useLocation();
   const { loggedIn } = useAuth();
   const [menu, setMenu] = useCycle(false, true);
+  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
         <ProductsProvider>
           <motion.div style={{ flexGrow: 1 }}>
-            <Nav toggleMenu={setMenu} />
+            <Nav toggleMenu={setMenu} expireAlertCount={expireAlertCount} />
             <AnimatePresence exitBeforeEnter>
               <Routes location={location} key={location.pathname}>
                 <Route
@@ -68,7 +69,11 @@ export default function App() {
               </Routes>
             </AnimatePresence>
           </motion.div>
-          <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
+          <AnimatePresence>
+            {menu && (
+              <NotificationsMenu setExpireAlertCount={setExpireAlertCount} />
+            )}
+          </AnimatePresence>
         </ProductsProvider>
       </div>
       <Toaster />
