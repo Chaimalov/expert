@@ -5,7 +5,7 @@ import { Login } from "./Login";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "./Button";
 
-export function Nav({ setMenu }) {
+export function Nav({ toggleMenu }) {
   const { user, loggedIn } = useAuth();
 
   return (
@@ -14,10 +14,7 @@ export function Nav({ setMenu }) {
       <NavLink to="/statistics">statistics</NavLink>
       {loggedIn && <NavLink to="/mylist">My list</NavLink>}
       <div className="sep"></div>
-      <Button
-        value={<FaBell className="large" />}
-        onClick={() => setMenu((prev) => !prev)}
-      />
+      <Button value={<FaBell className="large" />} onClick={toggleMenu} />
       <Login />
       {!loggedIn ? (
         <></>

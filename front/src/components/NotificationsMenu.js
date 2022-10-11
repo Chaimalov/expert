@@ -6,8 +6,37 @@ import { useAuth } from "../context/AuthContext";
 
 const animationConfiguration = {
   initial: { width: 0 },
-  animate: { width: "min-content" },
-  exit: { width: 0 },
+  animate: { width: "fit-content" },
+  exit: {
+    width: 0,
+    transition: { delay: 0.1, duration: 0.25 },
+  },
+};
+
+const itemVariants = {
+  closed: {
+    x: "100%",
+    opacity: 0,
+  },
+  open: {
+    x: "0%",
+    opacity: 1,
+  },
+};
+
+const sideVariants = {
+  closed: {
+    transition: {
+      staggerChildren: 0.05,
+      staggerDirection: 1,
+    },
+  },
+  open: {
+    transition: {
+      staggerChildren: 0.2,
+      staggerDirection: 1,
+    },
+  },
 };
 
 export function NotificationsMenu() {
@@ -34,7 +63,7 @@ export function NotificationsMenu() {
       return groups;
     }, {});
 
-    setItems(groups);
+    setItems(sortObject(groups));
   }, [loggedIn, user, products]);
 
   return (
@@ -44,15 +73,21 @@ export function NotificationsMenu() {
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.25 }}
     >
-      {items &&
-        Object.keys(items).map((date) => (
-          <div key={date}>
-            <h3 className="date">{new Date(date).toDateString()}</h3>
-            <ProductsList list={items[date]} mini />
-          </div>
-        ))}
+      <motion.div
+        initial="closed"
+        animate="open"
+        exit="closed"
+        variants={sideVariants}
+      >
+        {items &&
+          Object.keys(items).map((date) => (
+            <motion.div key={date} variants={itemVariants}>
+              <h3 className="date">{new Date(date).toDateString()}</h3>
+              <ProductsList list={items[date]} mini />
+            </motion.div>
+          ))}
+      </motion.div>
     </motion.aside>
   );
 }
@@ -60,3 +95,8 @@ export function NotificationsMenu() {
 const addDays = (date, days) => {
   return new Date(date.setDate(date.getDate() + days));
 };
+
+const sortObject = (o) =>
+  Object.keys(o)
+    .sort((a, b) => Date.parse(a) - Date.parse(b))
+    .reduce((r, k) => ((r[k] = o[k]), r), {});

@@ -1,25 +1,31 @@
 .notifications-bar .list {
   grid-template-columns: repeat(1, 20ch);
+  background-color: white;
+  border-radius: 2em;
+  margin: 2em;
+  margin-top: 1em;
+  padding: 1em;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
 }
 
 .notifications-bar {
   position: sticky;
-  background-color: white;
+  background-color: var(--clr-primary-dark);
+  padding-block: 5em;
   top: 0;
   right: 0;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 1px solid grey;
+  border-left: 1px solid grey;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
     rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
 }
 
 .date {
-  position: relative;
   text-align: center;
-  color: grey;
-  border-block: 1px dashed grey;
+  color: white;
 }
 
 .notifications-bar::-webkit-scrollbar,

@@ -4,7 +4,7 @@ import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import Transitions from "./context/Transition";
-import { motion } from "framer-motion";
+import { motion, useCycle } from "framer-motion";
 
 import { Home, Statistics, Account, MyList, Product } from "./pages";
 
@@ -15,14 +15,14 @@ import { ProductsProvider } from "./context/ProductsContext";
 export default function App() {
   const location = useLocation();
   const { loggedIn } = useAuth();
-  const [menu, setMenu] = useState(false);
+  const [menu, setMenu] = useCycle(false, true);
 
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
         <ProductsProvider>
           <motion.div style={{ flexGrow: 1 }}>
-            <Nav setMenu={setMenu} />
+            <Nav toggleMenu={setMenu} />
             <AnimatePresence exitBeforeEnter>
               <Routes location={location} key={location.pathname}>
                 <Route

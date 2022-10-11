@@ -53,11 +53,13 @@
   position: relative;
   overflow: hidden;
   border-radius: 1em;
+}
+
+.itemContainer .animate {
   transform: scale(0);
   animation: scale 0.25s ease-out forwards;
   animation-delay: calc(30ms * var(--i));
 }
-
 @keyframes scale {
   100% {
     transform: scale(1);
