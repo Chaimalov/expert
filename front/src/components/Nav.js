@@ -10,9 +10,9 @@ export function Nav({ toggleMenu, expireAlertCount }) {
 
   return (
     <nav>
-      <NavLink to="/">home</NavLink>
-      <NavLink to="/statistics">statistics</NavLink>
-      {loggedIn && <NavLink to="/mylist">My list</NavLink>}
+      {/* <NavLink to="/">home</NavLink> */}
+      {/* <NavLink to="/statistics">statistics</NavLink> */}
+      {/* {loggedIn && <NavLink to="/mylist">My list</NavLink>} */}
       <div className="sep"></div>
       {loggedIn && (
         <Button

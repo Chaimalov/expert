@@ -6,10 +6,10 @@ import { sortObjectByDateKeys, addDaysToDate } from "../utils";
 
 const animationConfiguration = {
   initial: { width: 0 },
-  animate: { width: "fit-content" },
+  animate: { width: "max-content" },
   exit: {
     width: 0,
-    transition: { duration: 0.25 },
+    transition: { delay: 0.05, duration: 0.25 },
   },
 };
 

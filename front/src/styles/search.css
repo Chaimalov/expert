@@ -1,71 +1,71 @@
 .search {
-    display: flex;
-    border: solid 3px black;
-    margin: 2em auto;
-    border-radius: 3em;
-    align-items: center;
-    overflow: hidden;
-    background-color: hsl(0, 0%, 98%);
-    box-shadow: 0 .5em 1em hsl(0, 0%, 95%);
-    border: solid 3px;
-    border-color: hsl(0, 0%, 90%);
-    width: clamp(10em, 90vw, 35em);
-    justify-content: space-between;
-    transition: var(--transition);
-    gap: 0;
+  display: flex;
+  border: solid 3px black;
+  margin: 2em auto;
+  border-radius: 3em;
+  align-items: center;
+  overflow: hidden;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 0.5em 1em hsl(0, 0%, 95%);
+  border: solid 3px;
+  border-color: hsl(0, 0%, 90%);
+  width: clamp(10em, 90vw, 35em);
+  justify-content: space-between;
+  transition: var(--transition);
+  gap: 0;
 }
 
 .search:focus-within {
-    border-color: var(--clr-primary-dark);
-    box-shadow: 0 .5em 1em hsl(0, 0%, 88%);
+  border-color: var(--clr-primary-dark);
+  box-shadow: 0 0.5em 1em hsl(0, 0%, 88%);
 }
 
 .search button {
-    margin: 0;
+  margin: 0;
 }
 
 .search .input label {
-    display: none;
+  display: none;
 }
 
 .search .input {
-    margin: 0;
+  margin: 0;
 }
 
 .search .input input::-webkit-search-cancel-button {
-    appearance: none;
-    -webkit-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .search .input input {
-    border: none;
-    background: none;
-    outline: none;
-    padding: .5em .75em;
-    margin: 0;
-    font-size: 2em;
-    font-weight: 700;
-    width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0.5em 0.75em;
+  margin: 0;
+  font-size: 2em;
+  font-weight: 700;
+  width: 100%;
 }
 
 .search .input input::placeholder {
-    color: hsl(0, 0%, 75%);
+  color: hsl(0, 0%, 75%);
 }
 
 .search .input input:placeholder-shown {
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .search button {
-    outline: 0;
-    background: none;
-    color: var(--clr-primary-dark);
-    font-size: 2.5em;
-    padding: 0 .5em;
-    line-height: 0;
-    width: min-content;
+  outline: 0;
+  background: none;
+  color: var(--clr-primary-dark);
+  font-size: 2.5em;
+  padding: 0 0.5em;
+  line-height: 0;
+  width: min-content;
 }
 
 .search .btn {
-    box-shadow: none;
+  box-shadow: none;
 }

@@ -138,45 +138,41 @@ export function Item({ item, index, mini = false }) {
   });
 
   return (
-    <motion.div layout transition={{ ease: "anticipate" }}>
-      <div
-        className="itemContainer"
-        ref={domRef}
-        style={{
-          "--hue": (emoji && colorFromEmoji(emoji)) || 50,
-          "--i": index,
-        }}
-      >
-        {!mini && (
-          <>
-            <Options type="emoji" open={OpenEmoji} list={icons} />
-            <Options open={OpenDate} list={date} type="date" />
-            <Options open={open} list={productOptions} />
-          </>
-        )}
-        <div className={`item  ${mini ? "mini" : "animate"}`}>
-          <div className="top">
-            {emoji && <div className="icon">{emoji}</div>}
-            {!mini && (
-              <button onClick={() => setOpen(true)} className="reset">
-                <IoEllipsisHorizontal className="ion" />
-              </button>
-            )}
-          </div>
-          <Link to={`/product/${item.name}`} state={{ ...item }}>
-            <h2>{item.name}</h2>
-          </Link>
+    <div
+      className="itemContainer"
+      ref={domRef}
+      style={{
+        "--hue": (emoji && colorFromEmoji(emoji)) || 50,
+      }}
+    >
+      {!mini && (
+        <>
+          <Options type="emoji" open={OpenEmoji} list={icons} />
+          <Options open={OpenDate} list={date} type="date" />
+          <Options open={open} list={productOptions} />
+        </>
+      )}
+      <div className={"item"}>
+        <div className="top">
+          {emoji && <div className="icon">{emoji}</div>}
           {!mini && (
-            <>
-              <h3>{item.category} </h3>
-              <h4>
-                {displayDays(expiryDate)}{" "}
-                <span>{item.refrigerator && "❄️"}</span>
-              </h4>
-            </>
+            <button onClick={() => setOpen(true)} className="reset">
+              <IoEllipsisHorizontal className="ion" />
+            </button>
           )}
         </div>
+        <Link to={`/product/${item.name}`} state={{ ...item }}>
+          <h2>{item.name}</h2>
+        </Link>
+        {!mini && (
+          <>
+            <h3>{item.category} </h3>
+            <h4>
+              {displayDays(expiryDate)} <span>{item.refrigerator && "❄️"}</span>
+            </h4>
+          </>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -87,7 +87,7 @@ label {
 
 .list {
   position: relative;
-  width: min(1200px, auto);
+  max-width: 1200px;
   justify-content: center;
   align-content: flex-start;
   padding: 2em clamp(2vw, 2vw, 2em);
