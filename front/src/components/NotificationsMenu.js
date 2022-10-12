@@ -9,7 +9,7 @@ const animationConfiguration = {
   animate: { width: "fit-content" },
   exit: {
     width: 0,
-    transition: { delay: 0.1, duration: 0.25 },
+    transition: { duration: 0.25 },
   },
 };
 
