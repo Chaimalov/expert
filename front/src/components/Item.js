@@ -152,7 +152,7 @@ export function Item({ item, index, mini = false }) {
           <Options open={open} list={productOptions} />
         </>
       )}
-      <div className={"item"}>
+      <div className={`item  ${mini && "mini"}`}>
         <div className="top">
           {emoji && <div className="icon">{emoji}</div>}
           {!mini && (

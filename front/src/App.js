@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import Transitions from "./context/Transition";
 import { motion, useCycle } from "framer-motion";
 
-import { Home, Statistics, Account, MyList, Product } from "./pages";
+import { Home, Statistics, Account, Login, Product } from "./pages";
 
 import { Nav, NotificationsMenu } from "./components";
 import { useAuth } from "./context/AuthContext";
@@ -23,31 +23,17 @@ export default function App() {
       <div style={{ display: "flex" }}>
         <ProductsProvider>
           <motion.div style={{ flexGrow: 1 }}>
-            <Nav toggleMenu={setMenu} expireAlertCount={expireAlertCount} />
+            <Nav
+              toggleMenu={setMenu}
+              menu={menu}
+              expireAlertCount={expireAlertCount}
+            />
             <AnimatePresence exitBeforeEnter>
               <Routes location={location} key={location.pathname}>
                 <Route
                   path="/"
                   element={
-                    <Transitions>
-                      <Home />
-                    </Transitions>
-                  }
-                />
-                <Route
-                  path="/statistics"
-                  element={
-                    <Transitions>
-                      <Statistics />
-                    </Transitions>
-                  }
-                />
-                <Route
-                  path="/mylist"
-                  element={
-                    <Transitions>
-                      {loggedIn ? <MyList /> : <Navigate to="/" />}
-                    </Transitions>
+                    <Transitions>{loggedIn ? <Home /> : <Login />}</Transitions>
                   }
                 />
                 <Route

@@ -7,17 +7,12 @@
 @import "./notifications.css";
 
 header {
-  background: var(--clr-primary-dark);
   width: 100%;
-  color: white;
+  color: var(--clr-primary-dark);
   padding-block: 3em;
+  text-align: center;
   margin-bottom: 3em;
-}
-
-header > * {
-  text-align: left;
-  max-width: 1000px;
-  padding: 0 5rem;
+  padding: 2em 5em;
 }
 
 form {
@@ -30,8 +25,18 @@ form {
   height: 7em;
 }
 
-form > * {
-  margin: auto;
+input {
+  padding: 0.5em;
+  margin-block: 1em;
+  width: 100%;
+  font-size: 1.3em;
+  border: 2px solid var(--clr-primary-dark);
+  border-radius: 0.5em;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--clr-primary-light);
 }
 
 input[type="radio"] {
@@ -64,6 +69,7 @@ input[type="radio"]:checked::before {
 label {
   position: relative;
   text-transform: capitalize;
+  text-align: left;
 }
 
 .category {

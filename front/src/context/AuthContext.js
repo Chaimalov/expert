@@ -4,6 +4,8 @@ import {
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, database } from "../firebase";
 import axios from "axios";
@@ -14,6 +16,34 @@ function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
   signInWithRedirect(auth, provider);
 }
+const signIn = (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+};
+
+const signUpWithEmailAndPassword = (email, password) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      console.log(userCredential.user);
+      return userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      // ..
+    });
+};
 
 export function AuthProvider({ children }) {
   const [userDetails, setUserDetails] = useState();
@@ -50,9 +80,6 @@ export function AuthProvider({ children }) {
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
-    setTimeout(() => {
-      window.location.reload();
-    }, 250);
   }
 
   useEffect(() => {
@@ -70,7 +97,16 @@ export function AuthProvider({ children }) {
   const loggedIn = userDetails && userPreferences;
 
   return (
-    <AuthContext.Provider value={{ signInWithGoogle, logOut, user, loggedIn }}>
+    <AuthContext.Provider
+      value={{
+        signInWithGoogle,
+        logOut,
+        signUpWithEmailAndPassword,
+        signIn,
+        user,
+        loggedIn,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

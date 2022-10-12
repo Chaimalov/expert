@@ -1,27 +1,40 @@
 import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { FaUserAlt, FaBell } from "react-icons/fa";
-import { Login } from "./Login";
+import { FaUserAlt, FaBell, FaRegBell } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "./Button";
 
-export function Nav({ toggleMenu, expireAlertCount }) {
-  const { user, loggedIn } = useAuth();
+export function Nav({ toggleMenu, menu, expireAlertCount }) {
+  const { user, loggedIn, logOut } = useAuth();
+
+  async function signOut() {
+    try {
+      await logOut();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <nav>
-      {/* <NavLink to="/">home</NavLink> */}
-      {/* <NavLink to="/statistics">statistics</NavLink> */}
-      {/* {loggedIn && <NavLink to="/mylist">My list</NavLink>} */}
+      <NavLink to="/">
+        <h2>expert</h2>
+      </NavLink>
       <div className="sep"></div>
       {loggedIn && (
         <Button
-          value={<FaBell className="large" />}
+          value={
+            menu ? (
+              <FaRegBell className="large" />
+            ) : (
+              <FaBell className="large" />
+            )
+          }
           onClick={toggleMenu}
           bubble={expireAlertCount}
         />
       )}
-      <Login />
+      {user.uid && <Button value="sign out" onClick={signOut} />}
       {!loggedIn ? (
         <></>
       ) : user.photoURL ? (
