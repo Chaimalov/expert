@@ -18,7 +18,6 @@ function signInWithGoogle() {
 export function AuthProvider({ children }) {
   const [userDetails, setUserDetails] = useState();
   const [userPreferences, setUserPreferences] = useState();
-  const [loggedIn, setLoggedIn] = useState(false);
 
   function addUser() {
     axios.post("/users/create", {
@@ -51,7 +50,6 @@ export function AuthProvider({ children }) {
   function logOut() {
     signOut(auth);
     setUserPreferences(null);
-    setLoggedIn(false);
     setTimeout(() => {
       window.location.reload();
     }, 250);
@@ -69,9 +67,7 @@ export function AuthProvider({ children }) {
     ...userPreferences,
   };
 
-  useEffect(() => {
-    if (userDetails && userPreferences) setLoggedIn(true);
-  }, [userDetails, userPreferences]);
+  const loggedIn = userDetails && userPreferences;
 
   return (
     <AuthContext.Provider value={{ signInWithGoogle, logOut, user, loggedIn }}>

@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { ProductsList } from "./ProductsList";
 import { useProducts } from "../context/ProductsContext";
-import { useAuth } from "../context/AuthContext";
+import { sortObjectByDateKeys, addDaysToDate } from "../utils";
 
 const animationConfiguration = {
   initial: { width: 0 },
@@ -40,32 +40,30 @@ const sideVariants = {
 };
 
 export function NotificationsMenu({ setExpireAlertCount }) {
-  const [items, setItems] = useState();
-  const { products } = useProducts();
-  const { user, loggedIn } = useAuth();
+  const { userProducts } = useProducts();
 
-  useMemo(() => {
-    if (!loggedIn || !user.itemsArray || !products) return;
-    const list = products.filter((item) =>
-      Object.keys(user.itemsArray).some((list) => list === item.id)
-    );
+  const items = useMemo(() => {
+    if (!userProducts) return;
 
-    const groups = list.reduce((groups, item) => {
+    const groups = userProducts.reduce((groups, item) => {
       if (item.createdAt) {
-        const date = new Date(
-          addDays(item.createdAt.toDate(), item.expiryDays).setHours(0, 0, 0, 0)
+        const date = addDaysToDate(
+          new Date(item.createdAt.toDate().setHours(0, 0, 0, 0)),
+          item.expiryDays
         );
 
         if (!groups[date]) {
           groups[date] = [];
         }
+
         groups[date].push(item);
       }
+
       return groups;
     }, {});
 
-    setItems(sortObject(groups));
-  }, [loggedIn, user, products]);
+    return sortObjectByDateKeys(groups);
+  }, [userProducts]);
 
   return (
     <motion.aside
@@ -92,12 +90,3 @@ export function NotificationsMenu({ setExpireAlertCount }) {
     </motion.aside>
   );
 }
-
-const addDays = (date, days) => {
-  return new Date(date.setDate(date.getDate() + days));
-};
-
-const sortObject = (o) =>
-  Object.keys(o)
-    .sort((a, b) => Date.parse(a) - Date.parse(b))
-    .reduce((r, k) => ((r[k] = o[k]), r), {});
