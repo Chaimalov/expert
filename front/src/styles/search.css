@@ -9,7 +9,7 @@
   box-shadow: 0 0.5em 1em hsl(0, 0%, 95%);
   border: solid 3px;
   border-color: hsl(0, 0%, 90%);
-  width: clamp(10em, 90vw, 35em);
+  width: calc(min(100%, 65ch) - 2em);
   justify-content: space-between;
   transition: var(--transition);
   gap: 0;

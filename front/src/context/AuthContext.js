@@ -16,6 +16,7 @@ const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   await signInWithPopup(auth, provider);
 };
+
 const signIn = async (email, password, setError) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);

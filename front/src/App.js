@@ -18,6 +18,7 @@ export default function App() {
   const [menu, setMenu] = useCycle(false, true);
   const [expireAlertCount, setExpireAlertCount] = useState(0);
 
+  if (!loggedIn) return <Login />;
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
@@ -33,7 +34,9 @@ export default function App() {
                 <Route
                   path="/"
                   element={
-                    <Transitions>{loggedIn ? <Home /> : <Login />}</Transitions>
+                    <Transitions>
+                      <Home />
+                    </Transitions>
                   }
                 />
                 <Route
@@ -56,7 +59,7 @@ export default function App() {
             </AnimatePresence>
           </motion.div>
           <AnimatePresence>
-            {loggedIn && menu && (
+            {menu && (
               <NotificationsMenu setExpireAlertCount={setExpireAlertCount} />
             )}
           </AnimatePresence>

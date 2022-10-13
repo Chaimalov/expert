@@ -1,7 +1,6 @@
 import React from "react";
 
 export function Button(props) {
-  console.log(props);
   const classes = Object.keys(props).filter(
     (item) => props[item] === true || props[item] > 0
   );
