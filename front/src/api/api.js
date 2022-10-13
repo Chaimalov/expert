@@ -35,7 +35,7 @@ export const products = {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
       axios
         .delete("/products", {
-          data: {id: item.id},
+          data: { id: item.id },
         })
         .then(({ data }) => {
           notify(data, types.SUCCESS);
