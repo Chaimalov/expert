@@ -74,7 +74,7 @@ export function Home() {
     <div className="App">
       <header>
         <h1>this is expert</h1>
-        <h2>expiry dates by the experts</h2>
+        <h3>expiry dates by the experts</h3>
       </header>
       {found ? (
         <>

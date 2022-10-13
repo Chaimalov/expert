@@ -37,12 +37,14 @@ export function Nav({ toggleMenu, menu, expireAlertCount }) {
       {user.uid && <Button value="sign out" onClick={signOut} />}
       {!loggedIn ? (
         <></>
-      ) : user.photoURL ? (
-        <NavLink to="/account">
-          <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
-        </NavLink>
       ) : (
-        <FaUserAlt className="ion" />
+        <NavLink to="/account">
+          {user.photoURL ? (
+            <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
+          ) : (
+            <FaUserAlt className="ion" />
+          )}
+        </NavLink>
       )}
     </nav>
   );

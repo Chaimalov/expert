@@ -17,7 +17,7 @@ header {
 
 form {
   display: grid;
-  gap: 2em;
+  gap: 1em;
 }
 
 .container {
@@ -27,14 +27,14 @@ form {
 
 input {
   padding: 0.5em;
-  margin-block: 1em;
   width: 100%;
   font-size: 1.3em;
   border: 2px solid var(--clr-primary-dark);
   border-radius: 0.5em;
+  margin-block: 0.5em;
 }
 
-input:focus {
+input:not(input[type="search"]):focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--clr-primary-light);
 }
@@ -67,9 +67,10 @@ input[type="radio"]:checked::before {
 }
 
 label {
+  color: var(--clr-primary-dark);
   position: relative;
   text-transform: capitalize;
-  text-align: left;
+  text-align: start;
 }
 
 .category {
@@ -119,6 +120,11 @@ label {
   animation: loading 0.5s infinite alternate;
   display: block;
   font-size: 10em;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px solid;
 }
 
 @keyframes loading {

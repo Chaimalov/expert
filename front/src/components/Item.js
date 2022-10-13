@@ -162,14 +162,14 @@ export function Item({ item, index, mini = false }) {
           )}
         </div>
         <Link to={`/product/${item.name}`} state={{ ...item }}>
-          <h2>{item.name}</h2>
+          <h3>{item.name}</h3>
         </Link>
         {!mini && (
           <>
-            <h3>{item.category} </h3>
-            <h4>
+            <h4>{item.category} </h4>
+            <h5>
               {displayDays(expiryDate)} <span>{item.refrigerator && "❄️"}</span>
-            </h4>
+            </h5>
           </>
         )}
       </div>

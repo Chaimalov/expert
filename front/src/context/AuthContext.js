@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   GoogleAuthProvider,
-  signInWithRedirect,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -12,37 +12,25 @@ import axios from "axios";
 import { onSnapshot, doc, getDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
-function signInWithGoogle() {
+const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  signInWithRedirect(auth, provider);
-}
-const signIn = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+  await signInWithPopup(auth, provider);
+};
+const signIn = async (email, password, setError) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    setError("password is incorrect");
+  }
 };
 
-const signUpWithEmailAndPassword = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      console.log(userCredential.user);
-      return userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-      // ..
-    });
+const signUpWithEmailAndPassword = async (email, password, setError) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    signIn(email, password, setError);
+    // setError("email already exists. try sign in");
+  }
 };
 
 export function AuthProvider({ children }) {

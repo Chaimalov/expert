@@ -10,7 +10,7 @@ section {
   text-align: start;
   display: grid;
   padding: 2em;
-  gap: 1em;
+  gap: 2em;
 }
 
 p {
@@ -29,20 +29,28 @@ h1 {
 
 h2 {
   font-weight: 800;
-  font-size: 22px;
+  font-size: 32px;
 }
 
 h3 {
-  font-weight: 700;
-  font-size: 18px;
+  font-weight: 800;
+  font-size: 22px;
   line-height: 2em;
 }
 
 h4 {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+h5 {
+  font-weight: 500;
   font-size: 12px;
-  display: flex;
-  justify-content: space-between;
+}
+
+span {
+  text-align: start;
+  color: var(--clr-primary);
 }
 
 body {
@@ -149,7 +157,7 @@ svg.large {
 }
 
 .btn.large {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .danger {
@@ -178,9 +186,17 @@ img {
   gap: 1em;
 }
 
+.nowarp {
+  white-space: nowrap;
+}
+
 .full-page {
   min-height: calc(100vh - 5em);
   margin-inline: 4em;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .m2 {

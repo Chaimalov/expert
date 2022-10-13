@@ -56,7 +56,7 @@ export default function App() {
             </AnimatePresence>
           </motion.div>
           <AnimatePresence>
-            {menu && (
+            {loggedIn && menu && (
               <NotificationsMenu setExpireAlertCount={setExpireAlertCount} />
             )}
           </AnimatePresence>

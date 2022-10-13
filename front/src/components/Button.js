@@ -1,33 +1,19 @@
 import React from "react";
 
-export function Button({
-  value,
-  large,
-  danger,
-  secondary,
-  bubble,
-  type,
-  onClick,
-}) {
+export function Button(props) {
+  console.log(props);
+  const classes = Object.keys(props).filter(
+    (item) => props[item] === true || props[item] > 0
+  );
+
   return (
     <button
-      className={
-        "btn " +
-        (danger
-          ? "danger"
-          : secondary
-          ? "secondary"
-          : bubble
-          ? "bubble"
-          : large
-          ? "large"
-          : "")
-      }
-      data-count={bubble}
-      type={type}
-      onClick={onClick ? () => onClick(true) : null}
+      className={"btn " + classes.join(" ")}
+      data-count={props.bubble}
+      type={props.type}
+      onClick={props.onClick ? () => props.onClick(true) : null}
     >
-      {value}
+      {props.value} {props.children}
     </button>
   );
 }
