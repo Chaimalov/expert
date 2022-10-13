@@ -39,11 +39,3 @@
 .notifications-bar:hover::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 0 10px #00000070;
 }
-
-/* @media screen and (max-width: 1000px) {
-  .notifications-bar {
-    position: fixed;
-    box-shadow: 0 0 100vmax hsl(0, 0%, 0%, 60%);
-    z-index: 10;
-  }
-} */
