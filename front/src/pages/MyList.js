@@ -1,23 +1,9 @@
-import React, { useState, useMemo } from "react";
-import { useAuth } from "../context/AuthContext";
+import React from "react";
 import { useProducts } from "../context/ProductsContext";
 import { ProductsList } from "../components";
 
 export function MyList() {
-  const { user, loggedIn } = useAuth();
-  const { products } = useProducts();
-  const [items, setItems] = useState();
+  const { userProducts } = useProducts();
 
-  useMemo(() => {
-    if (!loggedIn || !user.itemsArray) return;
-    const list = products.filter((item) => Object.keys(user.itemsArray).some((list) => list == item.id))
-    setItems(list
-      // list.map(item => (
-      //   { ...item, ...user.itemsArray[item.id] }
-      // ))
-    );
-  }, [user, products]);
-
-  if (items) return <ProductsList list={items} />;
-  return <div>my list</div>;
+  return <ProductsList list={userProducts} />;
 }

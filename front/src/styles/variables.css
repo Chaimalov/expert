@@ -1,29 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 
 * {
-    box-sizing: border-box;
-    font-family: 'Nunito', 'Varela Round', sans-serif;
-    margin: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", "Varela Round", sans-serif;
+  margin: 0;
 }
 
 :root {
-    --hue: 148;
-    --saturation: 80%;
-    --value: 50%;
+  --hue: 148;
+  --saturation: 80%;
+  --value: 50%;
 }
 
-:where(div, button, img, label) {
+:where(div, button, img, label, aside, span, label, input) {
+  --grey: hsl(22, 57%, 97%);
+  --text-color: hsla(0, 0%, 0%, 80%);
+  --clr-primary: hsl(var(--hue), var(--saturation), var(--value));
+  --clr-primary-dark: hsl(
+    calc(var(--hue)),
+    var(--saturation),
+    calc(var(--value) * 0.9)
+  );
+  --clr-primary-light: hsl(
+    calc(var(--hue)),
+    var(--saturation),
+    calc(var(--value) * 1.1)
+  );
+  --clr-primary-light-4: hsl(
+    var(--hue),
+    var(--saturation),
+    calc(var(--value) * 1.4)
+  );
+  --gradient: linear-gradient(
+    to bottom right,
+    var(--clr-primary-light),
+    var(--clr-primary-dark)
+  );
 
-    --grey: hsl(22, 57%, 97%);
-    --text-color: hsla(0, 0%, 0%, 80%);
-    --clr-primary: hsl(var(--hue), var(--saturation), var(--value));
-    --clr-primary-dark: hsl(calc(var(--hue)), var(--saturation), calc(var(--value) * .9));
-    --clr-primary-light: hsl(calc(var(--hue)), var(--saturation), calc(var(--value) * 1.1));
-    --clr-primary-light-4: hsl(var(--hue), var(--saturation), calc(var(--value) * 1.4));
-    --gradient: linear-gradient(to bottom right, var(--clr-primary-light), var(--clr-primary-dark));
-
-    --transition: 250ms;
-    --transition-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  --transition: 250ms;
+  --transition-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }

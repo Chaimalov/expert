@@ -1,54 +1,56 @@
 .item {
-    --value: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: var(--gradient);
-    aspect-ratio: 10/11;
-    padding: 1.2em;
-    transition: var(--transition);
+  --value: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--gradient);
+  aspect-ratio: 10/11;
+  padding: 1.2em;
+  transition: var(--transition);
 }
 
+.item.mini {
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  aspect-ratio: 10/5;
+  gap: 0.5em;
+}
+
+.item.mini > * {
+  margin: 0;
+}
 .top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: auto;
 }
 
 .ion {
-    box-sizing: content-box;
-    background-color: rgba(0, 0, 0, .2);
-    padding: .5em;
-    color: white;
-    border-radius: 50%;
-    cursor: pointer;
+  box-sizing: content-box;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5em;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .ion:where(:hover, :focus) {
-    background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .item a {
-    text-decoration: none;
-    color: var(--text-color);
-    margin-bottom: auto;
+  text-decoration: none;
+  color: var(--text-color);
+  margin-bottom: auto;
 }
 
 .item button {
-    border-radius: 100%;
+  border-radius: 100%;
 }
 
 .itemContainer {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1em;
-    transform: scale(0);
-    animation: scale .25s ease-out forwards;
-    animation-delay: calc(30ms * var(--i));
-}
-
-@keyframes scale {
-    100% {
-        transform: scale(1);
-    }
+  position: relative;
+  overflow: hidden;
+  border-radius: 1em;
 }

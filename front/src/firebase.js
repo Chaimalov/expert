@@ -23,6 +23,6 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 export const database = {
   products: collection(firestore, "products"),
-  users: collection(firestore, "users")
+  users: collection(firestore, "users"),
 };
 export const auth = getAuth(app);

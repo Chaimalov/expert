@@ -1,137 +1,226 @@
-@import url('variables.css');
+@import url("variables.css");
 
 :where(h1, h2, h3, h4, strong, a, button) {
-    text-transform: capitalize;
+  text-transform: capitalize;
+}
+
+section {
+  color: var(--clr-primary-dark);
+  flex-grow: 1;
+  text-align: start;
+  display: grid;
+  padding: 2em;
+  gap: 2em;
+}
+
+p {
+  font-size: 1.3em;
+  max-width: 40ch;
 }
 
 strong {
-    font-weight: 900;
+  font-weight: 900;
 }
 
 h1 {
-    font-weight: 900;
-    font-size: 48px;
-    text-align: center;
+  font-weight: 900;
+  font-size: 48px;
 }
 
 h2 {
-    font-weight: 800;
-    font-size: 22px;
+  font-weight: 800;
+  font-size: 32px;
 }
 
 h3 {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 2em;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 2em;
 }
 
 h4 {
-    font-weight: 600;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+span {
+  text-align: start;
+  color: var(--clr-primary);
 }
 
 body {
-    min-height: 100vh;
-    color: var(--text-clr);
-
+  min-height: 100vh;
+  color: var(--text-clr);
 }
 
 nav {
-    inset: 0;
-    bottom: auto;
-    display: block;
-    padding: 1em;
+  inset: 0;
+  bottom: auto;
+  display: block;
+  padding: 1em;
 }
 
-nav>div {
-    display: flex;
-    gap: 1em;
+nav > div {
+  display: flex;
+  gap: 1em;
 }
 
 .section {
-    margin: 2em;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-    gap: 1em;
+  margin: 2em;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  gap: 1em;
 }
 
 .icon {
-    font-size: 1.5em;
-    display: inline-block;
-    border-radius: .25em;
-    /* background-image: linear-gradient(to bottom right, var(--clr-primary), var(--clr-primary-dark)); */
+  font-size: 1.5em;
+  display: inline-block;
+  border-radius: 0.25em;
+  /* background-image: linear-gradient(to bottom right, var(--clr-primary), var(--clr-primary-dark)); */
 }
 
 button.reset {
-    padding: 0;
-    line-height: 0;
+  padding: 0;
+  line-height: 0;
 }
 
 button {
-    text-transform: capitalize;
-    border-radius: .5em;
-    background: none;
-    border: none;
-    outline: none;
-    font-weight: 700;
-    font-size: 1em;
-    color: white;
-    cursor: pointer;
-    padding: .5em 1em;
+  text-transform: capitalize;
+  border-radius: 0.5em;
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 1em;
+  color: white;
+  cursor: pointer;
+  padding: 0.5em 1em;
+}
+
+button:active {
+  scale: 0.9;
 }
 
 .btn {
-    --value: 40%;
-    background-color: var(--clr-primary-dark);
-    width: max-content;
-    margin: .5em;
+  --value: 40%;
+  position: relative;
+  background-color: var(--clr-primary-dark);
+  width: max-content;
+  display: grid;
+  place-items: center;
+}
+
+.btn:has(svg) {
+  padding: 0.5em;
+}
+
+.bubble::after {
+  content: attr(data-count);
+  font-size: small;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  top: -25%;
+  right: -25%;
+  width: 2em;
+  height: 2em;
+  background-color: red;
+  border-radius: 100vh;
+}
+
+svg.large {
+  width: 1.5em;
+  height: 1.5em;
 }
 
 :where(a):focus {
-    outline: none;
+  outline: none;
 }
 
 :where(.btn) {
-    box-shadow: 0 0 0 0px var(--clr-primary-light);
-    transition: var(--transition);
+  box-shadow: 0 0 0 0px var(--clr-primary-light);
+  transition: var(--transition);
 }
 
 .btn:hover {
-    --value: 35%;
+  --value: 35%;
 }
 
 .btn:focus {
-    box-shadow: 0 0 0 3px var(--clr-primary-light-4);
+  box-shadow: 0 0 0 3px var(--clr-primary-light-4);
+}
+
+.btn.large {
+  font-size: 1.3em;
 }
 
 .danger {
-    --hue: 10;
+  --hue: 10;
 }
 
 .secondary {
-    background-color: var(--clr-primary-light);
-    color: var(--clr-primary-dark);
+  background-color: var(--clr-primary-light);
+  color: var(--clr-primary-dark);
 }
 
 .center {
-    display: grid;
-    text-align: center;
-    justify-content: center;
+  display: grid;
+  text-align: center;
+  justify-content: center;
 }
 
 img {
-    margin: auto;
-    border-radius: 100%;
+  margin: auto;
+  border-radius: 100%;
 }
 
 .flex {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.nowarp {
+  white-space: nowrap;
+}
+
+.full-page {
+  min-height: calc(100vh - 5em);
+  margin-inline: 4em;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .m2 {
-    margin: 2em;
+  margin: 2em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1em;
+  }
 }

@@ -4,118 +4,135 @@
 @import "./editDate.css";
 @import "./item.css";
 @import "./options.css";
+@import "./notifications.css";
 
 header {
-    background: var(--clr-primary-dark);
-    width: 100%;
-    color: white;
-    padding-block: 3em;
-    margin-bottom: 3em;
-}
-
-header>* {
-    text-align: left;
-    max-width: 1000px;
-    padding: 0 5rem;
+  width: 100%;
+  color: var(--clr-primary-dark);
+  padding-block: 3em;
+  text-align: center;
+  margin-bottom: 3em;
+  padding: 2em 5em;
 }
 
 form {
-    display: grid;
-    gap: 2em;
+  display: grid;
+  gap: 1em;
 }
 
-form>* {
-    margin: auto;
+.container {
+  position: relative;
+  height: 7em;
+}
+
+input {
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1.3em;
+  border: 2px solid var(--clr-primary-dark);
+  border-radius: 0.5em;
+  margin-block: 0.5em;
+}
+
+input:not(input[type="search"]):focus {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--clr-primary-light);
 }
 
 input[type="radio"] {
-    -webkit-appearance: none;
-    -ms-progress-appearance: none;
-    appearance: none;
-    display: block;
-    transition: .2s linear;
-    opacity: 0;
+  -webkit-appearance: none;
+  -ms-progress-appearance: none;
+  appearance: none;
+  display: block;
+  transition: 0.2s linear;
+  opacity: 0;
 }
 
 input[type="radio"]:checked {
-    opacity: 1;
+  opacity: 1;
 }
 
 input[type="radio"]::before {
-    border-width: 0;
+  border-width: 0;
 }
 
 input[type="radio"]:checked::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 5px solid var(--clr-primary-dark);
-    transition: .1s linear;
-    border-radius: 1em;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 5px solid var(--clr-primary-dark);
+  transition: 0.1s linear;
+  border-radius: 1em;
+  pointer-events: none;
 }
 
 label {
-    position: relative;
-    text-transform: capitalize;
+  color: var(--clr-primary-dark);
+  position: relative;
+  text-transform: capitalize;
+  text-align: start;
 }
 
 .category {
-    display: flex;
-    color: var(--text-clr);
-    width: max-content;
-    align-items: center;
-    background-color: var(--grey);
-    gap: .25em;
-    padding: .5em 1em;
-    border-radius: 1em;
-    cursor: pointer;
-    transition: .2s ease;
-    box-shadow: inset 0 0 0 var(--clr-primary);
+  display: flex;
+  color: var(--text-clr);
+  width: max-content;
+  align-items: center;
+  background-color: var(--grey);
+  gap: 0.25em;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: inset 0 0 0 var(--clr-primary);
 }
 
 .category:hover {
-    --value: 80%;
-    background-color: var(--clr-primary-light);
+  --value: 80%;
+  background-color: var(--clr-primary-light);
 }
 
 .list {
-    position: relative;
-    max-width: 1200px;
-    justify-content: center;
-    align-content: flex-start;
-    padding: 2em clamp(2vw, 2vw, 2em);
-    display: grid;
-    flex-grow: 1;
-    grid-template-columns: repeat(auto-fit, 11em);
-    margin: 2em auto;
-    gap: 1em;
-    border-radius: .5em;
+  position: relative;
+  max-width: 1200px;
+  justify-content: center;
+  align-content: flex-start;
+  padding: 2em clamp(2vw, 2vw, 2em);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(1em, 20ch));
+  margin: auto;
+  gap: 1em;
+  border-radius: 0.5em;
 }
 
 .loading,
 .no-data {
-    position: absolute;
-    display: grid;
-    place-content: center;
-    inset: 0;
-    bottom: -300%;
-    text-align: center;
-    opacity: .1;
+  position: absolute;
+  display: grid;
+  place-content: center;
+  inset: 0;
+  bottom: -300%;
+  text-align: center;
+  opacity: 0.1;
 }
 
 .loadingLogo {
-    animation: loading .5s infinite alternate;
-    display: block;
-    font-size: 10em;
+  animation: loading 0.5s infinite alternate;
+  display: block;
+  font-size: 10em;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px solid;
 }
 
 @keyframes loading {
-    0% {
-        opacity: 0.3;
-    }
+  0% {
+    opacity: 0.3;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
