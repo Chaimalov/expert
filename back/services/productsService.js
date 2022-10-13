@@ -1,21 +1,20 @@
 import { searchByName, searchByCategory } from "../searchEmoji.js";
 import productsRepository from "../repositories/productsRepository.js";
 
-const createProduct = async (productDesc) => {
-  if (await isExist(product))
-    throw Error(`${productDesc.name} already exists.`);
+const createProduct = async ({ name, category, refrigerator }) => {
+  if (!(await productsRepository.getProductByName(name)))
+    throw Error(`${name} already exists.`);
 
-  const category = req.body.category.replace(" ", "_");
-  const iconsList = await getEmoji(product.name, category);
+  const iconsList = await getEmoji(name, category);
   const product = {
-    name: req.body.name,
+    name: name,
     category: category,
     emojiList: iconsList,
     expiryDays: categoryDays[category].expiryDate,
     emoji: iconsList[0].character,
     supportRate: 1,
     createdBy: "",
-    refrigerator: req.body.refrigerator,
+    refrigerator: refrigerator,
     nameVariation: [],
   };
 

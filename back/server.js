@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { searchByCategory, searchByName } from "./searchEmoji.js";
 
-import productsRoute from "./repositories/productsRepository.js";
+import productsRoute from "./controllers/productsController.js";
 import usersRoute from "./controllers/userController.js";
 
 const app = express();

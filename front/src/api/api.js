@@ -1,7 +1,39 @@
 import axios from "axios";
 import { notify, types } from "../utils";
+import { useProducts } from "../context/ProductsContext";
 
-export const products = {
+const products = {
+  createProduct: (name, category, refrigerator) => {
+    axios
+      .post("/products", {
+        product: { name: name.toLowerCase().trim(), category, refrigerator },
+      })
+      .then(({ data }) => {
+        notify(data.message, types.SUCCESS);
+      })
+      .catch((error) => notify(error.response.data, types.ERROR));
+  },
+
+  deleteItem: (item) => {
+    if (window.confirm(`would you like to delete ${item.name}?`)) {
+      axios
+        .delete("/products/" + item.id)
+        .then(({ data }) => {
+          notify(data, types.SUCCESS);
+        })
+        .catch(({ err }) => {
+          notify(err, types.ERROR);
+        });
+    }
+  },
+  getProducts: async () => {
+    return await (
+      await axios.get("/products")
+    ).data;
+  },
+};
+
+const user = {
   addItem: (userId, itemId, expiryDate, emoji) =>
     axios
       .post("/users/products", {
@@ -30,18 +62,16 @@ export const products = {
       });
   },
 
-  deleteItem: (item) => {
-    if (window.confirm(`would you like to delete ${item.name}?`)) {
-      axios
-        .delete("/products/admin", {
-          data: { productId: item.id },
-        })
-        .then(({ data }) => {
-          notify(data, types.SUCCESS);
-        })
-        .catch(({ err }) => {
-          notify(err, types.ERROR);
-        });
-    }
+  updateItem: (userId, productId, key, value) => {
+    axios
+      .patch("/users/products", {
+        userId: userId,
+        product: { id: productId, key, value },
+      })
+      .then(({ data }) => {
+        notify(data, types.SUCCESS);
+      });
   },
 };
+
+export default { products, user };

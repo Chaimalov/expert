@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, createRef, useEffect } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { FaBell } from "react-icons/fa";
@@ -13,6 +12,7 @@ import {
   Input,
 } from "../components";
 import { useAuth } from "../context/AuthContext";
+import api from "../api/api";
 
 export function Home() {
   const [name, setName] = useState("");
@@ -23,7 +23,7 @@ export function Home() {
   const [filteredList, setFilteredList] = useState();
 
   const { user, loggedIn } = useAuth();
-  const { products } = useProducts();
+  const { products, setStatus } = useProducts();
 
   useEffect(() => {
     if (!products) return;
@@ -38,23 +38,16 @@ export function Home() {
     });
   }
 
-  function sendData(e) {
+  async function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
     const toastId = toast.loading("sending data...");
-    axios
-      .post("/products/add", {
-        name: name.toLowerCase().trim(),
-        category,
-        refrigerator,
-      })
-      .then(({ data }) => {
-        e.target.reset();
-        notify(data.message, types.SUCCESS);
-        setFound(true);
-      })
-      .catch((error) => notify(error.response.data, types.ERROR))
-      .finally(() => toast.dismiss(toastId));
+
+    await api.products.createProduct(name, category, refrigerator);
+    setStatus(true);
+    e.target.reset();
+    setFound(true);
+    toast.dismiss(toastId);
   }
 
   function handleCancel(f) {
@@ -84,7 +77,7 @@ export function Home() {
               name="search"
               ref={searchRef}
               placeholder="search for an item"
-              onChange={filterList}
+              onChange={() => filterList()}
             />
             <Button value={<BiSearchAlt2 />} type="submit" />
           </form>

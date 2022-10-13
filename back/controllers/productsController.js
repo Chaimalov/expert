@@ -1,5 +1,5 @@
 import express from "express";
-import productsService from "../services/productsService";
+import productsService from "../services/productsService.js";
 
 const route = express.Router();
 export default route;

@@ -33,7 +33,7 @@ const updateProductEmoji = async (productId, emoji) => {
 const getProducts = async () => {
   return await (
     await db.products.get()
-  ).docs;
+  ).docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
 
 export default {

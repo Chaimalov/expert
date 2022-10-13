@@ -4,7 +4,6 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { Options, EditDate } from "./index";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import {
   notify,
@@ -14,7 +13,7 @@ import {
   isInUsersList,
 } from "../utils";
 import { displayDays } from "../utils";
-import { products } from "../api/api";
+import api from "../api/api";
 
 export function Item({ item, index, mini = false }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
@@ -37,7 +36,7 @@ export function Item({ item, index, mini = false }) {
   function handleEmoji(icon) {
     setOpenEmoji(false);
     setEmoji(icon);
-    updateItem("emoji", icon);
+    api.user.updateItem(user.uid, item.id, "emoji", icon);
   }
 
   function editEmoji() {
@@ -82,20 +81,7 @@ export function Item({ item, index, mini = false }) {
     setOpenDate(false);
     setExpiryDate(dateRef.current.value);
     setOpen(false);
-    updateItem("expiryDays", dateRef.current.value);
-  }
-
-  function updateItem(key, value) {
-    axios
-      .post("/users/updateItem", {
-        userId: user.uid,
-        item: item.id,
-        key,
-        value,
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      });
+    api.user.updateItem(user.uid, item.id, "expiryDays", dateRef.current.value);
   }
 
   const productOptions = [
@@ -118,14 +104,14 @@ export function Item({ item, index, mini = false }) {
     {
       text: isInList ? "remove item" : "add item",
       action: isInList
-        ? () => products.removeItem(user.uid, item.id)
-        : () => products.addItem(user.uid, item.id, expiryDate, emoji),
+        ? () => api.user.removeItem(user.uid, item.id)
+        : () => api.user.addItem(user.uid, item.id, expiryDate, emoji),
       key: 5,
       type: isInList ? "delete" : "add",
     },
     {
       text: "delete",
-      action: () => products.deleteItem(item),
+      action: () => api.products.deleteItem(item),
       key: 3,
       type: "delete",
     },

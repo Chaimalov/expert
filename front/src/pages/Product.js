@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { colorFromEmoji, isInUsersList } from "../utils";
 import { useProducts } from "../context/ProductsContext";
 import { useAuth } from "../context/AuthContext";
-import { products as api } from "../api/api";
+import api from "../api/api";
 import { Options, EditDate } from "../components";
 
 export function Product() {
@@ -31,7 +31,7 @@ export function Product() {
             {isInUsersList(user, item) ? (
               <button
                 className="category"
-                onClick={() => api.removeItem(user.uid, item.id)}
+                onClick={() => api.user.removeItem(user.uid, item.id)}
               >
                 remove item
               </button>
@@ -39,7 +39,12 @@ export function Product() {
               <button
                 className="category"
                 onClick={() =>
-                  api.addItem(user.uid, item.id, item.expiryDays, item.emoji)
+                  api.user.addItem(
+                    user.uid,
+                    item.id,
+                    item.expiryDays,
+                    item.emoji
+                  )
                 }
               >
                 add item

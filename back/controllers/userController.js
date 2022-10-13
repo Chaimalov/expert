@@ -14,15 +14,15 @@ route.post("/", async (req, res) => {
 
 route.patch("/", async (req, res) => {});
 
-route.post("products/", async (req, res) => {
+route.post("/products", async (req, res) => {
   res.send(await userService.addProduct(req.body.userId, req.body.product));
 });
 
-route.patch("products/", async (req, res) => {
+route.patch("/products", async (req, res) => {
   res.send(await userService.editProduct(req.body.userId, req.body.product));
 });
 
-route.delete("products/", async (req, res) => {
+route.delete("/products", async (req, res) => {
   res.send(
     await userService.removeProduct(req.body.userId, req.body.productId)
   );

@@ -1,35 +1,25 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-// import { database } from "../firebase";
-import { onSnapshot } from "firebase/firestore";
 import { useAuth } from "./AuthContext";
 import { sortBy } from "../utils";
+import api from "../api/api";
 
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
   const { user, loggedIn } = useAuth();
   const [products, setProducts] = useState();
+  const [status, setStatus] = useState(false);
   const [userProducts, setUserProducts] = useState();
 
-  // useEffect(() => {
-  //   if (Object.entries(user).length && !loggedIn) return;
-  //   const unsubscribe = onSnapshot(database.products, (snap) => {
-  //     const data = snap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  //     const list = [];
-  //     data.forEach((item) => {
-  //       if (user.itemsArray && user.itemsArray[item.id]) {
-  //         list.push({ ...item, ...user.itemsArray[item.id] });
-  //       } else {
-  //         list.push(item);
-  //       }
-  //     });
+  useEffect(() => {
+    getProducts();
+    return setStatus(false);
+  }, [loggedIn, status]);
 
-  //     setProducts(sortBy(list, "name"));
-  //   });
-
-  //   return () => unsubscribe();
-  // }, [user, loggedIn, user.itemsArray]);
-
+  const getProducts = async () => {
+    const list = await api.products.getProducts();
+    setProducts(sortBy(list, "name"));
+  };
   useEffect(() => {
     if (products && user.itemsArray) {
       setUserProducts(
@@ -41,7 +31,7 @@ export function ProductsProvider({ children }) {
   }, [products, user]);
 
   return (
-    <ProductsContext.Provider value={{ products, userProducts }}>
+    <ProductsContext.Provider value={{ products, userProducts, setStatus }}>
       {children}
     </ProductsContext.Provider>
   );
