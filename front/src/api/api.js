@@ -4,7 +4,7 @@ import { notify, types } from "../utils";
 export const products = {
   addItem: (userId, itemId, expiryDate, emoji) =>
     axios
-      .post("/users/addItem", {
+      .post("/users/products", {
         userId: userId,
         item: itemId,
         days: expiryDate,
@@ -17,11 +17,10 @@ export const products = {
         notify(err, types.ERROR);
       }),
 
-  removeItem: (userId, itemId) => {
+  removeItem: (userId, productId) => {
     axios
-      .post("/users/removeItem", {
-        userId: userId,
-        item: itemId,
+      .delete("/users/products", {
+        data: { userId, productId },
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
@@ -34,8 +33,8 @@ export const products = {
   deleteItem: (item) => {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
       axios
-        .delete("/products", {
-          data: { id: item.id },
+        .delete("/products/admin", {
+          data: { productId: item.id },
         })
         .then(({ data }) => {
           notify(data, types.SUCCESS);

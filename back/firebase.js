@@ -2,9 +2,13 @@ import admin from "firebase-admin";
 import { getFirestore } from "firebase-admin/firestore";
 import serviceAccount from "./serviceAccountKey.json" assert { type: "json" };
 
-admin.initializeApp({
+const firebase = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://expert.firebaseio.com",
 });
-
-export const db = getFirestore();
+// Initialize Firebase
+const firestore = getFirestore(firebase);
+export const db = {
+  products: await firestore.collection("products"),
+  users: await firestore.collection("users"),
+};

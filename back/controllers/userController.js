@@ -14,8 +14,6 @@ route.post("/", async (req, res) => {
 
 route.patch("/", async (req, res) => {});
 
-route.delete("products/admin", async (req, res) => {});
-
 route.post("products/", async (req, res) => {
   res.send(await userService.addProduct(req.body.userId, req.body.product));
 });
