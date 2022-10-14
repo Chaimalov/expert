@@ -85,7 +85,7 @@ export function Home() {
         </>
       ) : (
         <form onSubmit={(e) => sendData(e)}>
-          <h2>
+          <h2 className="text-center">
             <strong>{name}</strong> is in what Category?
           </h2>
           <CategoriesList
@@ -109,7 +109,7 @@ export function Home() {
               group="refrigerator"
             />
           </div>
-          <div>
+          <div className="flex m-auto">
             <Button value="add" type="submit" />
             <Button value="cancel" danger onClick={handleCancel} />
           </div>

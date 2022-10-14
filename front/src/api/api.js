@@ -1,6 +1,5 @@
 import axios from "axios";
 import { notify, types } from "../utils";
-import { useProducts } from "../context/ProductsContext";
 
 const products = {
   createProduct: (name, category, refrigerator) => {
@@ -39,6 +38,7 @@ const user = {
       await axios.get("/users/" + userId)
     ).data;
   },
+
   addItem: (userId, itemId, expiryDate, emoji) =>
     axios
       .post("/users/products", {

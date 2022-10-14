@@ -33,6 +33,12 @@ export function Item({ item, mini }) {
     notify("would be added", types.ERROR);
   }
 
+  const close = () => {
+    setOpen(false);
+    setOpenEmoji(false);
+    setOpenDate(false);
+  };
+
   async function handleEmoji(icon) {
     setOpenEmoji(false);
     // setEmoji(icon);
@@ -60,8 +66,7 @@ export function Item({ item, mini }) {
   }
 
   function editDate() {
-    setOpen(false);
-    setOpenEmoji(false);
+    close();
     setOpenDate(true);
     setDate([
       {
@@ -79,10 +84,15 @@ export function Item({ item, mini }) {
   }
 
   function saveDate() {
-    setOpenDate(false);
     setExpiryDate(dateRef.current.value);
-    setOpen(false);
-    api.user.updateItem(user.uid, item.id, "expiryDays", dateRef.current.value);
+    api.user.updateItem(
+      user.uid,
+      item.id,
+      "expiryDays",
+      Number(dateRef.current.value)
+    );
+    setStatus(true);
+    close();
   }
 
   const productOptions = [
@@ -108,10 +118,12 @@ export function Item({ item, mini }) {
         ? () => {
             api.user.removeItem(user.uid, item.id);
             setStatus(true);
+            close();
           }
         : () => {
             api.user.addItem(user.uid, item.id, expiryDate, item.emoji);
             setStatus(true);
+            close();
           },
       key: 5,
       type: isInList ? "delete" : "add",
@@ -127,11 +139,7 @@ export function Item({ item, mini }) {
     },
   ];
 
-  const domRef = useClickOutside(() => {
-    setOpen(false);
-    setOpenEmoji(false);
-    setOpenDate(false);
-  });
+  const domRef = useClickOutside(close);
 
   return (
     <div

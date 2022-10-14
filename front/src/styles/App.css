@@ -25,7 +25,7 @@ form {
   height: 7em;
 }
 
-input {
+input:not(input[type="radio"]) {
   padding: 0.5em;
   width: 100%;
   font-size: 1.3em;
@@ -34,7 +34,7 @@ input {
   margin-block: 0.5em;
 }
 
-input:not(input[type="search"]):focus {
+input:not(input[type="search"], input[type="radio"]):focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--clr-primary-light);
 }
@@ -46,6 +46,7 @@ input[type="radio"] {
   display: block;
   transition: 0.2s linear;
   opacity: 0;
+  outline: none;
 }
 
 input[type="radio"]:checked {
