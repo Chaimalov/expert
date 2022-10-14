@@ -32,3 +32,7 @@ route.patch("/:productId", async (req, res) => {
 route.get("/", async (req, res) => {
   res.send(await productsService.getProducts());
 });
+
+route.get("/user/:userId", async (req, res) => {
+  res.send(await productsService.getProductsByUser(req.params.userId));
+});

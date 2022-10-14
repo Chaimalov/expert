@@ -8,20 +8,29 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import api from "../api/api";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  const [providerUser, seProviderUser] = useState();
+  const [userRecord, setUserRecord] = useState();
+  const [status, setStatus] = useState(false);
+
+  const loggedIn = providerUser && userRecord;
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    setUser(await signInWithPopup(auth, provider));
+    seProviderUser(await (await signInWithPopup(auth, provider)).user);
   };
 
   const signIn = async (email, password, setError) => {
     try {
-      setUser(await signInWithEmailAndPassword(auth, email, password));
+      seProviderUser(
+        await (
+          await signInWithEmailAndPassword(auth, email, password)
+        ).user
+      );
     } catch (error) {
       setError("password is incorrect");
     }
@@ -29,33 +38,16 @@ export function AuthProvider({ children }) {
 
   const signUpWithEmailAndPassword = async (email, password, setError) => {
     try {
-      setUser(await createUserWithEmailAndPassword(auth, email, password));
+      seProviderUser(
+        await (
+          await createUserWithEmailAndPassword(auth, email, password)
+        ).user
+      );
     } catch (error) {
       signIn(email, password, setError);
       // setError("email already exists. try sign in");
     }
   };
-
-  // useEffect(() => {
-  //   if (!userDetails) return;
-  //   const checkExist = async () => {
-  //     if (!userDetails) return;
-  //     const doc = await getDoc(database.users, userDetails.uid);
-  //     if (!doc.exists()) addUser();
-  //   };
-  //   return () => checkExist();
-  // }, [userDetails]);
-
-  // useEffect(() => {
-  //   if (!userDetails) return;
-  //   const unsubscribe = onSnapshot(
-  //     doc(database.users, userDetails.uid),
-  //     (doc) => {
-  //       setUserPreferences({ ...doc.data(), uid: doc.id });
-  //     }
-  //   );
-  //   return () => unsubscribe();
-  // }, [userDetails]);
 
   function logOut() {
     signOut(auth);
@@ -64,12 +56,23 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      seProviderUser(currentUser);
     });
     return unsubscribe;
-  }, [user]);
+  }, [providerUser]);
 
-  const loggedIn = !!user;
+  useEffect(() => {
+    const getRecord = async () => {
+      const record = await api.user.getUser(providerUser.uid);
+      setUserRecord(record);
+    };
+    if (providerUser) getRecord();
+  }, [providerUser, status]);
+
+  const user = {
+    ...providerUser,
+    ...userRecord,
+  };
 
   return (
     <AuthContext.Provider
@@ -80,6 +83,8 @@ export function AuthProvider({ children }) {
         signIn,
         user,
         loggedIn,
+        setStatus,
+        status,
       }}
     >
       {children}

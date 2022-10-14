@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { Options, EditDate } from "./index";
@@ -14,16 +13,17 @@ import {
 } from "../utils";
 import { displayDays } from "../utils";
 import api from "../api/api";
+import { useProducts } from "../context/ProductsContext";
 
-export function Item({ item, index, mini = false }) {
+export function Item({ item, mini }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
   const [icons, setIcons] = useState();
-  const [emoji, setEmoji] = useState(item.emoji);
   const [expiryDate, setExpiryDate] = useState(item.expiryDays);
   const [date, setDate] = useState();
-  const { user, loggedIn } = useAuth();
+  const { user } = useAuth();
+  const { setStatus } = useProducts();
   const dateRef = useRef(expiryDate);
 
   const isInList = isInUsersList(user, item);
@@ -33,10 +33,11 @@ export function Item({ item, index, mini = false }) {
     notify("would be added", types.ERROR);
   }
 
-  function handleEmoji(icon) {
+  async function handleEmoji(icon) {
     setOpenEmoji(false);
-    setEmoji(icon);
+    // setEmoji(icon);
     api.user.updateItem(user.uid, item.id, "emoji", icon);
+    setStatus(true);
   }
 
   function editEmoji() {
@@ -104,14 +105,23 @@ export function Item({ item, index, mini = false }) {
     {
       text: isInList ? "remove item" : "add item",
       action: isInList
-        ? () => api.user.removeItem(user.uid, item.id)
-        : () => api.user.addItem(user.uid, item.id, expiryDate, emoji),
+        ? () => {
+            api.user.removeItem(user.uid, item.id);
+            setStatus(true);
+          }
+        : () => {
+            api.user.addItem(user.uid, item.id, expiryDate, item.emoji);
+            setStatus(true);
+          },
       key: 5,
       type: isInList ? "delete" : "add",
     },
     {
       text: "delete",
-      action: () => api.products.deleteItem(item),
+      action: () => {
+        api.products.deleteItem(item);
+        setStatus(true);
+      },
       key: 3,
       type: "delete",
     },
@@ -128,7 +138,7 @@ export function Item({ item, index, mini = false }) {
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": (emoji && colorFromEmoji(emoji)) || 50,
+        "--hue": (item.emoji && colorFromEmoji(item.emoji)) || 50,
       }}
     >
       {!mini && (
@@ -140,7 +150,7 @@ export function Item({ item, index, mini = false }) {
       )}
       <div className={`item  ${mini && "mini"}`}>
         <div className="top">
-          {emoji && <div className="icon">{emoji}</div>}
+          {item.emoji && <div className="icon">{item.emoji}</div>}
           {!mini && (
             <button onClick={() => setOpen(true)} className="reset">
               <IoEllipsisHorizontal className="ion" />

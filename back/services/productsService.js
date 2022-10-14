@@ -1,5 +1,6 @@
 import { searchByName, searchByCategory } from "../searchEmoji.js";
 import productsRepository from "../repositories/productsRepository.js";
+import userService from "./userService.js";
 
 const createProduct = async ({ name, category, refrigerator }) => {
   if (!(await productsRepository.getProductByName(name)))
@@ -43,6 +44,22 @@ const getProducts = async () => {
   return await productsRepository.getProducts();
 };
 
+const getProductsByUser = async (userId) => {
+  const products = await getProducts();
+  const usersProducts = (await userService.getUserById(userId)).products;
+
+  const productsByUser = [];
+  products.forEach((product) => {
+    if (usersProducts[product.id]) {
+      productsByUser.push({ ...product, ...usersProducts[product.id] });
+    } else {
+      productsByUser.push(product);
+    }
+  });
+
+  return productsByUser;
+};
+
 const categoryDays = {
   fruits: {
     expiryDate: 30,
@@ -80,4 +97,5 @@ export default {
   getProducts,
   updateProductsEmoji,
   deleteProductById,
+  getProductsByUser,
 };

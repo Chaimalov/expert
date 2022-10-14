@@ -8,6 +8,7 @@ const firebase = admin.initializeApp({
 });
 // Initialize Firebase
 const firestore = getFirestore(firebase);
+
 export const db = {
   products: await firestore.collection("products"),
   users: await firestore.collection("users"),

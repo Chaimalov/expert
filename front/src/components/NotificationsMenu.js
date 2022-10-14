@@ -48,7 +48,7 @@ export function NotificationsMenu({ setExpireAlertCount }) {
     const groups = userProducts.reduce((groups, item) => {
       if (item.createdAt) {
         const date = addDaysToDate(
-          new Date(item.createdAt.toDate().setHours(0, 0, 0, 0)),
+          new Date(new Date(item.createdAt).setHours(0, 0, 0, 0)),
           item.expiryDays
         );
 
@@ -58,10 +58,8 @@ export function NotificationsMenu({ setExpireAlertCount }) {
 
         groups[date].push(item);
       }
-
       return groups;
     }, {});
-
     return sortObjectByDateKeys(groups);
   }, [userProducts]);
 

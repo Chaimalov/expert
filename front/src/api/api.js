@@ -26,21 +26,24 @@ const products = {
         });
     }
   },
-  getProducts: async () => {
+  getProducts: async (userId) => {
     return await (
-      await axios.get("/products")
+      await axios.get("/products/user/" + userId)
     ).data;
   },
 };
 
 const user = {
+  getUser: async (userId) => {
+    return await (
+      await axios.get("/users/" + userId)
+    ).data;
+  },
   addItem: (userId, itemId, expiryDate, emoji) =>
     axios
       .post("/users/products", {
         userId: userId,
-        item: itemId,
-        days: expiryDate,
-        emoji: emoji,
+        product: { id: itemId, days: expiryDate, emoji: emoji },
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
@@ -70,6 +73,9 @@ const user = {
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
+      })
+      .catch(({ err }) => {
+        notify(err, types.ERROR);
       });
   },
 };

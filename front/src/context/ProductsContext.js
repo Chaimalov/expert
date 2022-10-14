@@ -6,9 +6,8 @@ import api from "../api/api";
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
-  const { user, loggedIn } = useAuth();
+  const { user, loggedIn, setStatus, status } = useAuth();
   const [products, setProducts] = useState();
-  const [status, setStatus] = useState(false);
   const [userProducts, setUserProducts] = useState();
 
   useEffect(() => {
@@ -17,14 +16,17 @@ export function ProductsProvider({ children }) {
   }, [loggedIn, status]);
 
   const getProducts = async () => {
-    const list = await api.products.getProducts();
+    const list = await api.products.getProducts(user.uid);
     setProducts(sortBy(list, "name"));
   };
+
   useEffect(() => {
-    if (products && user.itemsArray) {
+    if (products && user.products) {
       setUserProducts(
         products.filter((product) =>
-          Object.keys(user.itemsArray).some((item) => item === product.id)
+          Object.keys(user.products).some(
+            (userProduct) => userProduct === product.id
+          )
         )
       );
     }

@@ -4,26 +4,35 @@ import userService from "../services/userService.js";
 const route = express.Router();
 export default route;
 
-route.get("/", async (req, res) => {
-  res.send(await userService.getUserById(req.body.userId));
-});
-
-route.post("/", async (req, res) => {
-  res.send(await userService.createUser(req.body.id, req.body.name));
+route.get("/:userId", async (req, res) => {
+  res.send(await userService.getUserById(req.params.userId));
 });
 
 route.patch("/", async (req, res) => {});
 
 route.post("/products", async (req, res) => {
-  res.send(await userService.addProduct(req.body.userId, req.body.product));
+  try {
+    await userService.addProduct(req.body.userId, req.body.product);
+    res.send("product was added successfully");
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 route.patch("/products", async (req, res) => {
-  res.send(await userService.editProduct(req.body.userId, req.body.product));
+  try {
+    await userService.editProduct(req.body.userId, req.body.product);
+    res.send("changes were saved");
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 route.delete("/products", async (req, res) => {
-  res.send(
-    await userService.removeProduct(req.body.userId, req.body.productId)
-  );
+  try {
+    await userService.removeProduct(req.body.userId, req.body.productId);
+    res.send("product removed from your list");
+  } catch (error) {
+    res.send(error);
+  }
 });

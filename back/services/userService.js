@@ -4,10 +4,6 @@ const getUserById = async (id) => {
   return await usersRepository.getUser(id);
 };
 
-const createUser = async (id, name) => {
-  return await usersRepository.createUserDoc(id, name);
-};
-
 const addProduct = async (userId, product) => {
   return await usersRepository.addProductToUsersList(userId, product);
 };
@@ -26,7 +22,6 @@ const deleteProduct = async (productId) => {
 
 export default {
   getUserById,
-  createUser,
   addProduct,
   editProduct,
   removeProduct,
