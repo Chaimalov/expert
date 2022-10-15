@@ -171,7 +171,7 @@ export function Item({ item, mini }) {
         {!mini && (
           <>
             <h4>{item.category} </h4>
-            <h5>
+            <h5 className="space-between">
               {displayDays(expiryDate)} <span>{item.refrigerator && "❄️"}</span>
             </h5>
           </>

@@ -8,9 +8,9 @@ const products = {
         product: { name: name.toLowerCase().trim(), category, refrigerator },
       })
       .then(({ data }) => {
-        notify(data.message, types.SUCCESS);
+        notify(data, types.SUCCESS);
       })
-      .catch((error) => notify(error.response.data, types.ERROR));
+      .catch((error) => notify(error, types.ERROR));
   },
 
   deleteItem: (item) => {
@@ -71,6 +71,17 @@ const user = {
         userId: userId,
         product: { id: productId, key, value },
       })
+      .then(({ data }) => {
+        notify(data, types.SUCCESS);
+      })
+      .catch(({ err }) => {
+        notify(err, types.ERROR);
+      });
+  },
+
+  deleteAcount: (userId) => {
+    axios
+      .delete("/users/" + userId)
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })

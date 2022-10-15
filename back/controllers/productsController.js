@@ -5,7 +5,12 @@ const route = express.Router();
 export default route;
 
 route.post("/", async (req, res) => {
-  res.send(await productsService.createProduct(req.body.product));
+  try {
+    await productsService.createProduct(req.body.product);
+    res.send(req.body.product.name + " was created");
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 route.get("/:productName", async (req, res) => {
@@ -17,7 +22,12 @@ route.get("/:category", async (req, res) => {
 });
 
 route.delete("/:productId", async (req, res) => {
-  res.send(await productsService.deleteProductById(req.params.productId));
+  try {
+    await productsService.deleteProductById(req.params.productId);
+    res.send("product was deleted successfully");
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 route.patch("/:productId", async (req, res) => {

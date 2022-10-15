@@ -54,6 +54,10 @@ export function AuthProvider({ children }) {
     // setUserPreferences(null);
   }
 
+  const deleteAcount = (userId) => {
+    api.user.deleteAcount(userId);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       seProviderUser(currentUser);

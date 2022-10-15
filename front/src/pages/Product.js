@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { colorFromEmoji, isInUsersList } from "../utils";
+import { colorFromEmoji, displayDays, isInUsersList } from "../utils";
 import { useProducts } from "../context/ProductsContext";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
@@ -27,6 +27,7 @@ export function Product() {
             {item.emoji} {item.name}
           </h1>
           <h2>{item.category}</h2>
+          <h3>{displayDays(item.expiryDays)}</h3>
           <div className="section">
             {isInUsersList(user, item) ? (
               <button
@@ -54,27 +55,7 @@ export function Product() {
                 add item
               </button>
             )}
-            <button className="category">edit emoji</button>
             <button className="category">edit date</button>
-          </div>
-          <div className="container">
-            <Options
-              type="emoji"
-              open={true}
-              list={[
-                ...item.emojiList.map((emoji) => ({
-                  text: emoji.character,
-                  action: "",
-                  key: emoji.slug,
-                  send: emoji.character,
-                })),
-                {
-                  action: "",
-                  key: 90,
-                  send: null,
-                },
-              ]}
-            />
           </div>
         </div>
       )}

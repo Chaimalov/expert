@@ -211,6 +211,11 @@ img {
   text-align: center;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 700px) {
   :root {
     font-size: 0.7rem;
