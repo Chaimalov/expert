@@ -9,7 +9,7 @@ import { Options, EditDate } from "../components";
 export function Product() {
   const [item, setItem] = useState();
   const { id } = useParams();
-  const { products } = useProducts();
+  const { products, setStatus } = useProducts();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -31,21 +31,25 @@ export function Product() {
             {isInUsersList(user, item) ? (
               <button
                 className="category"
-                onClick={() => api.user.removeItem(user.uid, item.id)}
+                onClick={() => {
+                  api.user.removeItem(user.uid, item.id);
+                  setStatus(true);
+                }}
               >
                 remove item
               </button>
             ) : (
               <button
                 className="category"
-                onClick={() =>
+                onClick={() => {
                   api.user.addItem(
                     user.uid,
                     item.id,
                     item.expiryDays,
                     item.emoji
-                  )
-                }
+                  );
+                  setStatus(true);
+                }}
               >
                 add item
               </button>
