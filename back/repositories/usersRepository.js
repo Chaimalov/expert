@@ -1,21 +1,17 @@
 import { db } from "../firebase.js";
-import {
-  updateDoc,
-  doc,
-  setDoc,
-  serverTimestamp,
-  deleteDoc,
-  deleteField,
-  getDoc,
-} from "firebase/firestore/lite";
 import { FieldValue } from "firebase-admin/firestore";
+
+const createUser = async (userId) => {
+  return await db.users.doc(userId).set({ products: {} });
+};
 
 const getUser = async (id) => {
   return await (await db.users.doc(id).get()).data();
 };
 
-const deleteProductFromDB = async (id) => {
-  return await deleteDoc(doc(db.users, id));
+const deleteUser = async (userId) => {
+  await db.users.doc(userId).delete();
+  return await db.auth.deleteUser(userId);
 };
 
 const addProductToUsersList = async (userId, product) => {
@@ -46,15 +42,16 @@ const editProductInUsersList = async (userId, product) => {
 };
 
 const removeProductFromUsersList = async (userId, productId) => {
-  return db.users.doc(userId).update({
+  return await db.users.doc(userId).update({
     [`products.${productId}`]: FieldValue.delete(),
   });
 };
 
 export default {
   getUser,
-  deleteProductFromDB,
+  deleteUser,
   addProductToUsersList,
   editProductInUsersList,
   removeProductFromUsersList,
+  createUser,
 };

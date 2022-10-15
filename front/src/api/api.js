@@ -10,7 +10,9 @@ const products = {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch((error) => notify(error, types.ERROR));
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
+      });
   },
 
   deleteItem: (item) => {
@@ -20,8 +22,8 @@ const products = {
         .then(({ data }) => {
           notify(data, types.SUCCESS);
         })
-        .catch(({ err }) => {
-          notify(err, types.ERROR);
+        .catch(({ response }) => {
+          notify(response.data, types.ERROR);
         });
     }
   },
@@ -39,7 +41,7 @@ const user = {
     ).data;
   },
 
-  addItem: (userId, itemId, expiryDate, emoji) =>
+  addItem: (userId, itemId, expiryDate, emoji) => {
     axios
       .post("/users/products", {
         userId: userId,
@@ -48,10 +50,10 @@ const user = {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({ err }) => {
-        notify(err, types.ERROR);
-      }),
-
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
+      });
+  },
   removeItem: (userId, productId) => {
     axios
       .delete("/users/products", {
@@ -60,8 +62,8 @@ const user = {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({ err }) => {
-        notify(err, types.ERROR);
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
       });
   },
 
@@ -74,19 +76,19 @@ const user = {
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({ err }) => {
-        notify(err, types.ERROR);
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
       });
   },
 
-  deleteAcount: (userId) => {
+  deleteAccount: (userId) => {
     axios
       .delete("/users/" + userId)
       .then(({ data }) => {
         notify(data, types.SUCCESS);
       })
-      .catch(({ err }) => {
-        notify(err, types.ERROR);
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
       });
   },
 };

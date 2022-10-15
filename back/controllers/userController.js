@@ -10,6 +10,24 @@ route.get("/:userId", async (req, res) => {
 
 route.patch("/", async (req, res) => {});
 
+route.delete("/products", async (req, res) => {
+  try {
+    await userService.removeProduct(req.body.userId, req.body.productId);
+    res.send("product removed from your list");
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+});
+
+route.delete("/:userId", async (req, res) => {
+  try {
+    await userService.deleteUser(req.params.userId);
+    res.send("deleted");
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 route.post("/products", async (req, res) => {
   try {
     await userService.addProduct(req.body.userId, req.body.product);
@@ -23,15 +41,6 @@ route.patch("/products", async (req, res) => {
   try {
     await userService.editProduct(req.body.userId, req.body.product);
     res.send("changes were saved");
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-route.delete("/products", async (req, res) => {
-  try {
-    await userService.removeProduct(req.body.userId, req.body.productId);
-    res.send("product removed from your list");
   } catch (error) {
     res.send(error);
   }

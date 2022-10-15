@@ -50,7 +50,7 @@ const getProductsByUser = async (userId) => {
 
   const productsByUser = [];
   products.forEach((product) => {
-    if (usersProducts[product.id]) {
+    if (usersProducts && usersProducts[product.id]) {
       productsByUser.push({ ...product, ...usersProducts[product.id] });
     } else {
       productsByUser.push(product);

@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ProductsList } from "./ProductsList";
 import { useProducts } from "../context/ProductsContext";
 import { sortObjectByDateKeys, addDaysToDate } from "../utils";
+import { FaQuestion } from "react-icons/fa";
 
 const animationConfiguration = {
   initial: { width: 0 },
@@ -77,13 +78,23 @@ export function NotificationsMenu({ setExpireAlertCount }) {
         exit="closed"
         variants={sideVariants}
       >
-        {items &&
+        {Object.keys(items).length > 0 ? (
           Object.keys(items).map((date) => (
             <motion.div key={date} variants={itemVariants}>
               <h3 className="date">{new Date(date).toDateString()}</h3>
               <ProductsList list={items[date]} mini />
             </motion.div>
-          ))}
+          ))
+        ) : (
+          <div className="text">
+            <motion.div variants={itemVariants}>
+              <h2>we're starting fresh 😊</h2>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <h4>add products to the list to get notified</h4>
+            </motion.div>
+          </div>
+        )}
       </motion.div>
     </motion.aside>
   );

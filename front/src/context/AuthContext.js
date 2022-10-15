@@ -54,8 +54,9 @@ export function AuthProvider({ children }) {
     // setUserPreferences(null);
   }
 
-  const deleteAcount = (userId) => {
-    api.user.deleteAcount(userId);
+  const deleteAccount = async () => {
+    await api.user.deleteAccount(user.uid);
+    logOut();
   };
 
   useEffect(() => {
@@ -89,6 +90,7 @@ export function AuthProvider({ children }) {
         loggedIn,
         setStatus,
         status,
+        deleteAccount,
       }}
     >
       {children}
