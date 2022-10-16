@@ -6,17 +6,16 @@ import { Toaster } from "react-hot-toast";
 import Transitions from "./context/Transition";
 import { motion, useCycle } from "framer-motion";
 
-import { Home, Statistics, Account, Login, Product } from "./pages";
+import { Home, Account, Login, Product } from "./pages";
 
 import { Nav, NotificationsMenu } from "./components";
 import { useAuth } from "./context/AuthContext";
-import { ProductsProvider } from "./context/ProductsContext";
+import { ProductsProvider, useProducts } from "./context/ProductsContext";
 
 export default function App() {
   const location = useLocation();
   const { loggedIn } = useAuth();
   const [menu, setMenu] = useCycle(false, true);
-  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   if (!loggedIn) return <Login />;
   return (
@@ -24,11 +23,7 @@ export default function App() {
       <div style={{ display: "flex" }}>
         <ProductsProvider>
           <motion.div style={{ flexGrow: 1 }}>
-            <Nav
-              toggleMenu={setMenu}
-              menu={menu}
-              expireAlertCount={expireAlertCount}
-            />
+            <Nav toggleMenu={setMenu} menu={menu} />
             <AnimatePresence exitBeforeEnter>
               <Routes location={location} key={location.pathname}>
                 <Route
@@ -58,11 +53,7 @@ export default function App() {
               </Routes>
             </AnimatePresence>
           </motion.div>
-          <AnimatePresence>
-            {menu && (
-              <NotificationsMenu setExpireAlertCount={setExpireAlertCount} />
-            )}
-          </AnimatePresence>
+          <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
         </ProductsProvider>
       </div>
       <Toaster />

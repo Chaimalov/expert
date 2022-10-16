@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
-import { sortBy } from "../utils";
+import { addDaysToDate, sortBy } from "../utils";
 import api from "../api/api";
 
 const ProductsContext = createContext();
@@ -9,6 +9,7 @@ export function ProductsProvider({ children }) {
   const { user, loggedIn, setStatus, status } = useAuth();
   const [products, setProducts] = useState();
   const [userProducts, setUserProducts] = useState();
+  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
     getProducts();
@@ -32,8 +33,23 @@ export function ProductsProvider({ children }) {
     }
   }, [products, user]);
 
+  useEffect(() => {
+    if (!userProducts) return;
+
+    setExpireAlertCount(
+      userProducts.filter((product) => {
+        return (
+          addDaysToDate(new Date(product.createdAt), product.expiryDays - 14) <=
+          new Date(new Date().setHours(0, 0, 0, 0))
+        );
+      }).length
+    );
+  }, [userProducts]);
+
   return (
-    <ProductsContext.Provider value={{ products, userProducts, setStatus }}>
+    <ProductsContext.Provider
+      value={{ products, userProducts, setStatus, expireAlertCount }}
+    >
       {children}
     </ProductsContext.Provider>
   );

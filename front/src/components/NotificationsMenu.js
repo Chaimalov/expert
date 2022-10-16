@@ -40,7 +40,7 @@ const sideVariants = {
   },
 };
 
-export function NotificationsMenu({ setExpireAlertCount }) {
+export function NotificationsMenu() {
   const { userProducts } = useProducts();
 
   const items = useMemo(() => {
