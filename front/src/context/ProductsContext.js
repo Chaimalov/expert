@@ -39,8 +39,9 @@ export function ProductsProvider({ children }) {
     setExpireAlertCount(
       userProducts.filter((product) => {
         return (
-          addDaysToDate(new Date(product.createdAt), product.expiryDays - 14) <=
-          new Date(new Date().setHours(0, 0, 0, 0))
+          product.expiryDate &&
+          addDaysToDate(new Date(product.expiryDate), -13) <=
+            new Date(new Date().setHours(0, 0, 0, 0))
         );
       }).length
     );

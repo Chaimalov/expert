@@ -51,13 +51,25 @@ const getProductsByUser = async (userId) => {
   const productsByUser = [];
   products.forEach((product) => {
     if (usersProducts && usersProducts[product.id]) {
-      productsByUser.push({ ...product, ...usersProducts[product.id] });
+      const userProduct = usersProducts[product.id];
+      productsByUser.push({
+        ...product,
+        ...userProduct,
+        expiryDate: addDaysToDate(
+          new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
+          product.expiryDays
+        ),
+      });
     } else {
       productsByUser.push(product);
     }
   });
 
   return productsByUser;
+};
+
+const addDaysToDate = (date, days) => {
+  return new Date(date.setDate(date.getDate() + days));
 };
 
 const categoryDays = {

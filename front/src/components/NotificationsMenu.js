@@ -48,10 +48,7 @@ export function NotificationsMenu() {
 
     const groups = userProducts.reduce((groups, item) => {
       if (item.createdAt) {
-        const date = addDaysToDate(
-          new Date(new Date(item.createdAt).setHours(0, 0, 0, 0)),
-          item.expiryDays
-        );
+        const date = new Date(item.expiryDate);
 
         if (!groups[date]) {
           groups[date] = [];

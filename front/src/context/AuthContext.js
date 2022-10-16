@@ -45,13 +45,11 @@ export function AuthProvider({ children }) {
       );
     } catch (error) {
       signIn(email, password, setError);
-      // setError("email already exists. try sign in");
     }
   };
 
   function logOut() {
     signOut(auth);
-    // setUserPreferences(null);
   }
 
   const deleteAccount = async () => {
@@ -69,6 +67,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const getRecord = async () => {
       const record = await api.user.getUser(providerUser.uid);
+      if (!providerUser.photoURL) {
+        record.photoURL = "http://www.zooniverse.org/assets/simple-avatar.png";
+      }
       setUserRecord(record);
     };
     if (providerUser) getRecord();

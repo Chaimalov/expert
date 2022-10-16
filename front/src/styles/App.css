@@ -25,7 +25,8 @@ form {
   height: 7em;
 }
 
-input:not(input[type="radio"]) {
+input:not(input[type="radio"]),
+select {
   padding: 0.5em;
   width: 100%;
   font-size: 1.3em;
@@ -34,9 +35,15 @@ input:not(input[type="radio"]) {
   margin-block: 0.5em;
 }
 
-input:not(input[type="search"], input[type="radio"]):focus {
+input:not(input[type="search"], input[type="radio"]):focus,
+select:focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--clr-primary-light);
+}
+
+input:not(input[type="search"], input[type="radio"]):disabled,
+select:disabled {
+  border-color: var(--grey);
 }
 
 input[type="radio"] {
