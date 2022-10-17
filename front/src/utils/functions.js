@@ -10,3 +10,7 @@ export const sortObjectByDateKeys = (object) =>
 export const addDaysToDate = (date, days) => {
   return new Date(date.setDate(date.getDate() + days));
 };
+
+export const randomInteger = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};

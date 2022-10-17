@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import api from "../api/api";
+import { generateAvatar } from "../utils";
 
 const AuthContext = createContext();
 
@@ -60,6 +61,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       seProviderUser(currentUser);
+      setStatus(true);
     });
     return unsubscribe;
   }, [providerUser]);
@@ -68,7 +70,7 @@ export function AuthProvider({ children }) {
     const getRecord = async () => {
       const record = await api.user.getUser(providerUser.uid);
       if (!providerUser.photoURL) {
-        record.photoURL = "http://www.zooniverse.org/assets/simple-avatar.png";
+        record.photoURL = generateAvatar(user.email.charAt(0), "white");
       }
       setUserRecord(record);
     };

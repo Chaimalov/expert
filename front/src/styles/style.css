@@ -4,6 +4,10 @@
   text-transform: capitalize;
 }
 
+:where(h1, h2, h3, h4, strong, a).color {
+  color: var(--clr-primary);
+}
+
 section {
   color: var(--clr-primary-dark);
   flex-grow: 1;
@@ -184,6 +188,11 @@ img {
 .flex {
   display: flex;
   align-items: center;
+  gap: 1em;
+}
+
+.grid {
+  display: grid;
   gap: 1em;
 }
 

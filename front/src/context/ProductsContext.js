@@ -17,7 +17,7 @@ export function ProductsProvider({ children }) {
 
     getProducts();
     return setStatus(false);
-  }, [loggedIn, status]);
+  }, [status]);
 
   const getProducts = async () => {
     const toastId = toast.loading("working on it...");

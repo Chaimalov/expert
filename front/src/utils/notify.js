@@ -1,8 +1,10 @@
 import toast from "react-hot-toast";
+import { Button } from "../components";
 
 export const types = {
   SUCCESS: "success",
   ERROR: "error",
+  CONFIRM: "confirm",
 };
 
 const styles = {
@@ -22,6 +24,22 @@ export function notify(message, type) {
       toast.error(message, {
         style: styles,
       });
+      break;
+    case types.CONFIRM:
+      toast((t) => (
+        <div className="grid">
+          <h4>{message}</h4>
+
+          <div className="flex m-auto">
+            <Button danger onClick={() => toast.dismiss(t.id)}>
+              delete
+            </Button>
+            <Button onClick={() => toast.dismiss(t.id)}>cancel</Button>
+          </div>
+        </div>
+      ));
+      break;
+    default:
       break;
   }
 }
