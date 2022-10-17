@@ -43,7 +43,7 @@ const editProductInUsersList = async (userId, product) => {
 
 const removeProductFromUsersList = async (userId, productId) => {
   return await db.users.doc(userId).update({
-    [`products.${productId}`]: FieldValue.delete(),
+    [`products.${productId}.createdAt`]: FieldValue.delete(),
   });
 };
 

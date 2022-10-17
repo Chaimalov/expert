@@ -15,7 +15,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [providerUser, seProviderUser] = useState();
   const [userRecord, setUserRecord] = useState();
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(true);
 
   const loggedIn = providerUser && userRecord;
 

@@ -116,13 +116,13 @@ export function Item({ item, mini }) {
       text: isInList ? "remove item" : "add item",
       action: isInList
         ? () => {
-            api.user.removeItem(user.uid, item.id);
             setStatus(true);
+            api.user.removeItem(user.uid, item.id);
             close();
           }
         : () => {
-            api.user.addItem(user.uid, item.id, expiryDate, item.emoji);
             setStatus(true);
+            api.user.addItem(user.uid, item.id, expiryDate, item.emoji);
             close();
           },
       key: 5,

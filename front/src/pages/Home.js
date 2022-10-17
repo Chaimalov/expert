@@ -41,13 +41,11 @@ export function Home() {
   async function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
-    const toastId = toast.loading("sending data...");
 
-    await api.products.createProduct(name, category, refrigerator);
     setStatus(true);
+    await api.products.createProduct(name, category, refrigerator);
     e.target.reset();
     setFound(true);
-    toast.dismiss(toastId);
   }
 
   function handleCancel(f) {

@@ -21,7 +21,7 @@ export function Account() {
       <select id="dropdown">
         <option>same day</option>
         <option>2 days in advance</option>
-        <option>a week in advance</option>
+        <option>1 week in advance</option>
       </select>
       <br />
       <div className="center">

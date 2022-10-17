@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { addDaysToDate, sortBy } from "../utils";
 import api from "../api/api";
+import toast from "react-hot-toast";
 
 const ProductsContext = createContext();
 
@@ -12,24 +13,22 @@ export function ProductsProvider({ children }) {
   const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
+    if (!status) return;
+
     getProducts();
     return setStatus(false);
   }, [loggedIn, status]);
 
   const getProducts = async () => {
+    const toastId = toast.loading("working on it...");
     const list = await api.products.getProducts(user.uid);
     setProducts(sortBy(list, "name"));
+    toast.dismiss(toastId);
   };
 
   useEffect(() => {
     if (products && user.products) {
-      setUserProducts(
-        products.filter((product) =>
-          Object.keys(user.products).some(
-            (userProduct) => userProduct === product.id
-          )
-        )
-      );
+      setUserProducts(products.filter((product) => product.createdAt));
     }
   }, [products, user]);
 

@@ -17,5 +17,5 @@ export function displayDays(days) {
 
 export const isInUsersList = (user, item) => {
   if (!user.products) return;
-  return Object.keys(user.products).some((id) => id === item.id);
+  return item.createdAt;
 };
