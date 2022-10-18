@@ -2,9 +2,15 @@ import React from "react";
 import { Button, Input } from "../components";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import api from "../api/api";
 
 export function Account() {
-  const { user, deleteAccount } = useAuth();
+  const { user, deleteAccount, setStatus } = useAuth();
+
+  const updatePreference = async (value) => {
+    await api.user.updateNotify(user.uid, Number(value));
+    setStatus(true);
+  };
 
   const deleteAccountAction = () => {
     toast((t) => (
@@ -44,10 +50,14 @@ export function Account() {
       <label htmlFor="dropdown">
         <h4>notify at:</h4>
       </label>
-      <select id="dropdown">
-        <option>same day</option>
-        <option>2 days in advance</option>
-        <option>1 week in advance</option>
+      <select
+        id="dropdown"
+        onChange={(selected) => updatePreference(selected.currentTarget.value)}
+        defaultValue={user.notifyBefore}
+      >
+        <option value={0}>same day</option>
+        <option value={2}>2 days in advance</option>
+        <option value={7}>1 week in advance</option>
       </select>
       <br />
       <div className="center">

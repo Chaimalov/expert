@@ -39,7 +39,7 @@ export function ProductsProvider({ children }) {
       userProducts.filter((product) => {
         return (
           product.expiryDate &&
-          addDaysToDate(new Date(product.expiryDate), -13) <=
+          addDaysToDate(new Date(product.expiryDate), -user.notifyBefore) <=
             new Date(new Date().setHours(0, 0, 0, 0))
         );
       }).length

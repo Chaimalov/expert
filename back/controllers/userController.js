@@ -8,7 +8,23 @@ route.get("/:userId", async (req, res) => {
   res.send(await userService.getUserById(req.params.userId));
 });
 
-route.patch("/", async (req, res) => {});
+route.patch("/products", async (req, res) => {
+  try {
+    await userService.editProduct(req.body.userId, req.body.product);
+    res.send("changes were saved");
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+route.patch("/:userId", async (req, res) => {
+  try {
+    await userService.updateNotify(req.params.userId, req.body.notifyBefore);
+    res.send("updated preference");
+  } catch (error) {
+    res.send(error);
+  }
+});
 
 route.delete("/products", async (req, res) => {
   try {
@@ -32,15 +48,6 @@ route.post("/products", async (req, res) => {
   try {
     await userService.addProduct(req.body.userId, req.body.product);
     res.send("product was added successfully");
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-route.patch("/products", async (req, res) => {
-  try {
-    await userService.editProduct(req.body.userId, req.body.product);
-    res.send("changes were saved");
   } catch (error) {
     res.send(error);
   }

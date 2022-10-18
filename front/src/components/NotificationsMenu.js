@@ -75,7 +75,7 @@ export function NotificationsMenu() {
         exit="closed"
         variants={sideVariants}
       >
-        {Object.keys(items).length > 0 ? (
+        {items && Object.keys(items).length > 0 ? (
           Object.keys(items).map((date) => (
             <motion.div key={date} variants={itemVariants}>
               <h3 className="date">{new Date(date).toDateString()}</h3>

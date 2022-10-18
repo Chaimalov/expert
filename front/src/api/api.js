@@ -41,11 +41,11 @@ const user = {
     ).data;
   },
 
-  addItem: (userId, itemId, expiryDate, emoji) => {
+  addItem: (userId, itemId, expiryDays, emoji) => {
     axios
       .post("/users/products", {
         userId: userId,
-        product: { id: itemId, days: expiryDate, emoji: emoji },
+        product: { id: itemId, expiryDays, emoji },
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);
@@ -72,6 +72,19 @@ const user = {
       .patch("/users/products", {
         userId: userId,
         product: { id: productId, key, value },
+      })
+      .then(({ data }) => {
+        // notify(data, types.SUCCESS);
+      })
+      .catch(({ response }) => {
+        notify(response.data, types.ERROR);
+      });
+  },
+
+  updateNotify: (userId, notifyBefore) => {
+    axios
+      .patch("/users/" + userId, {
+        notifyBefore,
       })
       .then(({ data }) => {
         notify(data, types.SUCCESS);

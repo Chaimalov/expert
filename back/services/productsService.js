@@ -57,7 +57,7 @@ const getProductsByUser = async (userId) => {
         ...userProduct,
         expiryDate: addDaysToDate(
           new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
-          product.expiryDays
+          userProduct.expiryDays || product.expiryDays
         ),
       });
     } else {

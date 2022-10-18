@@ -2,7 +2,7 @@ import { db } from "../firebase.js";
 import { FieldValue } from "firebase-admin/firestore";
 
 const createUser = async (userId) => {
-  return await db.users.doc(userId).set({ products: {} });
+  return await db.users.doc(userId).set({ products: {}, notifyBefore: 0 });
 };
 
 const getUser = async (id) => {
@@ -26,6 +26,10 @@ const addProductToUsersList = async (userId, product) => {
     },
     { merge: true }
   );
+};
+
+const updateNotify = async (userId, notifyBefore) => {
+  return await db.users.doc(userId).set({ notifyBefore });
 };
 
 const editProductInUsersList = async (userId, product) => {
@@ -54,4 +58,5 @@ export default {
   editProductInUsersList,
   removeProductFromUsersList,
   createUser,
+  updateNotify,
 };

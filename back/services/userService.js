@@ -37,6 +37,10 @@ const isProductExists = async (userId, productId) => {
   );
 };
 
+const updateNotify = async (userId, notifyBefore) => {
+  return await usersRepository.updateNotify(userId, notifyBefore);
+};
+
 export default {
   getUserById,
   deleteUser,
@@ -44,4 +48,5 @@ export default {
   editProduct,
   removeProduct,
   deleteProduct,
+  updateNotify,
 };
