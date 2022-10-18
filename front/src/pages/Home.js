@@ -22,7 +22,7 @@ export function Home() {
   const [refrigerator, setRefrigerator] = useState(null);
   const [filteredList, setFilteredList] = useState();
 
-  const { user, loggedIn } = useAuth();
+  const { user } = useAuth();
   const { products, setStatus } = useProducts();
 
   useEffect(() => {
@@ -38,14 +38,14 @@ export function Home() {
     });
   }
 
-  async function sendData(e) {
+  function sendData(e) {
     e.preventDefault();
     if (!category || refrigerator === null) return;
 
-    setStatus(true);
-    await api.products.createProduct(name, category, refrigerator);
+    api.products.createProduct(name, category, refrigerator);
     e.target.reset();
     setFound(true);
+    setStatus(true);
   }
 
   function handleCancel(f) {
