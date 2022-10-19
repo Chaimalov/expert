@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { Options, EditDate } from "./index";
@@ -153,10 +153,13 @@ export function Item({ item, mini }) {
         <>
           <Options type="emoji" open={OpenEmoji} list={icons} />
           <Options open={OpenDate} list={date} type="date" />
-          <Options open={open} list={productOptions} />
+          <Options
+            open={open}
+            list={user.isAdmin ? productOptions : productOptions.splice(0, 4)}
+          />
         </>
       )}
-      <div className={`item  ${mini && "mini"}`}>
+      <div className={`item${mini ? " mini" : ""}`}>
         <div className="top">
           {item.emoji && <div className="icon">{item.emoji}</div>}
           {!mini && (
