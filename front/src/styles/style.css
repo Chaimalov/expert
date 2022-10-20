@@ -156,7 +156,7 @@ svg.large {
   --value: 35%;
 }
 
-.btn:focus {
+.btn:focus-visible {
   box-shadow: 0 0 0 3px var(--clr-primary-light-4);
 }
 
