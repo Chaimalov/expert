@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "./AuthContext";
-import { addDaysToDate, sortBy } from "../utils";
-import api from "../api/api";
 import toast from "react-hot-toast";
+import api from "../api/api";
+import { addDaysToDate, sortBy } from "../utils";
+import { useAuth } from "./AuthContext";
 
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
-  const { user, loggedIn, setStatus, status } = useAuth();
+  const { user, setStatus, status } = useAuth();
   const [products, setProducts] = useState();
   const [userProducts, setUserProducts] = useState();
   const [expireAlertCount, setExpireAlertCount] = useState(0);
@@ -44,7 +44,7 @@ export function ProductsProvider({ children }) {
         );
       }).length
     );
-  }, [userProducts]);
+  }, [userProducts, user]);
 
   return (
     <ProductsContext.Provider
@@ -55,6 +55,6 @@ export function ProductsProvider({ children }) {
   );
 }
 
-export function useProducts() {
+export const useProducts = () => {
   return useContext(ProductsContext);
-}
+};

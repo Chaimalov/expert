@@ -1,20 +1,18 @@
-import { useState, createRef, useEffect } from "react";
+import { createRef, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { FaBell } from "react-icons/fa";
-import { useProducts } from "../context/ProductsContext";
-import toast from "react-hot-toast";
-import { notify, types, categories } from "../utils";
+import api from "../api/api";
 import {
-  Category,
-  CategoriesList,
-  ProductsList,
   Button,
+  CategoriesList,
+  Category,
   Input,
+  ProductsList,
 } from "../components";
 import { useAuth } from "../context/AuthContext";
-import api from "../api/api";
+import { useProducts } from "../context/ProductsContext";
+import { categories, notify, types } from "../utils";
 
-export function Home() {
+export const Home = () => {
   const [name, setName] = useState("");
   const searchRef = createRef();
   const [category, setCategory] = useState();
@@ -30,36 +28,39 @@ export function Home() {
     setFilteredList(products);
   }, [products, found, user]);
 
-  function filterList() {
+  const filterList = () => {
     setFilteredList(() => {
       return products.filter(
         (item) => item.name.indexOf(searchRef.current.value) !== -1
       );
     });
-  }
+  };
 
-  function sendData(e) {
+  const sendData = (e) => {
     e.preventDefault();
-    if (!category || refrigerator === null) return;
+    if (!category || refrigerator === null) {
+      notify("category and storage options are required.", types.ERROR);
+      return;
+    }
 
     api.products.createProduct(name, category, refrigerator);
     e.target.reset();
     setFound(true);
     setStatus(true);
-  }
+  };
 
-  function handleCancel(f) {
+  const handleCancel = (f) => {
     setFound(f);
-  }
+  };
 
-  function searchItem(e) {
+  const searchItem = (e) => {
     e.preventDefault();
     setName(searchRef.current.value);
     setFound(
       products.find((item) => item.name === searchRef.current.value) !==
         undefined
     );
-  }
+  };
 
   return (
     <div className="App">
@@ -115,4 +116,4 @@ export function Home() {
       )}
     </div>
   );
-}
+};

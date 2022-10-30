@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { colorFromEmoji, displayDays, isInUsersList } from "../utils";
-import { useProducts } from "../context/ProductsContext";
-import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
-import { Options, EditDate } from "../components";
+import { useAuth } from "../context/AuthContext";
+import { useProducts } from "../context/ProductsContext";
+import { colorFromEmoji, displayDays, isInUsersList } from "../utils";
 
-export function Product() {
+export const Product = () => {
   const [item, setItem] = useState();
   const { id } = useParams();
   const { products, setStatus } = useProducts();
@@ -15,7 +14,7 @@ export function Product() {
   useEffect(() => {
     if (!products) return;
     setItem(products.find((item) => item.name === id));
-  }, [products]);
+  }, [products, id]);
 
   const color = colorFromEmoji(item?.emoji);
 
@@ -61,4 +60,4 @@ export function Product() {
       )}
     </>
   );
-}
+};

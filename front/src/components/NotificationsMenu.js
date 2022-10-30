@@ -1,9 +1,8 @@
+import { motion } from "framer-motion";
 import React, { useMemo } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ProductsList } from "./ProductsList";
 import { useProducts } from "../context/ProductsContext";
-import { sortObjectByDateKeys, addDaysToDate } from "../utils";
-import { FaQuestion } from "react-icons/fa";
+import { sortObjectByDateKeys } from "../utils";
+import { ProductsList } from "./ProductsList";
 
 const animationConfiguration = {
   initial: { width: 0 },
@@ -68,6 +67,7 @@ export function NotificationsMenu() {
       initial="initial"
       animate="animate"
       exit="exit"
+      transition={{ ease: "easeOut" }}
     >
       <motion.div
         initial="closed"
