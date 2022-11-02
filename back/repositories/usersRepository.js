@@ -9,6 +9,10 @@ const getUser = async (id) => {
   return await (await db.users.doc(id).get()).data();
 };
 
+const getAllUsers = async () => {
+  return await (await db.users.doc().get()).data();
+};
+
 const deleteUser = async (userId) => {
   await db.users.doc(userId).delete();
   return await db.auth.deleteUser(userId);
@@ -59,4 +63,5 @@ export default {
   removeProductFromUsersList,
   createUser,
   updateNotify,
+  getAllUsers,
 };

@@ -110,4 +110,5 @@ export default {
   updateProductsEmoji,
   deleteProductById,
   getProductsByUser,
+  addDaysToDate,
 };
