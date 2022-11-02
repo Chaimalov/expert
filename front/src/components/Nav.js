@@ -3,9 +3,11 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { FaUserAlt, FaBell, FaRegBell } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "./Button";
+import { useProducts } from "../context/ProductsContext";
 
-export function Nav({ toggleMenu, menu, expireAlertCount }) {
+export function Nav({ toggleMenu, menu }) {
   const { user, loggedIn, logOut } = useAuth();
+  const { expireAlertCount } = useProducts();
 
   async function signOut() {
     try {

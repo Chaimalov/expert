@@ -1,20 +1,19 @@
-import axios from "axios";
-import { useState, createRef, useEffect } from "react";
+import { createRef, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { FaBell } from "react-icons/fa";
-import { useProducts } from "../context/ProductsContext";
-import toast from "react-hot-toast";
-import { notify, types, categories } from "../utils";
+import api from "../api/api";
 import {
-  Category,
-  CategoriesList,
-  ProductsList,
   Button,
+  CategoriesList,
+  Category,
   Input,
+  ProductsList,
 } from "../components";
 import { useAuth } from "../context/AuthContext";
+import { useProducts } from "../context/ProductsContext";
+import { categories, notify, types } from "../utils";
+import { Loading } from "./Loading";
 
-export function Home() {
+export const Home = () => {
   const [name, setName] = useState("");
   const searchRef = createRef();
   const [category, setCategory] = useState();
@@ -22,54 +21,49 @@ export function Home() {
   const [refrigerator, setRefrigerator] = useState(null);
   const [filteredList, setFilteredList] = useState();
 
-  const { user, loggedIn } = useAuth();
-  const { products } = useProducts();
+  const { user } = useAuth();
+  const { products, setStatus } = useProducts();
 
   useEffect(() => {
     if (!products) return;
     setFilteredList(products);
   }, [products, found, user]);
 
-  function filterList() {
+  const filterList = () => {
     setFilteredList(() => {
       return products.filter(
         (item) => item.name.indexOf(searchRef.current.value) !== -1
       );
     });
-  }
+  };
 
-  function sendData(e) {
+  const sendData = (e) => {
     e.preventDefault();
-    if (!category || refrigerator === null) return;
-    const toastId = toast.loading("sending data...");
-    axios
-      .post("/products/add", {
-        name: name.toLowerCase().trim(),
-        category,
-        refrigerator,
-      })
-      .then(({ data }) => {
-        e.target.reset();
-        notify(data.message, types.SUCCESS);
-        setFound(true);
-      })
-      .catch((error) => notify(error.response.data, types.ERROR))
-      .finally(() => toast.dismiss(toastId));
-  }
+    if (!category || refrigerator === null) {
+      notify("category and storage options are required.", types.ERROR);
+      return;
+    }
 
-  function handleCancel(f) {
+    api.products.createProduct(name, category, refrigerator);
+    e.target.reset();
+    setFound(true);
+    setStatus(true);
+  };
+
+  const handleCancel = (f) => {
     setFound(f);
-  }
+  };
 
-  function searchItem(e) {
+  const searchItem = (e) => {
     e.preventDefault();
     setName(searchRef.current.value);
     setFound(
       products.find((item) => item.name === searchRef.current.value) !==
         undefined
     );
-  }
+  };
 
+  if (!products) return <Loading />;
   return (
     <div className="App">
       <header>
@@ -84,7 +78,7 @@ export function Home() {
               name="search"
               ref={searchRef}
               placeholder="search for an item"
-              onChange={filterList}
+              onChange={() => filterList()}
             />
             <Button value={<BiSearchAlt2 />} type="submit" />
           </form>
@@ -92,7 +86,7 @@ export function Home() {
         </>
       ) : (
         <form onSubmit={(e) => sendData(e)}>
-          <h2>
+          <h2 className="text-center">
             <strong>{name}</strong> is in what Category?
           </h2>
           <CategoriesList
@@ -116,7 +110,7 @@ export function Home() {
               group="refrigerator"
             />
           </div>
-          <div>
+          <div className="flex m-auto">
             <Button value="add" type="submit" />
             <Button value="cancel" danger onClick={handleCancel} />
           </div>
@@ -124,4 +118,4 @@ export function Home() {
       )}
     </div>
   );
-}
+};

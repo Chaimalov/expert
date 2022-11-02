@@ -5,6 +5,7 @@
 @import "./item.css";
 @import "./options.css";
 @import "./notifications.css";
+@import "./loader.css";
 
 header {
   width: 100%;
@@ -25,18 +26,26 @@ form {
   height: 7em;
 }
 
-input {
+input:not(input[type="radio"]),
+select {
   padding: 0.5em;
   width: 100%;
   font-size: 1.3em;
   border: 2px solid var(--clr-primary-dark);
   border-radius: 0.5em;
   margin-block: 0.5em;
+  accent-color: var(--clr-primary);
 }
 
-input:not(input[type="search"]):focus {
+input:not(input[type="search"], input[type="radio"]):focus,
+select:focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--clr-primary-light);
+}
+
+input:not(input[type="search"], input[type="radio"]):disabled,
+select:disabled {
+  border-color: var(--grey);
 }
 
 input[type="radio"] {
@@ -46,6 +55,7 @@ input[type="radio"] {
   display: block;
   transition: 0.2s linear;
   opacity: 0;
+  outline: none;
 }
 
 input[type="radio"]:checked {

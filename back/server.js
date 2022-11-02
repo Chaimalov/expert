@@ -1,23 +1,16 @@
+import {} from "dotenv/config";
+import cors from "cors";
 import express from "express";
-import cors from "cors"
-import { searchByCategory, searchByName } from "./searchEmoji.js";
+import userController from "./controllers/userController.js";
+import productsController from "./controllers/productsController.js";
 
-import productsRoute from "./routes/products.js"
-import usersRoute from "./routes/users.js"
-
-const app = express()
+const app = express();
 const PORT = 8080;
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.use("/products", productsRoute)
-app.use("/users", usersRoute)
+app.use("/products", productsController);
+app.use("/users", userController);
 
-app.listen(PORT, () => console.log("listening on PORT " + PORT))
-
-app.get("/", (req, res) => {
-    res.send(searchByCategory(req.query.s))
-})
-
-
+app.listen(PORT, () => console.log("listening on PORT " + PORT));

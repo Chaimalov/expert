@@ -1,0 +1,61 @@
+.loader-container {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.loader {
+  display: grid;
+  grid-template-columns: repeat(3, 5vmin);
+  gap: 1vmin;
+}
+
+.block {
+  --value: 80%;
+  background: var(--gradient);
+  aspect-ratio: 1;
+  border-radius: 1vmin;
+  transition: var(--transition);
+  animation: blink 1000ms alternate infinite;
+}
+
+.block:nth-of-type(5) {
+  visibility: hidden;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+.block:nth-of-type(1) {
+  animation-delay: 250ms;
+}
+
+.block:nth-of-type(2) {
+  animation-delay: 500ms;
+}
+
+.block:nth-of-type(3) {
+  animation-delay: 750ms;
+}
+
+.block:nth-of-type(6) {
+  animation-delay: 1000ms;
+}
+
+.block:nth-of-type(9) {
+  animation-delay: 1250ms;
+}
+
+.block:nth-of-type(8) {
+  animation-delay: 1500ms;
+}
+
+.block:nth-of-type(7) {
+  animation-delay: 1750ms;
+}
+.block:nth-of-type(4) {
+  animation-delay: 2000ms;
+}

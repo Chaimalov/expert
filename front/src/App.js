@@ -1,12 +1,11 @@
-import "./styles/App.css";
-import React, { useState } from "react";
-import { Route, useLocation, Routes, Navigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useCycle } from "framer-motion";
+import React from "react";
 import { Toaster } from "react-hot-toast";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Transitions from "./context/Transition";
-import { motion, useCycle } from "framer-motion";
+import "./styles/App.css";
 
-import { Home, Statistics, Account, Login, Product } from "./pages";
+import { Account, Home, Loading, Login, Product } from "./pages";
 
 import { Nav, NotificationsMenu } from "./components";
 import { useAuth } from "./context/AuthContext";
@@ -16,19 +15,15 @@ export default function App() {
   const location = useLocation();
   const { loggedIn } = useAuth();
   const [menu, setMenu] = useCycle(false, true);
-  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
+  if (loggedIn === "pending") return <Loading />;
   if (!loggedIn) return <Login />;
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
         <ProductsProvider>
           <motion.div style={{ flexGrow: 1 }}>
-            <Nav
-              toggleMenu={setMenu}
-              menu={menu}
-              expireAlertCount={expireAlertCount}
-            />
+            <Nav toggleMenu={setMenu} menu={menu} />
             <AnimatePresence exitBeforeEnter>
               <Routes location={location} key={location.pathname}>
                 <Route
@@ -58,11 +53,7 @@ export default function App() {
               </Routes>
             </AnimatePresence>
           </motion.div>
-          <AnimatePresence>
-            {menu && (
-              <NotificationsMenu setExpireAlertCount={setExpireAlertCount} />
-            )}
-          </AnimatePresence>
+          <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
         </ProductsProvider>
       </div>
       <Toaster />

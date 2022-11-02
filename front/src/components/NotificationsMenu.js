@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
 import { motion } from "framer-motion";
-import { ProductsList } from "./ProductsList";
+import React, { useMemo } from "react";
 import { useProducts } from "../context/ProductsContext";
-import { sortObjectByDateKeys, addDaysToDate } from "../utils";
+import { sortObjectByDateKeys } from "../utils";
+import { ProductsList } from "./ProductsList";
 
 const animationConfiguration = {
   initial: { width: 0 },
@@ -39,7 +39,7 @@ const sideVariants = {
   },
 };
 
-export function NotificationsMenu({ setExpireAlertCount }) {
+export function NotificationsMenu() {
   const { userProducts } = useProducts();
 
   const items = useMemo(() => {
@@ -47,10 +47,7 @@ export function NotificationsMenu({ setExpireAlertCount }) {
 
     const groups = userProducts.reduce((groups, item) => {
       if (item.createdAt) {
-        const date = addDaysToDate(
-          new Date(item.createdAt.toDate().setHours(0, 0, 0, 0)),
-          item.expiryDays
-        );
+        const date = new Date(item.expiryDate);
 
         if (!groups[date]) {
           groups[date] = [];
@@ -58,10 +55,8 @@ export function NotificationsMenu({ setExpireAlertCount }) {
 
         groups[date].push(item);
       }
-
       return groups;
     }, {});
-
     return sortObjectByDateKeys(groups);
   }, [userProducts]);
 
@@ -72,6 +67,7 @@ export function NotificationsMenu({ setExpireAlertCount }) {
       initial="initial"
       animate="animate"
       exit="exit"
+      transition={{ ease: "easeOut" }}
     >
       <motion.div
         initial="closed"
@@ -79,13 +75,23 @@ export function NotificationsMenu({ setExpireAlertCount }) {
         exit="closed"
         variants={sideVariants}
       >
-        {items &&
+        {items && Object.keys(items).length > 0 ? (
           Object.keys(items).map((date) => (
             <motion.div key={date} variants={itemVariants}>
               <h3 className="date">{new Date(date).toDateString()}</h3>
               <ProductsList list={items[date]} mini />
             </motion.div>
-          ))}
+          ))
+        ) : (
+          <div className="text">
+            <motion.div variants={itemVariants}>
+              <h2>we're starting fresh 😊</h2>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <h4>add products to the list to get notified</h4>
+            </motion.div>
+          </div>
+        )}
       </motion.div>
     </motion.aside>
   );
