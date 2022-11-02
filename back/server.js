@@ -1,8 +1,8 @@
 import {} from "dotenv/config";
 import cors from "cors";
 import express from "express";
-import userController from "./controllers/userController";
-import productsController from "./controllers/productsController";
+import userController from "./controllers/userController.js";
+import productsController from "./controllers/productsController.js";
 
 const app = express();
 const PORT = 8080;
