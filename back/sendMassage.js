@@ -1,15 +1,14 @@
 import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = {
-  to: "chaimalov@gmail.com",
-  from: "expirebyexpert@gmail.com",
-  subject: "experts alerts",
-  text: "your products getting expired",
-  html: "<strong>its in process</strong>",
-};
 
-export function sender() {
+export function sendEmail(email, subject, message) {
+  const msg = {
+    to: email,
+    from: "expirebyexpert@gmail.com",
+    subject,
+    html: message,
+  };
   sgMail.send(msg).then(
     () => {},
     (error) => {

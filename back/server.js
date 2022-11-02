@@ -9,8 +9,6 @@ import { sender } from "./sendMassage.js";
 const app = express();
 const PORT = 8080;
 
-// sender();
-
 app.use(cors());
 app.use(express.json());
 
