@@ -5,6 +5,7 @@
 @import "./item.css";
 @import "./options.css";
 @import "./notifications.css";
+@import "./loader.css";
 
 header {
   width: 100%;

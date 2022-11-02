@@ -17,8 +17,7 @@ export function AuthProvider({ children }) {
   const [providerUser, seProviderUser] = useState();
   const [userRecord, setUserRecord] = useState();
   const [status, setStatus] = useState(true);
-
-  const loggedIn = providerUser && userRecord;
+  const [loggedIn, setloggedIn] = useState("pending");
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -60,6 +59,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) setloggedIn(false);
+
       seProviderUser(currentUser);
       setStatus(true);
     });
@@ -73,6 +74,7 @@ export function AuthProvider({ children }) {
         record.photoURL = generateAvatar(user.email.charAt(0), "white");
       }
       setUserRecord(record);
+      setloggedIn(true);
     };
     if (providerUser) getRecord();
   }, [providerUser, status]);

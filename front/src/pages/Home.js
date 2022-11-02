@@ -11,6 +11,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
 import { categories, notify, types } from "../utils";
+import { Loading } from "./Loading";
 
 export const Home = () => {
   const [name, setName] = useState("");
@@ -62,6 +63,7 @@ export const Home = () => {
     );
   };
 
+  if (!products) return <Loading />;
   return (
     <div className="App">
       <header>

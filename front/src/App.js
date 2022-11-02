@@ -1,22 +1,22 @@
-import "./styles/App.css";
-import React, { useState } from "react";
-import { Route, useLocation, Routes, Navigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useCycle } from "framer-motion";
+import React from "react";
 import { Toaster } from "react-hot-toast";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Transitions from "./context/Transition";
-import { motion, useCycle } from "framer-motion";
+import "./styles/App.css";
 
-import { Home, Account, Login, Product } from "./pages";
+import { Account, Home, Loading, Login, Product } from "./pages";
 
 import { Nav, NotificationsMenu } from "./components";
 import { useAuth } from "./context/AuthContext";
-import { ProductsProvider, useProducts } from "./context/ProductsContext";
+import { ProductsProvider } from "./context/ProductsContext";
 
 export default function App() {
   const location = useLocation();
   const { loggedIn } = useAuth();
   const [menu, setMenu] = useCycle(false, true);
 
+  if (loggedIn === "pending") return <Loading />;
   if (!loggedIn) return <Login />;
   return (
     <div className="App">
