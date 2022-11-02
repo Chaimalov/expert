@@ -861,7 +861,6 @@ export const emojis = {
     },
   ],
   drink: [
-
     {
       slug: "hot-beverage",
       character: "☕",

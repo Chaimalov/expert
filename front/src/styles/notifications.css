@@ -28,6 +28,15 @@
   color: white;
 }
 
+.text {
+  --value: 70%;
+  color: var(--clr-primary);
+  display: grid;
+  gap: 3em;
+  margin: 2em;
+  width: min-content;
+}
+
 .notifications-bar::-webkit-scrollbar,
 .notifications-bar::-webkit-scrollbar-thumb {
   width: 12px;

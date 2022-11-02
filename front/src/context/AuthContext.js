@@ -7,83 +7,82 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, database } from "../firebase";
-import axios from "axios";
-import { onSnapshot, doc, getDoc } from "firebase/firestore";
+import { auth } from "../firebase";
+import api from "../api/api";
+import { generateAvatar } from "../utils";
 
 const AuthContext = createContext();
-const signInWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider);
-};
-
-const signIn = async (email, password, setError) => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    setError("password is incorrect");
-  }
-};
-
-const signUpWithEmailAndPassword = async (email, password, setError) => {
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    signIn(email, password, setError);
-    // setError("email already exists. try sign in");
-  }
-};
 
 export function AuthProvider({ children }) {
-  const [userDetails, setUserDetails] = useState();
-  const [userPreferences, setUserPreferences] = useState();
+  const [providerUser, seProviderUser] = useState();
+  const [userRecord, setUserRecord] = useState();
+  const [status, setStatus] = useState(true);
+  const [loggedIn, setloggedIn] = useState("pending");
 
-  function addUser() {
-    axios.post("/users/create", {
-      id: userDetails.uid,
-      name: userDetails.displayName,
-    });
-  }
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    seProviderUser(await (await signInWithPopup(auth, provider)).user);
+  };
 
-  useEffect(() => {
-    if (!userDetails) return;
-    const checkExist = async () => {
-      if (!userDetails) return;
-      const doc = await getDoc(database.users, userDetails.uid);
-      if (!doc.exists()) addUser();
-    };
-    return () => checkExist();
-  }, [userDetails]);
+  const signIn = async (email, password, setError) => {
+    try {
+      seProviderUser(
+        await (
+          await signInWithEmailAndPassword(auth, email, password)
+        ).user
+      );
+    } catch (error) {
+      setError("password is incorrect");
+    }
+  };
 
-  useEffect(() => {
-    if (!userDetails) return;
-    const unsubscribe = onSnapshot(
-      doc(database.users, userDetails.uid),
-      (doc) => {
-        setUserPreferences({ ...doc.data(), uid: doc.id });
-      }
-    );
-    return () => unsubscribe();
-  }, [userDetails]);
+  const signUpWithEmailAndPassword = async (email, password, setError) => {
+    try {
+      seProviderUser(
+        await (
+          await createUserWithEmailAndPassword(auth, email, password)
+        ).user
+      );
+    } catch (error) {
+      signIn(email, password, setError);
+    }
+  };
 
   function logOut() {
     signOut(auth);
-    setUserPreferences(null);
   }
+
+  const deleteAccount = async () => {
+    await api.user.deleteAccount(user.uid);
+    logOut();
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUserDetails(currentUser);
+      if (!currentUser) setloggedIn(false);
+
+      seProviderUser(currentUser);
+      setStatus(true);
     });
     return unsubscribe;
-  }, []);
+  }, [providerUser]);
+
+  useEffect(() => {
+    const getRecord = async () => {
+      const record = await api.user.getUser(providerUser.uid);
+      if (!providerUser.photoURL) {
+        record.photoURL = generateAvatar(user.email.charAt(0), "white");
+      }
+      setUserRecord(record);
+      setloggedIn(true);
+    };
+    if (providerUser) getRecord();
+  }, [providerUser, status]);
 
   const user = {
-    ...userDetails,
-    ...userPreferences,
+    ...providerUser,
+    ...userRecord,
   };
-
-  const loggedIn = userDetails && userPreferences;
 
   return (
     <AuthContext.Provider
@@ -94,6 +93,9 @@ export function AuthProvider({ children }) {
         signIn,
         user,
         loggedIn,
+        setStatus,
+        status,
+        deleteAccount,
       }}
     >
       {children}

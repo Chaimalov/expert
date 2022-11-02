@@ -1,7 +1,10 @@
 import { forwardRef } from "react";
 
 export const Input = forwardRef(
-  ({ name, type, placeholder, autoFocus, error, onFocus }, ref) => (
+  (
+    { name, type, placeholder, autoFocus, error, onFocus, onChange, disabled },
+    ref
+  ) => (
     <div className={`input ${error && "danger"}`}>
       <label htmlFor={name}>
         <h4>{name}:</h4>
@@ -13,9 +16,10 @@ export const Input = forwardRef(
         placeholder={placeholder || ""}
         required
         ref={ref}
-        minLength={6}
+        disabled={disabled}
         autoFocus={autoFocus}
         onFocus={onFocus}
+        onChange={onChange}
       />
     </div>
   )

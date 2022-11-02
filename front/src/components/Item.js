@@ -1,10 +1,8 @@
-import { useState, useRef } from "react";
-import axios from "axios";
+import { useState, useRef, useEffect } from "react";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { AiOutlineClose, AiFillPlusCircle } from "react-icons/ai";
 import { Options, EditDate } from "./index";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import {
   notify,
@@ -14,17 +12,18 @@ import {
   isInUsersList,
 } from "../utils";
 import { displayDays } from "../utils";
-import { products } from "../api/api";
+import api from "../api/api";
+import { useProducts } from "../context/ProductsContext";
 
-export function Item({ item, index, mini = false }) {
+export function Item({ item, mini }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
   const [icons, setIcons] = useState();
-  const [emoji, setEmoji] = useState(item.emoji);
   const [expiryDate, setExpiryDate] = useState(item.expiryDays);
   const [date, setDate] = useState();
-  const { user, loggedIn } = useAuth();
+  const { user } = useAuth();
+  const { setStatus } = useProducts();
   const dateRef = useRef(expiryDate);
 
   const isInList = isInUsersList(user, item);
@@ -34,10 +33,17 @@ export function Item({ item, index, mini = false }) {
     notify("would be added", types.ERROR);
   }
 
-  function handleEmoji(icon) {
+  const close = () => {
+    setOpen(false);
     setOpenEmoji(false);
-    setEmoji(icon);
-    updateItem("emoji", icon);
+    setOpenDate(false);
+  };
+
+  async function handleEmoji(icon) {
+    setOpenEmoji(false);
+    // setEmoji(icon);
+    api.user.updateItem(user.uid, item.id, "emoji", icon);
+    setStatus(true);
   }
 
   function editEmoji() {
@@ -60,8 +66,7 @@ export function Item({ item, index, mini = false }) {
   }
 
   function editDate() {
-    setOpen(false);
-    setOpenEmoji(false);
+    close();
     setOpenDate(true);
     setDate([
       {
@@ -79,23 +84,15 @@ export function Item({ item, index, mini = false }) {
   }
 
   function saveDate() {
-    setOpenDate(false);
     setExpiryDate(dateRef.current.value);
-    setOpen(false);
-    updateItem("expiryDays", dateRef.current.value);
-  }
-
-  function updateItem(key, value) {
-    axios
-      .post("/users/updateItem", {
-        userId: user.uid,
-        item: item.id,
-        key,
-        value,
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      });
+    api.user.updateItem(
+      user.uid,
+      item.id,
+      "expiryDays",
+      Number(dateRef.current.value)
+    );
+    setStatus(true);
+    close();
   }
 
   const productOptions = [
@@ -118,43 +115,53 @@ export function Item({ item, index, mini = false }) {
     {
       text: isInList ? "remove item" : "add item",
       action: isInList
-        ? () => products.removeItem(user.uid, item.id)
-        : () => products.addItem(user.uid, item.id, expiryDate, emoji),
+        ? () => {
+            api.user.removeItem(user.uid, item.id);
+            setStatus(true);
+            close();
+          }
+        : () => {
+            api.user.addItem(user.uid, item.id, expiryDate, item.emoji);
+            setStatus(true);
+            close();
+          },
       key: 5,
       type: isInList ? "delete" : "add",
     },
     {
       text: "delete",
-      action: () => products.deleteItem(item),
+      action: () => {
+        api.products.deleteItem(item);
+        setStatus(true);
+      },
       key: 3,
       type: "delete",
     },
   ];
 
-  const domRef = useClickOutside(() => {
-    setOpen(false);
-    setOpenEmoji(false);
-    setOpenDate(false);
-  });
+  const domRef = useClickOutside(close);
 
   return (
     <div
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": (emoji && colorFromEmoji(emoji)) || 50,
+        "--hue": (item.emoji && colorFromEmoji(item.emoji)) || 50,
       }}
     >
       {!mini && (
         <>
           <Options type="emoji" open={OpenEmoji} list={icons} />
           <Options open={OpenDate} list={date} type="date" />
-          <Options open={open} list={productOptions} />
+          <Options
+            open={open}
+            list={user.isAdmin ? productOptions : productOptions.splice(0, 4)}
+          />
         </>
       )}
-      <div className={`item  ${mini && "mini"}`}>
+      <div className={`item${mini ? " mini" : ""}`}>
         <div className="top">
-          {emoji && <div className="icon">{emoji}</div>}
+          {item.emoji && <div className="icon">{item.emoji}</div>}
           {!mini && (
             <button onClick={() => setOpen(true)} className="reset">
               <IoEllipsisHorizontal className="ion" />
@@ -167,7 +174,7 @@ export function Item({ item, index, mini = false }) {
         {!mini && (
           <>
             <h4>{item.category} </h4>
-            <h5>
+            <h5 className="space-between">
               {displayDays(expiryDate)} <span>{item.refrigerator && "❄️"}</span>
             </h5>
           </>
