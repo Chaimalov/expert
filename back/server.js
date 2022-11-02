@@ -1,8 +1,8 @@
+import {} from "dotenv/config";
 import cors from "cors";
 import express from "express";
-
-import productsRoute from "./controllers/productsController.js";
-import usersRoute from "./controllers/userController.js";
+import cors from "cors";
+import { searchByCategory, searchByName } from "./searchEmoji.js";
 
 const app = express();
 const PORT = 8080;
