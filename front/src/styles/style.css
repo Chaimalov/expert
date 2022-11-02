@@ -4,6 +4,10 @@
   text-transform: capitalize;
 }
 
+:where(h1, h2, h3, h4, strong, a).color {
+  color: var(--clr-primary);
+}
+
 section {
   color: var(--clr-primary-dark);
   flex-grow: 1;
@@ -104,7 +108,7 @@ button {
 }
 
 button:active {
-  scale: 0.9;
+  scale: 0.95;
 }
 
 .btn {
@@ -152,7 +156,7 @@ svg.large {
   --value: 35%;
 }
 
-.btn:focus {
+.btn:focus-visible {
   box-shadow: 0 0 0 3px var(--clr-primary-light-4);
 }
 
@@ -178,11 +182,17 @@ svg.large {
 img {
   margin: auto;
   border-radius: 100%;
+  max-width: 100px;
 }
 
 .flex {
   display: flex;
   align-items: center;
+  gap: 1em;
+}
+
+.grid {
+  display: grid;
   gap: 1em;
 }
 
@@ -203,8 +213,17 @@ img {
   margin: 2em;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .text-center {
   text-align: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 700px) {

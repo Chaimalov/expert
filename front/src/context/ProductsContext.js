@@ -1,52 +1,60 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { database } from "../firebase";
-import { onSnapshot } from "firebase/firestore";
+import toast from "react-hot-toast";
+import api from "../api/api";
+import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
-import { sortBy } from "../utils";
 
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
-  const { user, loggedIn } = useAuth();
+  const { user, setStatus, status } = useAuth();
   const [products, setProducts] = useState();
   const [userProducts, setUserProducts] = useState();
+  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
-    if (Object.entries(user).length && !loggedIn) return;
-    const unsubscribe = onSnapshot(database.products, (snap) => {
-      const data = snap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const list = [];
-      data.forEach((item) => {
-        if (user.itemsArray && user.itemsArray[item.id]) {
-          list.push({ ...item, ...user.itemsArray[item.id] });
-        } else {
-          list.push(item);
-        }
-      });
+    if (!status) return;
 
-      setProducts(sortBy(list, "name"));
-    });
+    getProducts();
+    return setStatus(false);
+  }, [status]);
 
-    return () => unsubscribe();
-  }, [user, loggedIn, user.itemsArray]);
+  const getProducts = async () => {
+    const toastId = toast.loading("working on it...");
+    const list = await api.products.getProducts(user.uid);
+    setProducts(sortBy(list, "name"));
+    toast.dismiss(toastId);
+  };
 
   useEffect(() => {
-    if (products && user.itemsArray) {
-      setUserProducts(
-        products.filter((product) =>
-          Object.keys(user.itemsArray).some((item) => item === product.id)
-        )
-      );
+    if (products && user.products) {
+      setUserProducts(products.filter((product) => product.createdAt));
     }
   }, [products, user]);
 
+  useEffect(() => {
+    if (!userProducts) return;
+
+    setExpireAlertCount(
+      userProducts.filter((product) => {
+        return (
+          product.expiryDate &&
+          addDaysToDate(new Date(product.expiryDate), -user.notifyBefore) <=
+            new Date(new Date().setHours(0, 0, 0, 0))
+        );
+      }).length
+    );
+  }, [userProducts, user]);
+
   return (
-    <ProductsContext.Provider value={{ products, userProducts }}>
+    <ProductsContext.Provider
+      value={{ products, userProducts, setStatus, expireAlertCount }}
+    >
       {children}
     </ProductsContext.Provider>
   );
 }
 
-export function useProducts() {
+export const useProducts = () => {
   return useContext(ProductsContext);
-}
+};

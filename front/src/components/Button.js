@@ -1,9 +1,7 @@
 import React from "react";
 
-export function Button(props) {
-  const classes = Object.keys(props).filter(
-    (item) => props[item] === true || props[item] > 0
-  );
+export const Button = (props) => {
+  const classes = Object.keys(props).filter((item) => !!props[item]);
 
   return (
     <button
@@ -15,4 +13,4 @@ export function Button(props) {
       {props.value} {props.children}
     </button>
   );
-}
+};
