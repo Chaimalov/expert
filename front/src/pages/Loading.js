@@ -5,7 +5,7 @@ export function Loading() {
     <main className="loader-container">
       <div className="loader">
         {[...Array(9)].map((e, i) => (
-          <div className="block" />
+          <div key={i} className="block" />
         ))}
       </div>
     </main>
