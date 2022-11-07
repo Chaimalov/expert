@@ -54,3 +54,7 @@
   overflow: hidden;
   border-radius: 1em;
 }
+
+.item h3 {
+  line-height: 1.2;
+}

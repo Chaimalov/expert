@@ -6,7 +6,7 @@ import { ProductsList } from "./ProductsList";
 
 const animationConfiguration = {
   initial: { width: 0 },
-  animate: { width: "max-content" },
+  animate: { width: "min-content" },
   exit: {
     width: 0,
     transition: { delay: 0.05, duration: 0.25 },
