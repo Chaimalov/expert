@@ -1,4 +1,4 @@
-import { searchByName, searchByCategory } from "../searchEmoji.js";
+import axios from "axios";
 import productsRepository from "../repositories/productsRepository.js";
 import userService from "./userService.js";
 
@@ -96,13 +96,15 @@ const categoryDays = {
   },
 };
 
-function getEmoji(name, category) {
-  const resName = searchByName(name, category);
+const getEmoji = async (name, category) => {
+  const foundEmojis = await axios.get(
+    `http://localhost:9090/emoji/${category}/${name}`
+  );
 
-  if (resName.length) return resName;
+  if (foundEmojis.length) return foundEmojis;
 
-  return searchByCategory(category);
-}
+  return await axios.get(`http://localhost:9090/emoji/${category}`);
+};
 
 export default {
   createProduct,
