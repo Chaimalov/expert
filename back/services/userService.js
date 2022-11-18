@@ -10,6 +10,10 @@ const getUserById = async (id) => {
   return user;
 };
 
+const getAllUsers = async () => {
+  return await usersRepository.getAllUsers();
+}
+
 const deleteUser = async (userId) => {
   return await usersRepository.deleteUser(userId);
 };
@@ -49,4 +53,5 @@ export default {
   removeProduct,
   deleteProduct,
   updateNotify,
+  getAllUsers,
 };
