@@ -41,7 +41,6 @@ export function Item({ item, mini }) {
 
   async function handleEmoji(icon) {
     setOpenEmoji(false);
-    // setEmoji(icon);
     api.user.updateItem(user.uid, item.id, "emoji", icon);
     setStatus(true);
   }

@@ -13,8 +13,6 @@ export function ProductsProvider({ children }) {
   const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
-    if (!status) return;
-
     getProducts();
     return setStatus(false);
   }, [status]);

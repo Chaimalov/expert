@@ -33,7 +33,7 @@ const addProductToUsersList = async (userId, product) => {
 };
 
 const updateNotify = async (userId, notifyBefore) => {
-  return await db.users.doc(userId).set({ notifyBefore });
+  return await db.users.doc(userId).set({ notifyBefore }, { merge: true });
 };
 
 const editProductInUsersList = async (userId, product) => {

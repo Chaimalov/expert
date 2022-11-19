@@ -37,14 +37,14 @@ export const Home = () => {
     });
   };
 
-  const sendData = (e) => {
+  const sendData = async (e) => {
     e.preventDefault();
     if (!category || refrigerator === null) {
       notify("category and storage options are required.", types.ERROR);
       return;
     }
 
-    api.products.createProduct(name, category, refrigerator);
+    await api.products.createProduct(name, category, refrigerator);
     e.target.reset();
     setFound(true);
     setStatus(true);
