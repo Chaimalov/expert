@@ -11,7 +11,7 @@ const products = {
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        // notify(response.data, types.ERROR);
       });
   },
 
@@ -74,9 +74,10 @@ const user = {
         product: { id: productId, key, value },
       })
       .then(({ data }) => {
-        // notify(data, types.SUCCESS);
+        notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
+        console.log(response);
         notify(response.data, types.ERROR);
       });
   },

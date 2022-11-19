@@ -101,9 +101,11 @@ const getEmoji = async (name, category) => {
     `http://localhost:9090/emoji/${category}/${name}`
   );
 
-  if (foundEmojis.length) return foundEmojis;
+  if (foundEmojis.data.length) return foundEmojis;
 
-  return await axios.get(`http://localhost:9090/emoji/${category}`);
+  return await (
+    await axios.get(`http://localhost:9090/emoji/${category}`)
+  ).data;
 };
 
 export default {

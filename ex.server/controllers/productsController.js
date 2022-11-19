@@ -9,6 +9,7 @@ route.post("/", async (req, res) => {
     await productsService.createProduct(req.body.product);
     res.send(req.body.product.name + " was created");
   } catch (error) {
+    console.log(error);
     res.send(error);
   }
 });
