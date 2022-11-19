@@ -1,15 +1,16 @@
-import emojis from "./searchEmoji.js";
+import { emojis } from "./emojis.js";
 
 const getAll = () => {
-  return emojis.getAll();
+  return emojis;
 };
 
 const getByName = (name, category) => {
-  return emojis.searchByName(name, category);
+  const reg = new RegExp(`(?<![a-z])${name}`);
+  return emojis[category].filter((emoji) => emoji.slug.match(reg));
 };
 
 const getByCategory = (category) => {
-  return emojis.searchByCategory(category);
+  return emojis[category];
 };
 
 export default {
