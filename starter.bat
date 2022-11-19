@@ -1,4 +1,3 @@
-
 :: Start server
 cd ex.server
 start cmd.exe /k "npm start"
