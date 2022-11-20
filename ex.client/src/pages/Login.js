@@ -4,7 +4,7 @@ import { Button, Input } from "../components";
 import { useAuth } from "../context/AuthContext";
 
 export function Login() {
-  const { signInWithGoogle, signUpWithEmailAndPassword, signIn } = useAuth();
+  const { signInWithGoogle, signUpWithEmailAndPassword } = useAuth();
   const email = useRef();
   const password = useRef();
   const [error, setError] = useState();

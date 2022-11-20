@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Item } from "./Item";
+import { Product } from "./Product";
 
 const transition = {
   staggerChildren: 0.05,
@@ -36,14 +36,14 @@ export function ProductsList({ list, mini }) {
           animate="show"
           variants={sideVariants}
         >
-          {list.map((prod) => (
+          {list.map((product) => (
             <motion.div
               layout
-              key={prod.id}
+              key={product.id}
               transition={{ duration: 0.25 }}
               variants={!mini && itemVariants}
             >
-              <Item item={prod} mini={mini} />
+              <Product product={product} mini={mini} />
             </motion.div>
           ))}
         </motion.div>

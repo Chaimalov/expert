@@ -97,11 +97,11 @@ const categoryDays = {
 };
 
 const getEmoji = async (name, category) => {
-  const foundEmojis = await axios.get(
+  const foundEmoji = await axios.get(
     `http://localhost:9090/emoji/${category}/${name}`
   );
 
-  if (foundEmojis.data.length) return foundEmojis;
+  if (foundEmoji.data.length) return foundEmoji.data;
 
   return await (
     await axios.get(`http://localhost:9090/emoji/${category}`)

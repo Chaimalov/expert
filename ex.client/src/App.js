@@ -10,6 +10,7 @@ import { Account, Home, Loading, Login, Product } from "./pages";
 import { Nav, NotificationsMenu } from "./components";
 import { useAuth } from "./context/AuthContext";
 import { ProductsProvider } from "./context/ProductsContext";
+import NewProduct from "./pages/NewProduct";
 
 export default function App() {
   const location = useLocation();
@@ -47,6 +48,14 @@ export default function App() {
                   element={
                     <Transitions>
                       <Product />
+                    </Transitions>
+                  }
+                />
+                <Route
+                  path="/products/:name"
+                  element={
+                    <Transitions>
+                      <NewProduct />
                     </Transitions>
                   }
                 />

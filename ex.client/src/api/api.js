@@ -8,10 +8,11 @@ const products = {
         product: { name: name.toLowerCase().trim(), category, refrigerator },
       })
       .then(({ data }) => {
+        console.log(data);
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        // notify(response.data, types.ERROR);
+        notify(response.data, types.ERROR);
       });
   },
 
