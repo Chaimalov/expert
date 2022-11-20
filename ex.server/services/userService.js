@@ -12,7 +12,7 @@ const getUserById = async (id) => {
 
 const getAllUsers = async () => {
   return await usersRepository.getAllUsers();
-}
+};
 
 const deleteUser = async (userId) => {
   return await usersRepository.deleteUser(userId);
