@@ -3,6 +3,7 @@ import { Button, Input } from "../components";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import api from "../api/api";
+import { Loading } from "./Loading";
 
 export function Account() {
   const { user, deleteAccount, setStatus } = useAuth();
@@ -35,36 +36,42 @@ export function Account() {
   };
 
   return (
-    <div className="center m2 text-center">
-      <h1>User Settings</h1>
+    <>
+      <header>
+        <h1>User Settings</h1>
+      </header>
 
-      <img src={user.photoURL} alt="profile" />
+      <main className="center m2 text-center">
+        <img src={user.photoURL} alt="profile" />
 
-      <Input
-        type="text"
-        name="user name"
-        placeholder={user.displayName || "Not set"}
-        disabled
-      />
-      <Input type="email" name="email" placeholder={user.email} disabled />
-      <label htmlFor="dropdown">
-        <h4>notify at:</h4>
-      </label>
-      <select
-        id="dropdown"
-        onChange={(selected) => updatePreference(selected.currentTarget.value)}
-        defaultValue={user.notifyBefore}
-      >
-        <option value={0}>same day</option>
-        <option value={2}>2 days in advance</option>
-        <option value={7}>1 week in advance</option>
-      </select>
-      <br />
-      <div className="center">
-        <Button danger onClick={() => deleteAccountAction()}>
-          delete account
-        </Button>
-      </div>
-    </div>
+        <Input
+          type="text"
+          name="user name"
+          placeholder={user.displayName || "Not set"}
+          disabled
+        />
+        <Input type="email" name="email" placeholder={user.email} disabled />
+        <label htmlFor="dropdown">
+          <h4>notify at:</h4>
+        </label>
+        <select
+          id="dropdown"
+          onChange={(selected) =>
+            updatePreference(selected.currentTarget.value)
+          }
+          defaultValue={user.notifyBefore}
+        >
+          <option value={0}>same day</option>
+          <option value={2}>2 days in advance</option>
+          <option value={7}>1 week in advance</option>
+        </select>
+        <br />
+        <div className="center">
+          <Button danger onClick={() => deleteAccountAction()}>
+            delete account
+          </Button>
+        </div>
+      </main>
+    </>
   );
 }

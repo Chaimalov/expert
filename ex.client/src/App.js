@@ -38,7 +38,7 @@ export default function App() {
                   path="/account"
                   element={
                     <Transitions>
-                      <Account />{" "}
+                      <Account />
                     </Transitions>
                   }
                 />
