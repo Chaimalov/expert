@@ -34,7 +34,6 @@ export function ProductsList({ list, mini }) {
           className="list"
           initial="hide"
           animate="show"
-          exit="hide"
           variants={sideVariants}
         >
           {list.map((prod) => (
