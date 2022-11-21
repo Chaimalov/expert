@@ -14,19 +14,19 @@ import { generateAvatar } from "../utils";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [providerUser, seProviderUser] = useState();
+  const [providerUser, setProviderUser] = useState();
   const [userRecord, setUserRecord] = useState();
   const [status, setStatus] = useState(true);
   const [loggedIn, setloggedIn] = useState("pending");
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    seProviderUser(await (await signInWithPopup(auth, provider)).user);
+    setProviderUser(await (await signInWithPopup(auth, provider)).user);
   };
 
   const signIn = async (email, password, setError) => {
     try {
-      seProviderUser(
+      setProviderUser(
         await (
           await signInWithEmailAndPassword(auth, email, password)
         ).user
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
 
   const signUpWithEmailAndPassword = async (email, password, setError) => {
     try {
-      seProviderUser(
+      setProviderUser(
         await (
           await createUserWithEmailAndPassword(auth, email, password)
         ).user
@@ -61,11 +61,14 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) setloggedIn(false);
 
-      if (currentUser.email === "chaimalov@gmail.com") {
+      if (
+        currentUser.email === "chaimalov@gmail.com" ||
+        currentUser.email === "israelmark98@gmail.com"
+      ) {
         currentUser.isAdmin = true;
       }
 
-      seProviderUser(currentUser);
+      setProviderUser(currentUser);
       setStatus(true);
     });
     return unsubscribe;
