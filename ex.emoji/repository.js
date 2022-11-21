@@ -4,9 +4,11 @@ const getAll = () => {
   return emojis;
 };
 
-const getByName = (name, category) => {
+const getByName = (name) => {
   const reg = new RegExp(`(?<![a-z])${name}`);
-  return emojis[category].filter((emoji) => emoji.slug.match(reg));
+  return Object.values(emojis)
+    .flat()
+    .filter((emoji) => emoji.slug.match(reg));
 };
 
 const getByCategory = (category) => {

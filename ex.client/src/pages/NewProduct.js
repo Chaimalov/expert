@@ -14,6 +14,7 @@ export default function NewProduct() {
 
     await api.products.createProduct(name, category, storage);
     setStatus(true);
+    goTo("/");
   };
 
   const [storage, setStorage] = useState(null);
@@ -29,7 +30,6 @@ export default function NewProduct() {
       onSubmit={(e) => {
         e.preventDefault();
         saveProduct();
-        goTo("/");
       }}
     >
       <header />
@@ -41,6 +41,7 @@ export default function NewProduct() {
         onClick={setCategory}
         group="category"
       />
+      <h2 className="text-center">where should you store it?</h2>
       <div className="section">
         <Category
           category="fridge"

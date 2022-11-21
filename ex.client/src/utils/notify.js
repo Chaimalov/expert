@@ -8,7 +8,6 @@ export const types = {
 };
 
 const styles = {
-  boxShadow: "none",
   borderRadius: "2em",
   textTransform: "capitalize",
 };
