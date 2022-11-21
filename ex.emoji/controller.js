@@ -8,8 +8,8 @@ route.get("/", (req, res) => {
   res.send(emojiService.getAllEmojis());
 });
 
-route.get("/:category/:name", (req, res) => {
-  res.send(emojiService.getEmojiByName(req.params.name, req.params.category));
+route.get("/all/:name", (req, res) => {
+  res.send(emojiService.getEmojiByName(req.params.name));
 });
 
 route.get("/:category", (req, res) => {

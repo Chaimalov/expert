@@ -4,12 +4,10 @@ const getAllEmojis = () => {
   return emojiRepository.getAll();
 };
 
-const getEmojiByName = (emojiName, emojiCategory) => {
-  return emojiRepository
-    .getByName(emojiName.toLowerCase(), emojiCategory.toLowerCase())
-    .sort((a, b) => {
-      return levenshtein(a.slug, emojiName) - levenshtein(b.slug, emojiName);
-    });
+const getEmojiByName = (emojiName) => {
+  return emojiRepository.getByName(emojiName.toLowerCase()).sort((a, b) => {
+    return levenshtein(a.slug, emojiName) - levenshtein(b.slug, emojiName);
+  });
 };
 
 const getEmojisByCategory = (emojiCategory) => {

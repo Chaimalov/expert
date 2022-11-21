@@ -8,6 +8,6 @@ const PORT = 9090;
 app.use(cors());
 app.use(express.json());
 
-app.use("/emoji", emojiController);
+app.use("/emojis", emojiController);
 
 app.listen(PORT, () => console.log("listening on PORT " + PORT));
