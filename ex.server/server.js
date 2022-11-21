@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import userController from "./controllers/userController.js";
 import productsController from "./controllers/productsController.js";
+import dataCollectService from "./services/dataCollectService.js";
 
 const app = express();
 const PORT = 8080;
@@ -14,3 +15,5 @@ app.use("/products", productsController);
 app.use("/users", userController);
 
 app.listen(PORT, () => console.log("listening on PORT " + PORT));
+
+// dataCollectService.updateProductsExpiryDays();

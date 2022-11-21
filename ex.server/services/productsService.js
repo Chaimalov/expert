@@ -40,6 +40,10 @@ const updateProductsEmoji = async (productId, emoji) => {
   return await productsRepository.updateProductEmoji(productId, emoji);
 };
 
+const updateProductsExpiryDays = async (productId, days) => {
+  return await productsRepository.updateProductsExpiryDays(productId, days);
+};
+
 const getProducts = async () => {
   return await productsRepository.getProducts();
 };
@@ -114,6 +118,7 @@ export default {
   getProductByName,
   getProducts,
   updateProductsEmoji,
+  updateProductsExpiryDays,
   deleteProductById,
   getProductsByUser,
   addDaysToDate,

@@ -30,6 +30,10 @@ const updateProductEmoji = async (productId, emoji) => {
   return await db.products.doc(productId).update(emoji);
 };
 
+const updateProductsExpiryDays = async (productId, expiryDays) => {
+  return await db.products.doc(productId).update({ expiryDays });
+};
+
 const getProducts = async () => {
   return await (
     await db.products.get()
@@ -43,4 +47,5 @@ export default {
   deleteProduct,
   updateProductEmoji,
   getProducts,
+  updateProductsExpiryDays,
 };
