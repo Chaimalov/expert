@@ -61,7 +61,10 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) setloggedIn(false);
 
-      if (currentUser.email === "chaimalov@gmail.com") {
+      if (
+        currentUser.email === "chaimalov@gmail.com" ||
+        currentUser.email === "israelmark98@gmail.com"
+      ) {
         currentUser.isAdmin = true;
       }
 
