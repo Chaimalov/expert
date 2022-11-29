@@ -20,7 +20,6 @@
   flex-shrink: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  border-left: 1px solid grey;
 }
 
 .date {

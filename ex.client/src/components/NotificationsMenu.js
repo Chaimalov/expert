@@ -78,7 +78,13 @@ export function NotificationsMenu() {
         {items && Object.keys(items).length > 0 ? (
           Object.keys(items).map((date) => (
             <motion.div key={date} variants={itemVariants}>
-              <h3 className="date">{new Date(date).toDateString()}</h3>
+              <h4 className="date">
+                {new Date(date).toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </h4>
               <ProductsList list={items[date]} mini />
             </motion.div>
           ))
