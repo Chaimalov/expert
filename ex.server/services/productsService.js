@@ -89,6 +89,9 @@ const categoryDays = {
   meat: {
     expiryDate: 360,
   },
+  fish: {
+    expiryDate: 180,
+  },
   pantry: {
     expiryDate: 360,
   },
