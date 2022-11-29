@@ -13,12 +13,14 @@ export function ProductsProvider({ children }) {
   const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
-    getProducts();
+    if (status) {
+      getProducts();
+    }
     return setStatus(false);
   }, [status]);
 
   const getProducts = async () => {
-    const toastId = toast.loading("working on it...");
+    const toastId = toast.loading("loading changes...");
     const list = await api.products.getProducts(user.uid);
     setProducts(sortBy(list, "name"));
     toast.dismiss(toastId);

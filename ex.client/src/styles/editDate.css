@@ -1,12 +1,10 @@
 label.date {
   color: var(--text-color);
   text-align: left;
-  /* display: inline; */
 }
 
 input.date {
   color: var(--text-color);
-  width: 100%;
   text-align: right;
   background: none;
   border: none;
@@ -15,30 +13,12 @@ input.date {
   font-weight: 700;
 }
 
-.options button:is(.date):hover {
+button:is(.date):hover {
   background: none;
   color: black;
 }
 
-.options button input[type="number"]::-webkit-inner-spin-button {
+button input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-.num-input-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-}
-
-.arrows {
-  display: flex;
-  flex-direction: column;
-}
-
-.arrows > * {
-  margin: -3px;
-}
-
-.arrows > *:hover {
-  color: rgba(0, 0, 0, 0.5);
+  appearance: none;
 }
