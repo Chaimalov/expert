@@ -1,19 +1,42 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export function Options({ open, list, type }) {
+const animation = {
+  hide: {
+    y: "110%",
+  },
+  show: {
+    y: "0%",
+  },
+};
+
+export function Options({ open, list, type, children }) {
   return (
-    <div className={"options" + (open ? " open" : "")}>
-      {list &&
-        list.map((option) => (
-          <button
-            className={type + " " + option?.type}
-            key={option.key}
-            tabIndex={open ? "1" : "-1"}
-            onClick={option.action ? () => option.action(option.send) : null}
-          >
-            {option.text}
-          </button>
-        ))}
-    </div>
+    <AnimatePresence exitBeforeEnter>
+      {open && (
+        <motion.div
+          initial="hide"
+          animate="show"
+          exit="hide"
+          transition={{ duration: 0.2, ease: "anticipate" }}
+          variants={animation}
+          className={"options"}
+        >
+          {children}
+          {list &&
+            list.map((option) => (
+              <button
+                className={type + " " + option?.type}
+                key={option.key}
+                onClick={
+                  option.action ? () => option.action(option.send) : null
+                }
+              >
+                {option.text}
+              </button>
+            ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

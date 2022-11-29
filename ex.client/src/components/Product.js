@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { AiFillPlusCircle, AiOutlineClose } from "react-icons/ai";
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import api from "../api/api";
@@ -9,29 +9,22 @@ import {
   colorFromEmoji,
   displayDays,
   isInUsersList,
-  notify,
-  types,
   useClickOutside,
 } from "../utils";
-import { EditDate, Options } from "./index";
+import { Options } from "./index";
 
 export function Product({ product, mini }) {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
-  const [icons, setIcons] = useState();
-  const [expiryDate, setExpiryDate] = useState(product.expiryDays);
-  const [date, setDate] = useState();
+
+  const [emojis, setEmojis] = useState();
+  const [expiryDays, setExpiryDays] = useState(Number(product.expiryDays));
+
   const { user } = useAuth();
   const { setStatus } = useProducts();
-  const dateRef = useRef(expiryDate);
 
   const isInList = isInUsersList(user, product);
-
-  function addEmoji() {
-    setOpenEmoji(false);
-    notify("would be added", types.ERROR);
-  }
 
   const close = () => {
     setOpen(false);
@@ -39,60 +32,35 @@ export function Product({ product, mini }) {
     setOpenDate(false);
   };
 
-  async function handleEmoji(icon) {
-    setOpenEmoji(false);
+  const updateEmoji = async (icon) => {
+    close();
     api.user.updateItem(user.uid, product.id, "emoji", icon);
     setStatus(true);
-  }
+  };
 
-  function editEmoji() {
-    setOpen(false);
+  const editEmoji = () => {
+    close();
     setOpenEmoji(true);
-    setIcons([
+    setEmojis([
       ...product.emojiList.map((emoji) => ({
         text: emoji.character,
-        action: handleEmoji,
+        action: updateEmoji,
         key: emoji.slug,
         send: emoji.character,
       })),
-      {
-        text: <AiFillPlusCircle />,
-        action: addEmoji,
-        key: 90,
-        send: null,
-      },
     ]);
-  }
+  };
 
-  function editDate() {
+  const editDate = () => {
     close();
     setOpenDate(true);
-    setDate([
-      {
-        text: <EditDate days="expiry date" value={expiryDate} ref={dateRef} />,
-        action: null,
-        key: 1,
-        send: null,
-      },
-      {
-        text: "save",
-        action: () => saveDate(),
-        key: 2,
-      },
-    ]);
-  }
+  };
 
-  function saveDate() {
-    setExpiryDate(dateRef.current.value);
-    api.user.updateItem(
-      user.uid,
-      product.id,
-      "expiryDays",
-      Number(dateRef.current.value)
-    );
+  const updateDays = (days) => {
+    api.user.updateItem(user.uid, product.id, "expiryDays", days);
     setStatus(true);
     close();
-  }
+  };
 
   const productOptions = [
     {
@@ -120,7 +88,12 @@ export function Product({ product, mini }) {
             close();
           }
         : () => {
-            api.user.addItem(user.uid, product.id, expiryDate, product.emoji);
+            api.user.addItem(
+              user.uid,
+              product.id,
+              product.expiryDays,
+              product.emoji
+            );
             setStatus(true);
             close();
           },
@@ -145,13 +118,26 @@ export function Product({ product, mini }) {
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": (product.emoji && colorFromEmoji(product.emoji)) || 50,
+        "--hue": product.emoji && colorFromEmoji(product.emoji),
       }}
     >
       {!mini && (
         <>
-          <Options type="emoji" open={OpenEmoji} list={icons} />
-          <Options open={OpenDate} list={date} type="date" />
+          <Options type="emoji" open={OpenEmoji} list={emojis} />
+          <Options open={OpenDate}>
+            <label className="date" htmlFor="days">
+              <h4>expiry days</h4>
+            </label>
+            <input
+              min="1"
+              id="days"
+              type="number"
+              className="date"
+              value={expiryDays}
+              onChange={(e) => setExpiryDays(() => Number(e.target.value))}
+            />
+            <button onClick={() => updateDays(expiryDays)}>save</button>
+          </Options>
           <Options
             open={open}
             list={user.isAdmin ? productOptions : productOptions.splice(0, 4)}
@@ -174,7 +160,7 @@ export function Product({ product, mini }) {
           <>
             <h4>{product.category} </h4>
             <h5 className="space-between">
-              {displayDays(expiryDate)}{" "}
+              {displayDays(product.expiryDays)}{" "}
               <span>{product.refrigerator && "❄️"}</span>
             </h5>
           </>

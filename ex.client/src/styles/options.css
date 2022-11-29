@@ -11,25 +11,8 @@
   overflow-y: auto;
   background-color: var(--clr-primary);
   border-radius: 1em;
-  transform: translateY(120%);
-  transition: transform 250ms;
-  transition-timing-function: var(--transition-function);
-  z-index: 3;
-}
-
-.options.open {
   display: flex;
-  transform: translateY(0);
-}
-
-.item > * {
-  transition: 150ms;
-}
-
-.options.open + .item > * {
-  opacity: 0;
-  pointer-events: none;
-  cursor: default;
+  z-index: 3;
 }
 
 .options button {
@@ -52,10 +35,6 @@
   padding: 0;
   border-radius: 100%;
   line-height: 0;
-}
-
-.options .emoji:last-of-type {
-  color: rgba(0, 0, 0, 0.2);
 }
 
 .options .emoji:hover,
