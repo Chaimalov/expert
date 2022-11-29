@@ -8,8 +8,8 @@ const products = {
         product: { name: name.toLowerCase().trim(), category, refrigerator },
       })
       .then(({ data }) => {
-        console.log(data);
         notify(data, types.SUCCESS);
+        return data;
       })
       .catch(({ response }) => {
         notify(response.data, types.ERROR);

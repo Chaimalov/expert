@@ -14,7 +14,9 @@ export function ProductsProvider({ children }) {
 
   useEffect(() => {
     if (status) {
-      getProducts();
+      setTimeout(() => {
+        getProducts();
+      }, 1000);
     }
     return setStatus(false);
   }, [status]);
