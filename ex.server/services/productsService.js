@@ -1,15 +1,18 @@
 import axios from "axios";
+import { ApiError } from "../middleware/errorHandler.js";
 import productsRepository from "../repositories/productsRepository.js";
 import userService from "./userService.js";
 
 const createProduct = async ({ name, category, refrigerator }) => {
-  if (!(await productsRepository.getProductByName(name)))
-    throw Error(`${name} already exists.`);
+  if (await productsRepository.isProductExists(name)) {
+    throw new ApiError(`${name} already exists.`, 405);
+  }
 
   const iconsList = await getEmoji(name, category);
+  const product = {};
 
   try {
-    const product = {
+    product = {
       name: name,
       category: category,
       emojiList: iconsList,
@@ -20,22 +23,23 @@ const createProduct = async ({ name, category, refrigerator }) => {
       refrigerator: refrigerator,
       nameVariation: [],
     };
-
-    return await productsRepository.createProduct(product);
   } catch (error) {
-    throw Error(
-      "the product object failed to assemble. some information is missing."
+    throw new ApiError(
+      "the product object failed to assemble. some information is missing.",
+      400
     );
   }
+
+  return await productsRepository.createProduct(product);
 };
 
 const getProductByName = async (productName) => {
-  if (!productName) throw Error("query was empty");
+  if (!productName) throw ApiError("query was empty", 400);
   return await productsRepository.getProductByName(productName);
 };
 
 const getProductByCategory = async (category) => {
-  if (!category) throw Error("query was empty");
+  if (!category) throw ApiError("query was empty", 400);
   return await productsRepository.getProductByCategory(category);
 };
 

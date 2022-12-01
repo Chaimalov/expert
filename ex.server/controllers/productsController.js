@@ -4,12 +4,12 @@ import productsService from "../services/productsService.js";
 const route = express.Router();
 export default route;
 
-route.post("/", async (req, res) => {
+route.post("/", async (req, res, next) => {
   try {
     await productsService.createProduct(req.body.product);
     res.send(req.body.product.name + " was created");
   } catch (error) {
-    res.send(error);
+    next(error);
   }
 });
 

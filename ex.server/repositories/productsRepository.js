@@ -22,6 +22,11 @@ const getProductByCategory = async (category) => {
   );
 };
 
+const isProductExists = async (name) => {
+  return (await db.products.select("name").where("name", "==", name).get()).docs
+    .length;
+};
+
 const deleteProduct = async (productId) => {
   return await db.products.doc(productId).delete();
 };
@@ -48,4 +53,5 @@ export default {
   updateProductEmoji,
   getProducts,
   updateProductsExpiryDays,
+  isProductExists,
 };

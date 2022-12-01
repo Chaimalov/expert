@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 import userController from "./controllers/userController.js";
 import productsController from "./controllers/productsController.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+
 import dataCollectService from "./services/dataCollectService.js";
 import alertService from "./services/alertService.js";
 
@@ -14,6 +16,7 @@ app.use(express.json());
 
 app.use("/products", productsController);
 app.use("/users", userController);
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log("listening on PORT " + PORT));
 

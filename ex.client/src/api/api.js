@@ -12,7 +12,7 @@ const products = {
         return data;
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
 
@@ -24,7 +24,7 @@ const products = {
           notify(data, types.SUCCESS);
         })
         .catch(({ response }) => {
-          notify(response.data, types.ERROR);
+          notify(response.data || response.message, types.ERROR);
         });
     }
   },
@@ -52,7 +52,7 @@ const user = {
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
   removeItem: (userId, productId) => {
@@ -64,7 +64,7 @@ const user = {
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
 
@@ -79,7 +79,7 @@ const user = {
       })
       .catch(({ response }) => {
         console.log(response);
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
 
@@ -92,7 +92,7 @@ const user = {
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
 
@@ -103,7 +103,7 @@ const user = {
         notify(data, types.SUCCESS);
       })
       .catch(({ response }) => {
-        notify(response.data, types.ERROR);
+        notify(response.data || response.message, types.ERROR);
       });
   },
 };
