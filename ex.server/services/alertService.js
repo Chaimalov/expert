@@ -1,28 +1,35 @@
-import { getProductsByUser, addDaysToDate } from "./productsService";
-import { getAllUsers } from "./userService";
-import { sendEmail } from "../sendMassage";
+import productsService from "./productsService.js";
+import userService from "./userService.js";
+import { sendEmail } from "../sendMassage.js";
 
-let allUsers = getAllUsers();
-
-const getExpiredProducts = (userId, notifyBefore) => {
-  const expiredProducts = getProductsByUser(userId).filter((product) => {
-    return product.expiryDate <= addDaysToDate(new Date(), -notifyBefore);
+const getExpiredProducts = async (userId, notifyBefore) => {
+  const usersProducts = await productsService.getProductsByUser(userId);
+  const expiredProducts = usersProducts.filter((product) => {
+    return (
+      product.expiryDate <=
+      productsService.addDaysToDate(new Date(), -notifyBefore)
+    );
   });
+
   return expiredProducts;
 };
 
 const sendEmailToUser = (user) => {
-  const products = getExpiredProducts(user, user.notifyBefore);
-  let subject = `your products are getting expired!`;
-  let message = `products: ${products}`;
+  const products = getExpiredProducts(user.id, user.notifyBefore);
+  const subject = `your products are getting expired!`;
+  const message = `products: ${products}`;
 
   sendEmail(user.email, subject, message);
 };
 
-const sendEmailToExpired = () => {
-  allUsers.forEach((user) => {
-    sendEmailToUser(user);
-  });
+const sendEmailToExpired = async () => {
+  const users = await userService.getAllUsers();
+  if (users) {
+    users.forEach((user) => {
+      console.log("------extracting users data------");
+      sendEmailToUser(user);
+    });
+  }
 };
 
 export default {

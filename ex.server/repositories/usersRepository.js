@@ -10,7 +10,11 @@ const getUser = async (id) => {
 };
 
 const getAllUsers = async () => {
-  return await (await db.users.doc().get()).data();
+  return await (
+    await db.users.get()
+  ).docs.map((doc) => {
+    return { id: doc.id, ...doc.data() };
+  });
 };
 
 const deleteUser = async (userId) => {

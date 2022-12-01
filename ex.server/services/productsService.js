@@ -7,19 +7,26 @@ const createProduct = async ({ name, category, refrigerator }) => {
     throw Error(`${name} already exists.`);
 
   const iconsList = await getEmoji(name, category);
-  const product = {
-    name: name,
-    category: category,
-    emojiList: iconsList,
-    expiryDays: categoryDays[category].expiryDate,
-    emoji: iconsList[0].character,
-    supportRate: 1,
-    createdBy: "",
-    refrigerator: refrigerator,
-    nameVariation: [],
-  };
 
-  return await productsRepository.createProduct(product);
+  try {
+    const product = {
+      name: name,
+      category: category,
+      emojiList: iconsList,
+      expiryDays: categoryDays[category].expiryDate,
+      emoji: iconsList[0].character,
+      supportRate: 1,
+      createdBy: "",
+      refrigerator: refrigerator,
+      nameVariation: [],
+    };
+
+    return await productsRepository.createProduct(product);
+  } catch (error) {
+    throw Error(
+      "the product object failed to assemble. some information is missing."
+    );
+  }
 };
 
 const getProductByName = async (productName) => {

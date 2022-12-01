@@ -2,7 +2,8 @@ import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-export function sendEmail(email, subject, message) {
+export const sendEmail = (email, subject, message) => {
+  console.log("------sending email------");
   const msg = {
     to: email,
     from: "expirebyexpert@gmail.com",
@@ -10,13 +11,13 @@ export function sendEmail(email, subject, message) {
     html: message,
   };
   sgMail.send(msg).then(
-    () => {},
+    (response) => {
+      console.log(response);
+    },
     (error) => {
-      console.error(error);
-
       if (error.response) {
         console.error(error.response.body);
       }
     }
   );
-}
+};

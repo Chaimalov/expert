@@ -4,6 +4,7 @@ import express from "express";
 import userController from "./controllers/userController.js";
 import productsController from "./controllers/productsController.js";
 import dataCollectService from "./services/dataCollectService.js";
+import alertService from "./services/alertService.js";
 
 const app = express();
 const PORT = 8080;
@@ -17,3 +18,5 @@ app.use("/users", userController);
 app.listen(PORT, () => console.log("listening on PORT " + PORT));
 
 // dataCollectService.updateProductsExpiryDays();
+
+// alertService.sendEmailToExpired();
