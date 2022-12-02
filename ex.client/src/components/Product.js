@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoEllipsisHorizontal } from "react-icons/io5";
@@ -5,6 +6,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
+import Transitions from "../context/Transition";
 import {
   colorFromEmoji,
   displayDays,
@@ -126,20 +128,27 @@ export function Product({ product, mini }) {
       {!mini && (
         <>
           <Options type="emoji" open={OpenEmoji} list={emojis} />
-          <Options open={OpenDate}>
-            <label className="date" htmlFor="days">
-              <h4>expiry days</h4>
-            </label>
-            <input
-              min="1"
-              id="days"
-              type="number"
-              className="date"
-              value={expiryDays}
-              onChange={(e) => setExpiryDays(() => Number(e.target.value))}
-            />
-            <button onClick={() => updateDays(expiryDays)}>save</button>
-          </Options>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateDays(expiryDays);
+            }}
+          >
+            <Options open={OpenDate}>
+              <label className="date" htmlFor="days">
+                <h4>expiry days</h4>
+              </label>
+              <input
+                min="1"
+                id="days"
+                type="number"
+                className="date"
+                value={expiryDays}
+                onChange={(e) => setExpiryDays(() => Number(e.target.value))}
+              />
+              <button type="submit">save</button>
+            </Options>
+          </form>
           <Options
             open={open}
             list={user.isAdmin ? productOptions : productOptions.splice(0, 4)}
@@ -148,7 +157,11 @@ export function Product({ product, mini }) {
       )}
       <div className={`item ${mini ? "mini" : ""}`}>
         <div className="top">
-          {product.emoji && <div className="icon">{product.emoji}</div>}
+          {product.emoji && (
+            <Transitions key={product.emoji}>
+              <div className="icon">{product.emoji}</div>
+            </Transitions>
+          )}
           {!mini && (
             <button onClick={() => setOpen(true)} className="reset">
               <IoEllipsisHorizontal className="ion" />
@@ -161,10 +174,12 @@ export function Product({ product, mini }) {
         {!mini && (
           <>
             <h4>{product.category} </h4>
-            <h5 className="space-between">
-              {displayDays(product.expiryDays)}{" "}
-              <span>{product.refrigerator && "❄️"}</span>
-            </h5>
+            <Transitions key={product.expiryDays}>
+              <h5 className="space-between">
+                {displayDays(product.expiryDays)}{" "}
+                <span>{product.refrigerator && "❄️"}</span>
+              </h5>
+            </Transitions>
           </>
         )}
       </div>
