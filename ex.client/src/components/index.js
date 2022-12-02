@@ -1,7 +1,6 @@
 export * from "./Button";
 export * from "./CategoriesList";
 export * from "./Category";
-export * from "./EditDate";
 export * from "./Input";
 export * from "./Product";
 export * from "./Nav";

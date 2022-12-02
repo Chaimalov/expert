@@ -1,15 +1,14 @@
 import React from "react";
-import { Button, Input } from "../components";
-import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import api from "../api/api";
-import { Loading } from "./Loading";
+import { Button, Input } from "../components";
+import { useAuth } from "../context/AuthContext";
 
 export function Account() {
   const { user, deleteAccount, setStatus } = useAuth();
 
   const updatePreference = async (value) => {
-    await api.user.updateNotify(user.uid, Number(value));
+    api.execute(api.user.updateNotify(user.uid, Number(value)));
     setStatus(true);
   };
 

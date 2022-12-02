@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Category } from "./Category";
 
 export function CategoriesList({ categories, onClick, group }) {

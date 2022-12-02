@@ -16,7 +16,7 @@ export function ProductsProvider({ children }) {
     if (status) {
       setTimeout(() => {
         getProducts();
-      }, 1000);
+      }, 2000);
     }
     return setStatus(false);
   }, [status]);

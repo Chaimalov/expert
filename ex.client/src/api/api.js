@@ -1,31 +1,26 @@
 import axios from "axios";
 import { notify, types } from "../utils";
 
+const execute = (request) => {
+  request
+    .then(({ data }) => {
+      notify(data, types.SUCCESS);
+    })
+    .catch(({ response }) => {
+      notify(response.data || response.message, types.ERROR);
+    });
+};
+
 const products = {
   createProduct: (name, category, refrigerator) => {
-    axios
-      .post("/products", {
-        product: { name: name.toLowerCase().trim(), category, refrigerator },
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-        return data;
-      })
-      .catch(({ response }) => {
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.post("/products", {
+      product: { name: name.toLowerCase().trim(), category, refrigerator },
+    });
   },
 
   deleteItem: (item) => {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
-      axios
-        .delete("/products/" + item.id)
-        .then(({ data }) => {
-          notify(data, types.SUCCESS);
-        })
-        .catch(({ response }) => {
-          notify(response.data || response.message, types.ERROR);
-        });
+      return axios.delete("/products/" + item.id);
     }
   },
   getProducts: async (userId) => {
@@ -43,69 +38,33 @@ const user = {
   },
 
   addItem: (userId, itemId, expiryDays, emoji) => {
-    axios
-      .post("/users/products", {
-        userId: userId,
-        product: { id: itemId, expiryDays, emoji },
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ response }) => {
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.post("/users/products", {
+      userId: userId,
+      product: { id: itemId, expiryDays, emoji },
+    });
   },
   removeItem: (userId, productId) => {
-    axios
-      .delete("/users/products", {
-        data: { userId, productId },
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ response }) => {
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.delete("/users/products", {
+      data: { userId, productId },
+    });
   },
 
   updateItem: (userId, productId, key, value) => {
-    axios
-      .patch("/users/products", {
-        userId: userId,
-        product: { id: productId, key, value },
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ response }) => {
-        console.log(response);
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.patch("/users/products", {
+      userId: userId,
+      product: { id: productId, key, value },
+    });
   },
 
   updateNotify: (userId, notifyBefore) => {
-    axios
-      .patch("/users/" + userId, {
-        notifyBefore,
-      })
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ response }) => {
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.patch("/users/" + userId, {
+      notifyBefore,
+    });
   },
 
   deleteAccount: (userId) => {
-    axios
-      .delete("/users/" + userId)
-      .then(({ data }) => {
-        notify(data, types.SUCCESS);
-      })
-      .catch(({ response }) => {
-        notify(response.data || response.message, types.ERROR);
-      });
+    return axios.delete("/users/" + userId);
   },
 };
 
-export default { products, user };
+export default { products, user, execute };

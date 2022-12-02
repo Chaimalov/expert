@@ -9,7 +9,7 @@ const createProduct = async ({ name, category, refrigerator }) => {
   }
 
   const iconsList = await getEmoji(name, category);
-  const product = {};
+  let product = {};
 
   try {
     product = {
@@ -24,6 +24,7 @@ const createProduct = async ({ name, category, refrigerator }) => {
       nameVariation: [],
     };
   } catch (error) {
+    console.log(name, category, refrigerator);
     throw new ApiError(
       "the product object failed to assemble. some information is missing.",
       400

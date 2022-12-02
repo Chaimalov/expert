@@ -12,7 +12,7 @@ export default function NewProduct() {
       return;
     }
 
-    api.products.createProduct(name, category, storage);
+    api.execute(api.products.createProduct(name, category, storage));
     setStatus(true);
     goTo("/");
   };

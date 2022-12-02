@@ -31,7 +31,7 @@ export const Product = () => {
             <button
               className="category"
               onClick={() => {
-                api.user.removeItem(user.uid, item.id);
+                api.execute(api.user.removeItem(user.uid, item.id));
                 setStatus(true);
               }}
             >
@@ -41,11 +41,13 @@ export const Product = () => {
             <button
               className="category"
               onClick={() => {
-                api.user.addItem(
-                  user.uid,
-                  item.id,
-                  item.expiryDays,
-                  item.emoji
+                api.execute(
+                  api.user.addItem(
+                    user.uid,
+                    item.id,
+                    item.expiryDays,
+                    item.emoji
+                  )
                 );
                 setStatus(true);
               }}

@@ -34,7 +34,7 @@ export function Product({ product, mini }) {
 
   const updateEmoji = async (icon) => {
     close();
-    api.user.updateItem(user.uid, product.id, "emoji", icon);
+    api.execute(api.user.updateItem(user.uid, product.id, "emoji", icon));
     setStatus(true);
   };
 
@@ -57,7 +57,7 @@ export function Product({ product, mini }) {
   };
 
   const updateDays = (days) => {
-    api.user.updateItem(user.uid, product.id, "expiryDays", days);
+    api.execute(api.user.updateItem(user.uid, product.id, "expiryDays", days));
     setStatus(true);
     close();
   };
@@ -83,16 +83,18 @@ export function Product({ product, mini }) {
       text: isInList ? "remove item" : "add item",
       action: isInList
         ? () => {
-            api.user.removeItem(user.uid, product.id);
+            api.execute(api.user.removeItem(user.uid, product.id));
             setStatus(true);
             close();
           }
         : () => {
-            api.user.addItem(
-              user.uid,
-              product.id,
-              product.expiryDays,
-              product.emoji
+            api.execute(
+              api.user.addItem(
+                user.uid,
+                product.id,
+                product.expiryDays,
+                product.emoji
+              )
             );
             setStatus(true);
             close();
@@ -103,7 +105,7 @@ export function Product({ product, mini }) {
     {
       text: "delete",
       action: () => {
-        api.products.deleteItem(product);
+        api.execute(api.products.deleteItem(product));
         setStatus(true);
       },
       key: 3,

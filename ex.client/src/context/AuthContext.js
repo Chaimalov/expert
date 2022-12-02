@@ -52,8 +52,8 @@ export function AuthProvider({ children }) {
     signOut(auth);
   }
 
-  const deleteAccount = async () => {
-    await api.user.deleteAccount(user.uid);
+  const deleteAccount = () => {
+    api.execute(api.user.deleteAccount(user.uid));
     logOut();
   };
 
