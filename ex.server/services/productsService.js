@@ -1,14 +1,14 @@
-import axios from "axios";
 import { ApiError } from "../middleware/errorHandler.js";
 import productsRepository from "../repositories/productsRepository.js";
 import userService from "./userService.js";
+import emojisService from "./emojisService.js";
 
 const createProduct = async ({ name, category, refrigerator }) => {
   if (await productsRepository.isProductExists(name)) {
     throw new ApiError(`${name} already exists.`, 405);
   }
 
-  const iconsList = await getEmoji(name, category);
+  const iconsList = await emojisService.getEmoji(name, category);
   let product = {};
 
   try {
@@ -113,18 +113,6 @@ const categoryDays = {
   ice_cream: {
     expiryDate: 45,
   },
-};
-
-const getEmoji = async (name, category) => {
-  const foundEmoji = await axios.get(
-    `http://localhost:9090/emojis/all/${name}`
-  );
-
-  if (foundEmoji.data.length) return foundEmoji.data;
-
-  return await (
-    await axios.get(`http://localhost:9090/emojis/${category}`)
-  ).data;
 };
 
 export default {
