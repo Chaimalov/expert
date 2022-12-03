@@ -1,12 +1,14 @@
 import usersRepository from "../repositories/usersRepository.js";
+import { isAdmin } from "./admins.js";
 
 const getUserById = async (id) => {
-  const user = await usersRepository.getUser(id);
+  let user = await usersRepository.getUser(id);
 
   if (!user) {
-    return await usersRepository.createUser(id);
+    user = await usersRepository.createUser(id);
   }
 
+  user.isAdmin = isAdmin(id);
   return user;
 };
 

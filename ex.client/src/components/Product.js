@@ -37,7 +37,6 @@ export function Product({ product, mini }) {
   const updateEmoji = async (icon) => {
     close();
     api.execute(api.user.updateItem(user.uid, product.id, "emoji", icon));
-    setStatus(true);
   };
 
   const editEmoji = () => {
@@ -60,7 +59,6 @@ export function Product({ product, mini }) {
 
   const updateDays = (days) => {
     api.execute(api.user.updateItem(user.uid, product.id, "expiryDays", days));
-    setStatus(true);
     close();
   };
 
@@ -86,7 +84,6 @@ export function Product({ product, mini }) {
       action: isInList
         ? () => {
             api.execute(api.user.removeItem(user.uid, product.id));
-            setStatus(true);
             close();
           }
         : () => {
@@ -98,7 +95,6 @@ export function Product({ product, mini }) {
                 product.emoji
               )
             );
-            setStatus(true);
             close();
           },
       key: 5,
@@ -107,8 +103,7 @@ export function Product({ product, mini }) {
     {
       text: "delete",
       action: () => {
-        api.execute(api.products.deleteItem(product));
-        setStatus(true);
+        api.execute(api.products.deleteItem(product, user.id));
       },
       key: 3,
       type: "delete",
@@ -158,7 +153,7 @@ export function Product({ product, mini }) {
       <div className={`item ${mini ? "mini" : ""}`}>
         <div className="top">
           {product.emoji && (
-            <Transitions key={product.emoji}>
+            <Transitions on={product.emoji}>
               <div className="icon">{product.emoji}</div>
             </Transitions>
           )}
@@ -174,7 +169,7 @@ export function Product({ product, mini }) {
         {!mini && (
           <>
             <h4>{product.category} </h4>
-            <Transitions key={product.expiryDays}>
+            <Transitions on={product.expiryDays}>
               <h5 className="space-between">
                 {displayDays(product.expiryDays)}{" "}
                 <span>{product.refrigerator && "❄️"}</span>

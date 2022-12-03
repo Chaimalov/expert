@@ -5,15 +5,15 @@ const animationConfiguration = {
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: 0 },
 };
-const Transitions = ({ children, key }) => {
+const Transitions = ({ children, on }) => {
   return (
     <motion.main
-      key={key}
+      key={on}
       variants={animationConfiguration}
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.25 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
     >
       {children}
     </motion.main>

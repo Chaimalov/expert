@@ -11,12 +11,13 @@
 }
 
 .block {
+  --delay: 150;
   --value: 80%;
   background: var(--gradient);
   aspect-ratio: 1;
   border-radius: 1vmin;
   transition: var(--transition);
-  animation: blink 1000ms alternate infinite;
+  animation: blink calc(var(--delay) * 4ms) alternate infinite;
   opacity: 0;
   scale: 0;
 }
@@ -34,39 +35,39 @@
 
 .block:nth-of-type(1) {
   --hue: 0;
-  animation-delay: 250ms;
+  animation-delay: calc(var(--delay) * 1ms);
 }
 
 .block:nth-of-type(2) {
-  --hue: 50;
-  animation-delay: 500ms;
+  --hue: 45;
+  animation-delay: calc(var(--delay) * 2ms);
 }
 
 .block:nth-of-type(3) {
-  --hue: 100;
-  animation-delay: 750ms;
+  --hue: 90;
+  animation-delay: calc(var(--delay) * 3ms);
 }
 
 .block:nth-of-type(6) {
-  --hue: 150;
-  animation-delay: 1000ms;
+  --hue: 135;
+  animation-delay: calc(var(--delay) * 4ms);
 }
 
 .block:nth-of-type(9) {
-  --hue: 200;
-  animation-delay: 1250ms;
+  --hue: 180;
+  animation-delay: calc(var(--delay) * 5ms);
 }
 
 .block:nth-of-type(8) {
-  --hue: 250;
-  animation-delay: 1500ms;
+  --hue: 225;
+  animation-delay: calc(var(--delay) * 6ms);
 }
 
 .block:nth-of-type(7) {
-  --hue: 300;
-  animation-delay: 1750ms;
+  --hue: 270;
+  animation-delay: calc(var(--delay) * 7ms);
 }
 .block:nth-of-type(4) {
-  --hue: 350;
-  animation-delay: 2000ms;
+  --hue: 315;
+  animation-delay: calc(var(--delay) * 8ms);
 }

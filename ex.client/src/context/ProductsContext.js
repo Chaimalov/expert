@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import socketIOClient from "socket.io-client";
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
@@ -7,50 +13,40 @@ import { useAuth } from "./AuthContext";
 const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
-  const { user, setStatus, status } = useAuth();
+  const { user } = useAuth();
   const [products, setProducts] = useState();
-  const [userProducts, setUserProducts] = useState();
-  const [expireAlertCount, setExpireAlertCount] = useState(0);
 
   useEffect(() => {
-    if (status) {
-      setTimeout(() => {
-        getProducts();
-      }, 2000);
-    }
-    return setStatus(false);
-  }, [status]);
+    getProducts();
+    const socket = socketIOClient("http://localhost:3000");
+    socket.on("products", (data) => {
+      setProducts(sortBy(data, "name"));
+    });
+
+    return () => socket.disconnect();
+  }, []);
 
   const getProducts = async () => {
-    const toastId = toast.loading("loading changes...");
     const list = await api.products.getProducts(user.uid);
     setProducts(sortBy(list, "name"));
-    toast.dismiss(toastId);
   };
 
-  useEffect(() => {
-    if (products && user.products) {
-      setUserProducts(products.filter((product) => product.createdAt));
-    }
-  }, [products, user]);
+  const userProducts = products?.filter((product) => product.createdAt);
 
-  useEffect(() => {
-    if (!userProducts) return;
-
-    setExpireAlertCount(
-      userProducts.filter((product) => {
-        return (
-          product.expiryDate &&
-          addDaysToDate(new Date(product.expiryDate), -user.notifyBefore) <=
-            new Date(new Date().setHours(0, 0, 0, 0))
-        );
-      }).length
-    );
+  const expireAlertCount = useMemo(() => {
+    if (!userProducts) return 0;
+    return userProducts.filter((product) => {
+      return (
+        product.expiryDate &&
+        addDaysToDate(new Date(product.expiryDate), -user.notifyBefore) <=
+          new Date(new Date().setHours(0, 0, 0, 0))
+      );
+    }).length;
   }, [userProducts, user]);
 
   return (
     <ProductsContext.Provider
-      value={{ products, userProducts, setStatus, expireAlertCount }}
+      value={{ products, userProducts, expireAlertCount }}
     >
       {children}
     </ProductsContext.Provider>

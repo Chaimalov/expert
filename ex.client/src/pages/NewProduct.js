@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, CategoriesList, Category } from "../components";
-import { useProducts } from "../context/ProductsContext";
-import { categories, notify, types } from "../utils";
 import api from "../api/api";
+import { Button, CategoriesList, Category } from "../components";
+import { useAuth } from "../context/AuthContext";
+import { categories, notify, types } from "../utils";
 
 export default function NewProduct() {
   const saveProduct = async () => {
@@ -12,15 +12,14 @@ export default function NewProduct() {
       return;
     }
 
-    api.execute(api.products.createProduct(name, category, storage));
-    setStatus(true);
+    api.execute(api.products.createProduct(name, category, storage, user.id));
     goTo("/");
   };
 
   const [storage, setStorage] = useState(null);
   const [category, setCategory] = useState();
-  const { setStatus } = useProducts();
   const { name } = useParams();
+  const { user } = useAuth();
 
   const goTo = useNavigate();
 

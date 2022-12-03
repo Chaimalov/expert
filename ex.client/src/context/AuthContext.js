@@ -10,14 +10,15 @@ import {
 import { auth } from "../firebase";
 import api from "../api/api";
 import { generateAvatar } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [providerUser, setProviderUser] = useState();
   const [userRecord, setUserRecord] = useState();
-  const [status, setStatus] = useState(true);
-  const [loggedIn, setloggedIn] = useState("pending");
+  const [loggedIn, setLoggedIn] = useState("pending");
+  const goTo = useNavigate();
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -59,17 +60,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) setloggedIn(false);
-
-      if (
-        currentUser.email === "chaimalov@gmail.com" ||
-        currentUser.email === "israelmark98@gmail.com"
-      ) {
-        currentUser.isAdmin = true;
-      }
-
+      if (!currentUser) setLoggedIn(false);
       setProviderUser(currentUser);
-      setStatus(true);
     });
     return unsubscribe;
   }, [providerUser]);
@@ -81,10 +73,11 @@ export function AuthProvider({ children }) {
         record.photoURL = generateAvatar(user.email.charAt(0), "white");
       }
       setUserRecord(record);
-      setloggedIn(true);
+      setLoggedIn(true);
+      goTo("/");
     };
     if (providerUser) getRecord();
-  }, [providerUser, status]);
+  }, [providerUser]);
 
   const user = {
     ...providerUser,
@@ -100,8 +93,6 @@ export function AuthProvider({ children }) {
         signIn,
         user,
         loggedIn,
-        setStatus,
-        status,
         deleteAccount,
       }}
     >

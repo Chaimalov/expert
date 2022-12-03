@@ -1,26 +1,32 @@
 import axios from "axios";
 import { notify, types } from "../utils";
+import toast from "react-hot-toast";
 
 const execute = (request) => {
+  const toastId = toast.loading("working on it...");
   request
     .then(({ data }) => {
       notify(data, types.SUCCESS);
     })
     .catch(({ response }) => {
       notify(response.data || response.message, types.ERROR);
+    })
+    .finally(() => {
+      toast.dismiss(toastId);
     });
 };
 
 const products = {
-  createProduct: (name, category, refrigerator) => {
+  createProduct: (name, category, refrigerator, userId) => {
     return axios.post("/products", {
       product: { name: name.toLowerCase().trim(), category, refrigerator },
+      userId,
     });
   },
 
-  deleteItem: (item) => {
+  deleteItem: (item, userId) => {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
-      return axios.delete("/products/" + item.id);
+      return axios.delete("/products/" + item.id, { userId });
     }
   },
   getProducts: async (userId) => {

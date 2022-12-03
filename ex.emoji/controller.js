@@ -10,8 +10,10 @@ route.get("/", (req, res) => {
 
 route.get("/all/:name", (req, res) => {
   res.send(emojiService.getEmojiByName(req.params.name));
+  console.log(req.params.name + " - sent emoji by name");
 });
 
 route.get("/:category", (req, res) => {
   res.send(emojiService.getEmojisByCategory(req.params.category));
+  console.log(req.params.category + " - sent emojis by category");
 });
