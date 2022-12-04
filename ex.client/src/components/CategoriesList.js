@@ -1,7 +1,7 @@
 import React from "react";
 import { Category } from "./Category";
 
-export function CategoriesList({ categories, onClick, group }) {
+export function CategoriesList({ design, categories, onClick, group }) {
   return (
     <div className="section">
       {categories.map((category) => (
@@ -12,6 +12,7 @@ export function CategoriesList({ categories, onClick, group }) {
           onClick={onClick}
           value={category.name}
           group={group}
+          design={design}
         />
       ))}
     </div>

@@ -7,6 +7,9 @@
 @import "./notifications.css";
 @import "./loader.css";
 
+body {
+  overflow-y: scroll;
+}
 header {
   width: 100%;
   color: var(--clr-primary-dark);
@@ -63,11 +66,11 @@ input[type="radio"]::before {
   border-width: 0;
 }
 
-input[type="radio"]:checked::before {
+.category :not(.compact) input[type="radio"]:checked::before {
   content: "";
+  border: 5px solid var(--clr-primary-dark);
   position: absolute;
   inset: 0;
-  border: 5px solid var(--clr-primary-dark);
   transition: 0.1s linear;
   border-radius: 1em;
   pointer-events: none;
@@ -80,18 +83,27 @@ label {
   text-align: start;
 }
 
-.category {
+.category:not(.compact) {
   display: flex;
+  gap: 0.25em;
+}
+.icon {
+  transition: 0.2s ease;
+}
+.category.compact:has(input:not(:checked)) .icon {
+  opacity: 0.5;
+  filter: grayscale();
+}
+
+.category {
   color: var(--text-clr);
   width: max-content;
   align-items: center;
   background-color: var(--grey);
-  gap: 0.25em;
   padding: 0.5em 1em;
   border-radius: 1em;
   cursor: pointer;
   transition: 0.2s ease;
-  box-shadow: inset 0 0 0 var(--clr-primary);
 }
 
 .category:hover {

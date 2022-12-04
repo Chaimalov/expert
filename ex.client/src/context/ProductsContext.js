@@ -16,14 +16,18 @@ export function ProductsProvider({ children }) {
   const { user } = useAuth();
   const [products, setProducts] = useState();
 
+  const socket = socketIOClient();
+
   useEffect(() => {
     getProducts();
-    const socket = socketIOClient("http://localhost:3000");
     socket.on("products", (data) => {
       setProducts(sortBy(data, "name"));
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.off("products");
+      socket.disconnect();
+    };
   }, []);
 
   const getProducts = async () => {

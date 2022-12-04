@@ -1,14 +1,16 @@
 import { createRef, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, ProductsList } from "../components";
+import { Button, CategoriesList, Input, ProductsList } from "../components";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
+import { categories } from "../utils";
 import { Loading } from "./Loading";
 
 export const Home = () => {
   const searchRef = createRef();
   const [filteredList, setFilteredList] = useState();
+
   const goTo = useNavigate();
 
   const { user } = useAuth();
@@ -19,7 +21,7 @@ export const Home = () => {
     setFilteredList(products);
   }, [products, user]);
 
-  const filterList = (e) => {
+  const filterList = () => {
     setFilteredList(() => {
       return products.filter(
         (item) => item.name.indexOf(searchRef.current.value) !== -1
@@ -29,6 +31,12 @@ export const Home = () => {
 
   const isProductFound = () => {
     return filteredList.length;
+  };
+
+  const filterByCategory = (category) => {
+    setFilteredList(
+      products.filter((product) => product.category.includes(category))
+    );
   };
 
   if (!products) return <Loading />;
@@ -55,6 +63,12 @@ export const Home = () => {
         />
         <Button value={<BiSearchAlt2 />} type="submit" />
       </form>
+      <CategoriesList
+        categories={[...categories, { name: "", icon: "🗑️" }]}
+        onClick={filterByCategory}
+        group="category"
+        design="compact"
+      />
       <ProductsList list={filteredList} />
     </div>
   );
