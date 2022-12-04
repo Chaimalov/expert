@@ -10,7 +10,6 @@ import {
 import { auth } from "../firebase";
 import api from "../api/api";
 import { generateAvatar } from "../utils";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -18,7 +17,6 @@ export function AuthProvider({ children }) {
   const [providerUser, setProviderUser] = useState();
   const [userRecord, setUserRecord] = useState();
   const [loggedIn, setLoggedIn] = useState("pending");
-  const goTo = useNavigate();
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -74,7 +72,6 @@ export function AuthProvider({ children }) {
       }
       setUserRecord(record);
       setLoggedIn(true);
-      goTo("/");
     };
     if (providerUser) getRecord();
   }, [providerUser]);

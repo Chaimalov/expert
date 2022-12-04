@@ -50,7 +50,9 @@ export const Home = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          isProductFound() || goTo(`/products/${searchRef.current.value}`);
+          return (
+            isProductFound() || goTo(`/products/${searchRef.current.value}`)
+          );
         }}
         className="search"
       >
