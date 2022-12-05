@@ -13,7 +13,7 @@
   --value: 45%;
   position: sticky;
   background-color: var(--clr-primary-dark);
-  padding-block: 7em;
+  padding-block-start: 7em;
   top: 0;
   right: 0;
   height: 100vh;
