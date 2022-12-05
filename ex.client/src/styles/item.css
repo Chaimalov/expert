@@ -20,6 +20,7 @@
 .item.mini > * {
   margin: 0;
 }
+
 .top {
   display: flex;
   justify-content: space-between;

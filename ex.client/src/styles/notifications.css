@@ -1,12 +1,13 @@
 .notifications-bar .list {
+  --shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
   grid-template-columns: 100%;
   background-color: white;
   border-radius: 1.7em;
   margin: 2em;
   margin-top: 1em;
   padding: 1em;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+  box-shadow: var(--shadow);
 }
 
 .notifications-bar {
@@ -25,6 +26,21 @@
 .date {
   text-align: center;
   color: white;
+}
+
+.date[data-passed="true"] + .list::before {
+  content: "❗";
+  position: absolute;
+  left: 0;
+  font-size: 1.5em;
+  padding: 0.2em;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  background-color: white;
+  box-shadow: var(--shadow);
+  z-index: 1;
+  translate: -25% -25%;
+  rotate: -10deg;
 }
 
 .text {

@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import React, { useMemo } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
-import { sortObjectByDateKeys } from "../utils";
+import { addDaysToDate, sortObjectByDateKeys } from "../utils";
 import { ProductsList } from "./ProductsList";
 
 const animationConfiguration = {
@@ -41,6 +42,7 @@ const sideVariants = {
 
 export function NotificationsMenu() {
   const { userProducts } = useProducts();
+  const { user } = useAuth();
 
   const items = useMemo(() => {
     if (!userProducts) return;
@@ -78,7 +80,13 @@ export function NotificationsMenu() {
         {items && Object.keys(items).length > 0 ? (
           Object.keys(items).map((date) => (
             <motion.div key={date} variants={itemVariants}>
-              <h4 className="date">
+              <h4
+                className="date"
+                data-passed={
+                  new Date(date) <
+                  addDaysToDate(new Date(), +parseInt(user.notifyBefore))
+                }
+              >
                 {new Date(date).toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "long",
