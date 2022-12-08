@@ -43,7 +43,7 @@
   outline: none;
   padding: 0.5em 0.75em;
   margin: 0;
-  font-size: 2em;
+  font-size: clamp(1rem, 10vw, 2rem);
   font-weight: 700;
   width: 100%;
 }

@@ -20,51 +20,49 @@ export default function App() {
   if (loggedIn === "pending") return <Loading />;
   if (!loggedIn) return <Login />;
   return (
-    <div className="App">
-      <div style={{ display: "flex" }}>
-        <ProductsProvider>
-          <motion.div style={{ flexGrow: 1 }}>
-            <Nav toggleMenu={setMenu} menu={menu} />
-            <AnimatePresence exitBeforeEnter>
-              <Routes location={location} key={location.pathname}>
-                <Route
-                  path="/"
-                  element={
-                    <Transitions>
-                      <Home />
-                    </Transitions>
-                  }
-                />
-                <Route
-                  path="/account"
-                  element={
-                    <Transitions>
-                      <Account />
-                    </Transitions>
-                  }
-                />
-                <Route
-                  path="/product/:id"
-                  element={
-                    <Transitions>
-                      <Product />
-                    </Transitions>
-                  }
-                />
-                <Route
-                  path="/products/:name"
-                  element={
-                    <Transitions>
-                      <NewProduct />
-                    </Transitions>
-                  }
-                />
-              </Routes>
-            </AnimatePresence>
-          </motion.div>
-          <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
-        </ProductsProvider>
-      </div>
+    <div className="app">
+      <ProductsProvider>
+        <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
+        <motion.div className="main">
+          <Nav toggleMenu={setMenu} menu={menu} />
+          <AnimatePresence exitBeforeEnter>
+            <Routes location={location} key={location.pathname}>
+              <Route
+                path="/"
+                element={
+                  <Transitions>
+                    <Home />
+                  </Transitions>
+                }
+              />
+              <Route
+                path="/account"
+                element={
+                  <Transitions>
+                    <Account />
+                  </Transitions>
+                }
+              />
+              <Route
+                path="/product/:id"
+                element={
+                  <Transitions>
+                    <Product />
+                  </Transitions>
+                }
+              />
+              <Route
+                path="/products/:name"
+                element={
+                  <Transitions>
+                    <NewProduct />
+                  </Transitions>
+                }
+              />
+            </Routes>
+          </AnimatePresence>
+        </motion.div>
+      </ProductsProvider>
       <Toaster />
     </div>
   );

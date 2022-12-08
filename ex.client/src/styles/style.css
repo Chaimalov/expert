@@ -13,8 +13,16 @@ section {
   flex-grow: 1;
   text-align: start;
   display: grid;
-  padding: 2em;
   gap: 2em;
+}
+
+section h1 {
+  width: max-content;
+  font-size: clamp(3rem, 8vw, 5rem);
+}
+
+section h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 p {
@@ -188,8 +196,8 @@ img {
 .flex {
   display: flex;
   align-items: center;
-  gap: 1em;
   flex-wrap: wrap;
+  gap: 1em;
 }
 
 .grid {
@@ -203,7 +211,10 @@ img {
 
 .full-page {
   min-height: calc(100vh - 5em);
-  margin-inline: 4em;
+  margin-inline: auto;
+  margin-block: 4em;
+  max-width: 80%;
+  gap: 4em;
 }
 
 .full-width {

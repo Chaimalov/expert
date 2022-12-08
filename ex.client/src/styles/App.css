@@ -16,8 +16,9 @@ header {
   padding-block: 3em;
   text-align: center;
   margin-bottom: 3em;
-  padding: 2em 5em;
+  padding: 2em;
 }
+
 form {
   text-align: center;
 }
@@ -135,23 +136,17 @@ label {
   opacity: 0.1;
 }
 
-.loadingLogo {
-  animation: loading 0.5s infinite alternate;
-  display: block;
-  font-size: 10em;
-}
-
 .line {
   width: 100%;
   border-top: 1px solid;
 }
 
-@keyframes loading {
-  0% {
-    opacity: 0.3;
-  }
+.app {
+  display: flex;
+  flex-direction: row-reverse;
+}
 
-  100% {
-    opacity: 1;
-  }
+.main {
+  flex-grow: 1;
+  position: relative;
 }

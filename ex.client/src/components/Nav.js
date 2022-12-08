@@ -1,12 +1,12 @@
 import React from "react";
+import { FaBell, FaRegBell } from "react-icons/fa";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { FaUserAlt, FaBell, FaRegBell } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
-import { Button } from "./Button";
 import { useProducts } from "../context/ProductsContext";
+import { Button } from "./Button";
 
 export function Nav({ toggleMenu, menu }) {
-  const { user, loggedIn, logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const { expireAlertCount } = useProducts();
 
   async function signOut() {
@@ -22,32 +22,25 @@ export function Nav({ toggleMenu, menu }) {
       <NavLink to="/">
         <h2>expert</h2>
       </NavLink>
-      <div className="sep"></div>
-      {loggedIn && (
-        <Button
-          value={
-            menu ? (
-              <FaRegBell className="large" />
-            ) : (
-              <FaBell className="large" />
-            )
-          }
-          onClick={toggleMenu}
-          bubble={expireAlertCount}
-        />
-      )}
-      {user.uid && <Button value="sign out" onClick={signOut} />}
-      {!loggedIn ? (
-        <></>
-      ) : (
+      <div className="drawer">
+        <div className="notification-bell">
+          <Button
+            value={
+              menu ? (
+                <FaRegBell className="large" />
+              ) : (
+                <FaBell className="large" />
+              )
+            }
+            onClick={toggleMenu}
+            bubble={expireAlertCount}
+          />
+        </div>
+        <Button value="sign out" onClick={signOut} />
         <NavLink to="/account">
-          {user.photoURL ? (
-            <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
-          ) : (
-            <FaUserAlt className="ion" />
-          )}
+          <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
         </NavLink>
-      )}
+      </div>
     </nav>
   );
 }

@@ -17,7 +17,6 @@ export function Login() {
           <h3>expiry dates by the experts</h3>
         </div>
         <h1>🥭 + 📅 = 😊</h1>
-        <p></p>
       </section>
       <section>
         <div>
