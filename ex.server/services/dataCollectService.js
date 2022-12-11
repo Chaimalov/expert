@@ -10,9 +10,7 @@ const updateProductsExpiryDays = async () => {
     if (daysArray.length) {
       daysArray.push(parseInt(product.expiryDays));
 
-      const avgDays = parseInt(
-        daysArray.reduce((sum, days) => sum + days, 0) / daysArray.length
-      );
+      const avgDays = avgArrayOfNumbers(daysArray);
 
       productsService.updateProductsExpiryDays(product.id, avgDays);
     }
@@ -30,6 +28,12 @@ const collectExpiryDaysOnProduct = async (productId) => {
       Object.values(doc.products).map((product) => parseInt(product.expiryDays))
     )
     .flat();
+};
+
+const avgArrayOfNumbers = (numbersArray) => {
+  return parseInt(
+    numbersArray.reduce((sum, number) => sum + number, 0) / numbersArray.length
+  );
 };
 
 export default {
