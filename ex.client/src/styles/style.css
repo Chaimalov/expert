@@ -1,6 +1,6 @@
 @import url("variables.css");
 
-:where(h1, h2, h3, h4, strong, a, button) {
+:where(h1, h2, h3, h4, strong, a, button, h5) {
   text-transform: capitalize;
 }
 

@@ -24,8 +24,31 @@ export const Product = () => {
         <h1>
           {item.emoji} {item.name}
         </h1>
-        <h2>{item.category}</h2>
-        <h3>{displayDays(item.expiryDays)}</h3>
+        <div className="details">
+          <h3>category: {item.category}</h3>
+          <h3>lasts for: {displayDays(item.expiryDays)}</h3>
+          <h3>storage: {item.refrigerator ? "refrigerate" : "dry"}</h3>
+          {item.createdAt && (
+            <h3>
+              Date added:{" "}
+              {new Date(item.createdAt).toLocaleDateString("en-us", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </h3>
+          )}
+        </div>
+        {item.nameVariation.length > 0 && (
+          <div className="details">
+            <h3>name variations:</h3>
+            <div class="flex">
+              {item.nameVariation.map((name) => (
+                <h5 className="chips">{name}</h5>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="section">
           {isInUsersList(user, item) ? (
             <button
@@ -55,7 +78,6 @@ export const Product = () => {
               add item
             </button>
           )}
-          <button className="category">edit date</button>
         </div>
       </div>
     );

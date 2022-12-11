@@ -40,7 +40,7 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.item a {
+.item .name {
   text-decoration: none;
   color: var(--text-color);
   margin-bottom: auto;
@@ -58,4 +58,19 @@
 
 .item h3 {
   line-height: 1.2;
+}
+
+.details {
+  margin-block: 2em;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.chips {
+  color: var(--text-clr);
+  width: max-content;
+  align-items: center;
+  background-color: var(--grey);
+  padding: 0.5em 1em;
+  border-radius: 1em;
 }

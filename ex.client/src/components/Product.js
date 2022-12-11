@@ -163,7 +163,11 @@ export function Product({ product, mini }) {
             </button>
           )}
         </div>
-        <Link to={`/product/${product.name}`} state={{ ...product }}>
+        <Link
+          className="name"
+          to={`/product/${product.name}`}
+          state={{ ...product }}
+        >
           <h3>{product.name}</h3>
         </Link>
         {!mini && (
