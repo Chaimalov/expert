@@ -17,10 +17,6 @@
   gap: 0.5em;
 }
 
-.item.mini > * {
-  margin: 0;
-}
-
 .top {
   display: flex;
   justify-content: space-between;
@@ -54,10 +50,6 @@
   position: relative;
   overflow: hidden;
   border-radius: 1em;
-}
-
-.item h3 {
-  line-height: 1.2;
 }
 
 .details {
@@ -99,4 +91,8 @@ textarea {
 
 textarea:focus {
   border-color: var(--clr-primary-dark);
+}
+
+.item.mini > * {
+  margin: 0;
 }
