@@ -34,6 +34,12 @@ const products = {
       await axios.get("/products/user/" + userId)
     ).data;
   },
+
+  saveNameVariations: async (productId, nameVariations) => {
+    return axios.post("/products/" + productId, {
+      nameVariations,
+    });
+  },
 };
 
 const user = {

@@ -56,6 +56,16 @@ const updateProductsExpiryDays = async (productId, days) => {
   return await productsRepository.updateProductsExpiryDays(productId, days);
 };
 
+const updateProductsNameVariations = async (productId, nameVariations) => {
+  if (!nameVariations.length) {
+    throw new ApiError("the list must contain something", 400);
+  }
+  return await productsRepository.updateProductsNameVariations(
+    productId,
+    nameVariations
+  );
+};
+
 const getProducts = async () => {
   return await productsRepository.getProducts();
 };
@@ -122,6 +132,7 @@ export default {
   getProducts,
   updateProductsEmoji,
   updateProductsExpiryDays,
+  updateProductsNameVariations,
   deleteProductById,
   getProductsByUser,
   addDaysToDate,

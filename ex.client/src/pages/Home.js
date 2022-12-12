@@ -23,9 +23,14 @@ export const Home = () => {
 
   const filterList = () => {
     setFilteredList(() => {
-      return products.filter(
-        (item) => item.name.indexOf(searchRef.current.value) !== -1
-      );
+      return products.filter((item) => {
+        return (
+          item.name.indexOf(searchRef.current.value) !== -1 ||
+          item.nameVariation.find(
+            (variation) => variation.indexOf(searchRef.current.value) !== -1
+          )
+        );
+      });
     });
   };
 

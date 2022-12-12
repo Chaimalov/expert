@@ -13,6 +13,18 @@ route.post("/", async (req, res, errorHandler) => {
   }
 });
 
+route.post("/:productId", async (req, res, errorHandler) => {
+  try {
+    await productsService.updateProductsNameVariations(
+      req.params.productId,
+      req.body.nameVariations
+    );
+    res.send("variations were added");
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+
 route.get("/:productName", async (req, res, errorHandler) => {
   try {
     res.send(await productsService.getProductByName(req.params.productName));

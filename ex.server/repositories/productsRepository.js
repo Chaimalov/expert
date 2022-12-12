@@ -1,3 +1,4 @@
+import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../firebase.js";
 
 const createProduct = async (product) => {
@@ -39,6 +40,12 @@ const updateProductsExpiryDays = async (productId, expiryDays) => {
   return await db.products.doc(productId).update({ expiryDays });
 };
 
+const updateProductsNameVariations = async (productId, nameVariations) => {
+  return await db.products.doc(productId).update({
+    nameVariation: FieldValue.arrayUnion(...nameVariations),
+  });
+};
+
 const getProducts = async () => {
   return await (
     await db.products.get()
@@ -53,5 +60,6 @@ export default {
   updateProductEmoji,
   getProducts,
   updateProductsExpiryDays,
+  updateProductsNameVariations,
   isProductExists,
 };

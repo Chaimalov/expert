@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
+import Transitions from "../context/Transition";
 import { colorFromEmoji, displayDays, isInUsersList } from "../utils";
 import { Loading } from "./Loading";
 
 export const Product = () => {
-  const [item, setItem] = useState();
   const { id } = useParams();
   const { products, setStatus } = useProducts();
   const { user } = useAuth();
+  const variationsInputRef = useRef();
 
-  useEffect(() => {
-    if (!products) return;
-    setItem(products.find((item) => item.name === id));
-  }, [products, id]);
+  const saveNameVariations = async () => {
+    const variations = variationsInputRef.current.value
+      .split(",")
+      .map((variation) => variation.trim())
+      .filter((value) => !!value);
+    api.execute(api.products.saveNameVariations(item.id, variations));
+  };
+
+  const item = products?.find((item) => item.name === id);
 
   const color = colorFromEmoji(item?.emoji);
   if (products && item) {
@@ -39,16 +45,33 @@ export const Product = () => {
             </h3>
           )}
         </div>
-        {item.nameVariation.length > 0 && (
-          <div className="details">
-            <h3>name variations:</h3>
-            <div class="flex">
-              {item.nameVariation.map((name) => (
-                <h5 className="chips">{name}</h5>
+        <div className="details">
+          <h3>name variations:</h3>
+          <div className="chipsContainer">
+            {item.nameVariation.length > 0 &&
+              item.nameVariation.map((name) => (
+                <Transitions key={name}>
+                  <h5 className="chips">{name}</h5>
+                </Transitions>
               ))}
-            </div>
           </div>
-        )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveNameVariations();
+              variationsInputRef.current.value = "";
+            }}
+          >
+            <textarea
+              ref={variationsInputRef}
+              placeholder="add more comma separated variations here..."
+            ></textarea>
+            <button type="submit" className="btn">
+              save
+            </button>
+          </form>
+        </div>
+
         <div className="section">
           {isInUsersList(user, item) ? (
             <button
