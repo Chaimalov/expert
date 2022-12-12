@@ -1,20 +1,27 @@
 import axios from "axios";
 import { ApiError } from "../middleware/errorHandler.js";
 
+const route = axios.create({
+  baseURL: "http://localhost:9090/emojis",
+});
+
 const getEmoji = async (name, category) => {
   try {
-    const foundEmoji = await axios.get(
-      `http://localhost:9090/emojis/all/${name}`
-    );
+    const foundEmoji = await route.get(`all/${name}`);
 
-    if (foundEmoji.data.length) return foundEmoji.data;
+    if (!foundEmoji.data.length) throw new ApiError("emoji not found", 404);
 
-    return await (
-      await axios.get(`http://localhost:9090/emojis/${category}`)
-    ).data;
+    return await foundEmoji.data;
   } catch (error) {
-    console.log(error);
-    throw new ApiError("couldn't retrieve emojis from service", 500);
+    console.error(error);
+    try {
+      const foundEmojiCategory = await route.get(category);
+
+      return await foundEmojiCategory.data;
+    } catch (error) {
+      console.error(error);
+      throw new ApiError("couldn't retrieve emojis from service", 500);
+    }
   }
 };
 
