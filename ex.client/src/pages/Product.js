@@ -23,7 +23,7 @@ export const Product = () => {
 
   const item = products?.find((item) => item.name === id);
 
-  const color = colorFromEmoji(item?.emoji);
+  const [color] = colorFromEmoji(item?.emoji);
   if (products && item) {
     return (
       <div className="center m2" style={{ "--hue": color }}>

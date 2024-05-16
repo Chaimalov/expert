@@ -1,11 +1,16 @@
 import React from "react";
 import { FaBell, FaRegBell } from "react-icons/fa";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, To, useMatch, useResolvedPath } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
 import { Button } from "./Button";
 
-export function Nav({ toggleMenu, menu }) {
+type NavProps = {
+  toggleMenu: () => void;
+  menu: boolean;
+};
+
+export const Nav: React.FC<NavProps> = ({ toggleMenu, menu }) => {
   const { user, logOut } = useAuth();
   const { expireAlertCount } = useProducts();
 
@@ -24,17 +29,13 @@ export function Nav({ toggleMenu, menu }) {
       </NavLink>
       <div className="drawer">
         <div className="notification-bell">
-          <Button
-            value={
-              menu ? (
-                <FaRegBell className="large" />
-              ) : (
-                <FaBell className="large" />
-              )
-            }
-            onClick={toggleMenu}
-            bubble={expireAlertCount}
-          />
+          <Button onClick={toggleMenu} bubble={expireAlertCount}>
+            {menu ? (
+              <FaRegBell className="large" />
+            ) : (
+              <FaBell className="large" />
+            )}
+          </Button>
         </div>
         <Button value="sign out" onClick={signOut} />
         <NavLink to="/account">
@@ -43,9 +44,16 @@ export function Nav({ toggleMenu, menu }) {
       </div>
     </nav>
   );
-}
+};
 
-function NavLink({ children, to }) {
+type NavLinkProps = {
+  to: To;
+};
+
+const NavLink: React.FC<React.PropsWithChildren<NavLinkProps>> = ({
+  children,
+  to,
+}) => {
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
   return (
@@ -53,4 +61,4 @@ function NavLink({ children, to }) {
       {children}
     </Link>
   );
-}
+};

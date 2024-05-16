@@ -1,7 +1,24 @@
 import React from "react";
 import { Category } from "./Category";
 
-export function CategoriesList({ design, categories, onClick, group }) {
+type CategoryListProps = {
+  design: "compact",
+  categories: Category[],
+  onClick: () => void,
+  group: string,
+};
+
+type Category = {
+  name: string,
+  icon: string,
+}
+
+export const CategoriesList: React.FC<CategoryListProps> = ({
+  design,
+  categories,
+  onClick,
+  group,
+}) => {
   return (
     <div className="section">
       {categories.map((category) => (
@@ -17,4 +34,4 @@ export function CategoriesList({ design, categories, onClick, group }) {
       ))}
     </div>
   );
-}
+};

@@ -5,9 +5,9 @@ import { useAuth } from "../context/AuthContext";
 
 export function Login() {
   const { signInWithGoogle, signUpWithEmailAndPassword } = useAuth();
-  const email = useRef();
-  const password = useRef();
-  const [error, setError] = useState();
+  const email = useRef<Input>();
+  const password = useRef<Input>();
+  const [error, setError] = useState<string>();
 
   return (
     <div className="flex full-page">
@@ -55,13 +55,18 @@ export function Login() {
             full-width
             large
             value="continue"
-            onClick={() =>
-              signUpWithEmailAndPassword(
-                email.current.value,
-                password.current.value,
-                setError
-              )
-            }
+            onClick={() => {
+              try {
+                signUpWithEmailAndPassword(
+                  email.current.value,
+                  password.current.value
+                );
+              } catch (error) {
+                if (error instanceof Error) {
+                  setError(error.message);
+                }
+              }
+            }}
           />
           <span className="danger">{error && "* " + error}</span>
         </form>

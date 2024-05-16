@@ -1,15 +1,15 @@
-import axios from "axios";
-import { notify, types } from "../utils";
+import axios, { AxiosRequestConfig } from "axios";
+import { notify, Kind } from "../utils/notify";
 import toast from "react-hot-toast";
 
-const execute = (request) => {
+const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading("working on it...");
   request
     .then(({ data }) => {
-      notify(data, types.SUCCESS);
+      notify(data, "success");
     })
     .catch(({ response }) => {
-      notify(response.data || response.message, types.ERROR);
+      notify(response.data || response.message, "error");
     })
     .finally(() => {
       toast.dismiss(toastId);
@@ -17,25 +17,25 @@ const execute = (request) => {
 };
 
 const products = {
-  createProduct: (name, category, refrigerator, userId) => {
+  createProduct: (name: string, category: string, refrigerator: boolean, userId: string) => {
     return axios.post("/products", {
       product: { name: name.toLowerCase().trim(), category, refrigerator },
       userId,
     });
   },
 
-  deleteItem: (item, userId) => {
+  deleteItem: (item: {name: string, id: string }, userId: string) => {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
-      return axios.delete("/products/" + item.id, { userId });
+      return axios.delete("/products/" + item.id, { data: { userId } });
     }
   },
-  getProducts: async (userId) => {
+  getProducts: async (userId: string) => {
     return await (
       await axios.get("/products/user/" + userId)
     ).data;
   },
 
-  saveNameVariations: async (productId, nameVariations) => {
+  saveNameVariations: async (productId: string, nameVariations: string[]) => {
     return axios.post("/products/" + productId, {
       nameVariations,
     });
@@ -43,38 +43,38 @@ const products = {
 };
 
 const user = {
-  getUser: async (userId) => {
+  getUser: async (userId: string) => {
     return await (
       await axios.get("/users/" + userId)
     ).data;
   },
 
-  addItem: (userId, itemId, expiryDays, emoji) => {
+  addItem: (userId: string, itemId: string, expiryDays: string, emoji: string) => {
     return axios.post("/users/products", {
       userId: userId,
       product: { id: itemId, expiryDays, emoji },
     });
   },
-  removeItem: (userId, productId) => {
+  removeItem: (userId: string, productId: string) => {
     return axios.delete("/users/products", {
       data: { userId, productId },
     });
   },
 
-  updateItem: (userId, productId, key, value) => {
+  updateItem: (userId: string, productId: string, key: string, value: string) => {
     return axios.patch("/users/products", {
       userId: userId,
       product: { id: productId, key, value },
     });
   },
 
-  updateNotify: (userId, notifyBefore) => {
+  updateNotify: (userId: string, notifyBefore: boolean) => {
     return axios.patch("/users/" + userId, {
       notifyBefore,
     });
   },
 
-  deleteAccount: (userId) => {
+  deleteAccount: (userId: string) => {
     return axios.delete("/users/" + userId);
   },
 };

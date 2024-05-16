@@ -1,10 +1,12 @@
 export function generateAvatar(
-  text,
+  text: string,
   foregroundColor = "white",
   backgroundColor = "black"
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
+
+  if (!context) throw new Error("Unable to get canvas context");
 
   canvas.width = 200;
   canvas.height = 200;

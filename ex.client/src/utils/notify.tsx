@@ -1,39 +1,41 @@
 import toast from "react-hot-toast";
 import { Button } from "../components";
 
-export const types = {
+export const Kind = {
   SUCCESS: "success",
   ERROR: "error",
   CONFIRM: "confirm",
-};
+} as const;
 
-const styles = {
+export type Kind = typeof Kind[keyof typeof Kind];
+
+const style = {
   borderRadius: "2em",
   textTransform: "capitalize",
-};
+} satisfies React.CSSProperties;
 
-export function notify(message, type) {
+export function notify(message: string, type: Kind) {
   switch (type) {
-    case types.SUCCESS:
+    case Kind.SUCCESS:
       toast.success(message, {
-        style: styles,
+        style,
       });
       break;
-    case types.ERROR:
+    case Kind.ERROR:
       toast.error(message, {
-        style: styles,
+        style,
       });
       break;
-    case types.CONFIRM:
-      toast((t) => (
+    case Kind.CONFIRM:
+      toast(({ id }) => (
         <div className="grid">
           <h4>{message}</h4>
 
           <div className="flex m-auto">
-            <Button danger onClick={() => toast.dismiss(t.id)}>
+            <Button danger onClick={() => toast.dismiss(id)}>
               delete
             </Button>
-            <Button onClick={() => toast.dismiss(t.id)}>cancel</Button>
+            <Button onClick={() => toast.dismiss(id)}>cancel</Button>
           </div>
         </div>
       ));

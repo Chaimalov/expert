@@ -1,11 +1,14 @@
-export function calcDays(date) {
-  const days = parseInt(date % 30);
-  const months = parseInt((date / 30) % 12);
-  const years = parseInt(date / 30 / 12);
+import { User } from "firebase/auth";
+import { ExpertUser } from "src/context/AuthContext";
+
+export function calcDays(date: number) {
+  const days = Math.round(date % 30);
+  const months = Math.round((date / 30) % 12);
+  const years = Math.round(date / 30 / 12);
   return { days, months, years };
 }
 
-export function displayDays(days) {
+export function displayDays(days: number) {
   const date = calcDays(days);
   if (date.years) return date.years + (date.years > 1 ? " years" : " year");
   if (date.months) {
@@ -15,7 +18,7 @@ export function displayDays(days) {
   return date.days + (date.days > 1 ? " days" : " day");
 }
 
-export const isInUsersList = (user, item) => {
+export const isInUsersList = (user: ExpertUser, item: any) => {
   if (!user.products) return;
   return item.createdAt;
 };

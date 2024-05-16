@@ -117,7 +117,7 @@ export function Product({ product, mini }) {
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": product.emoji && colorFromEmoji(product.emoji),
+        "--hue": product.emoji && colorFromEmoji(product.emoji)[0],
       }}
     >
       {!mini && (
