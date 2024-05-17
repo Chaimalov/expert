@@ -15,6 +15,8 @@ import { generateAvatar } from "../utils";
 export type ExpertUser = User & {
   products: Record<string, unknown>;
   notifyBefore: number;
+  id: string;
+  isAdmin: boolean;
 };
 
 const AuthContext = createContext<{

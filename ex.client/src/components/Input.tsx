@@ -1,6 +1,17 @@
-import { forwardRef } from "react";
+import { ChangeEventHandler, FocusEventHandler, forwardRef } from "react";
 
-export const Input = forwardRef(
+type InputProps = {
+  name: string;
+  type: string;
+  placeholder?: string;
+  autoFocus?: boolean;
+  error?: boolean;
+  onFocus?: FocusEventHandler;
+  onChange?: ChangeEventHandler;
+  disabled?: boolean;
+};
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     { name, type, placeholder, autoFocus, error, onFocus, onChange, disabled },
     ref

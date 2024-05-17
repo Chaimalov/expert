@@ -2,19 +2,19 @@ import React from "react";
 import { Category } from "./Category";
 
 type CategoryListProps = {
-  design: "compact",
-  categories: Category[],
-  onClick: () => void,
-  group: string,
+  design?: "compact" | "regular";
+  categories: Readonly<Category[]>;
+  onClick: (value: string) => void;
+  group: string;
 };
 
 type Category = {
-  name: string,
-  icon: string,
-}
+  name: string;
+  icon: string;
+};
 
 export const CategoriesList: React.FC<CategoryListProps> = ({
-  design,
+  design = "regular",
   categories,
   onClick,
   group,
@@ -27,7 +27,7 @@ export const CategoriesList: React.FC<CategoryListProps> = ({
           category={category.name}
           icon={category.icon}
           onClick={onClick}
-          value={category.name}
+          value={category.name as any}
           group={group}
           design={design}
         />

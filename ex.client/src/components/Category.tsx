@@ -1,17 +1,24 @@
-import { colorFromEmoji } from "../utils/color";
+import { colorFromEmoji } from "../utils";
 
 interface CategoryProps extends React.PropsWithChildren {
-  design: "compact",
-  group: string,
-  category: string,
-  value: string,
-  icon: string,
-  onClick: (value: string) => void,
+  design?: "compact" | "regular";
+  group: string;
+  category: string;
+  value: "fridge" | "pantry";
+  icon: string;
+  onClick: (value: "fridge" | "pantry") => void;
 }
 
-export const Category: React.FC<CategoryProps> = ({ design, group, category, value, icon, onClick }) => {
+export const Category: React.FC<CategoryProps> = ({
+  design,
+  group,
+  category,
+  value,
+  icon,
+  onClick,
+}) => {
   const [color] = colorFromEmoji(icon);
-  
+
   return (
     <label
       className={`category ${design}`}
@@ -26,4 +33,4 @@ export const Category: React.FC<CategoryProps> = ({ design, group, category, val
       <input type="radio" name={group} />
     </label>
   );
-}
+};

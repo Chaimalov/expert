@@ -3,21 +3,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import { Button, CategoriesList, Category } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { categories, notify, types } from "../utils";
+import { Categories, notify, Kind } from "../utils";
 
-export default function NewProduct() {
+export const NewProduct: React.FC = () => {
   const saveProduct = async () => {
-    if (!category || storage === null) {
-      notify("category and storage options are required.", types.ERROR);
+    if (!category || !storage) {
+      notify("category and storage options are required.", Kind.ERROR);
       return;
     }
 
-    api.execute(api.products.createProduct(name, category, storage, user.id));
+    if (!name) return;
+
+    api.execute(
+      api.products.createProduct(name, category, storage === "fridge", user.id)
+    );
     goTo("/");
   };
 
-  const [storage, setStorage] = useState(null);
-  const [category, setCategory] = useState();
+  const [storage, setStorage] = useState<"fridge" | "pantry">();
+  const [category, setCategory] = useState<string>();
   const { name } = useParams();
   const { user } = useAuth();
 
@@ -36,7 +40,7 @@ export default function NewProduct() {
         <strong>{name}</strong> is in what Category?
       </h2>
       <CategoriesList
-        categories={categories}
+        categories={Categories}
         onClick={setCategory}
         group="category"
       />
@@ -46,14 +50,14 @@ export default function NewProduct() {
           category="fridge"
           icon="❄️"
           onClick={setStorage}
-          value={true}
+          value={"fridge"}
           group="storage"
         />
         <Category
           category="pantry"
           icon="🧺"
           onClick={setStorage}
-          value={false}
+          value={"pantry"}
           group="storage"
         />
       </div>
@@ -63,4 +67,4 @@ export default function NewProduct() {
       </div>
     </form>
   );
-}
+};

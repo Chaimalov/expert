@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
-export const useClickOutside = (handler: () => void) => {
-    const domNode = useRef<HTMLElement | null>(null);
+export const useClickOutside = <T extends HTMLElement = HTMLElement>(handler: () => void) => {
+    const domNode = useRef<T | null>(null);
 
     useEffect(() => {
         function maybeHandler(event: MouseEvent) {

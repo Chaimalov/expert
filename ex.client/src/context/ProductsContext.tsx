@@ -9,11 +9,13 @@ import socketIOClient from "socket.io-client";
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
+import { Emoji } from "../components";
 
 export type Product = {
+  id: string;
   name: string;
   category: string;
-  emojiList: string[];
+  emojiList: Emoji[];
   expiryDays: number;
   createdAt: Date;
   expiryDate: Date;

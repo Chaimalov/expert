@@ -2,10 +2,10 @@ export const sortBy = <K extends string, T extends Record<K, unknown>[]>(list: T
   return list.sort((current, next) => (current[prop] < next[prop] ? -1 : 1));
 };
 
-export const sortObjectByDateKeys = (object: Record<string, unknown>) =>
+export const sortObjectByDateKeys = <T>(object: Record<string, T>) =>
   Object.keys(object)
     .sort((current, next) => Date.parse(current) - Date.parse(next))
-    .reduce((sorted: Record<string, unknown>, item) => ((sorted[item] = object[item]), sorted), {});
+    .reduce((sorted: Record<string, T>, item) => ((sorted[item] = object[item]), sorted), {});
 
 export const addDaysToDate = (date: Date, days: number) => {
   return new Date(date.setDate(date.getDate() + days));

@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
+import { Transitions } from "../context";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
-import Transitions from "../context/Transition";
 import { colorFromEmoji, displayDays, isInUsersList } from "../utils";
 import { Loading } from "./Loading";
 
-export const Product = () => {
+export const Product: React.FC = () => {
   const { id } = useParams();
   const { products, setStatus } = useProducts();
   const { user } = useAuth();

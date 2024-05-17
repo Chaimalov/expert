@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useMemo } from "react";
-import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
+import { Product, useAuth, useProducts } from "../context";
 import { addDaysToDate, sortObjectByDateKeys } from "../utils";
 import { ProductsList } from "./ProductsList";
 
@@ -40,25 +39,28 @@ const sideVariants = {
   },
 };
 
-export function NotificationsMenu() {
+export const NotificationsMenu: React.FC = () => {
   const { userProducts } = useProducts();
   const { user } = useAuth();
 
   const items = useMemo(() => {
     if (!userProducts) return;
 
-    const groups = userProducts.reduce((groups, item) => {
-      if (item.createdAt) {
-        const date = new Date(item.expiryDate);
+    const groups = userProducts.reduce(
+      (groups: Record<string, Product[]>, item) => {
+        if (item.createdAt) {
+          const date = new Date(item.expiryDate).toString();
 
-        if (!groups[date]) {
-          groups[date] = [];
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+
+          groups[date].push(item);
         }
-
-        groups[date].push(item);
-      }
-      return groups;
-    }, {});
+        return groups;
+      },
+      {}
+    );
     return sortObjectByDateKeys(groups);
   }, [userProducts]);
 
@@ -84,7 +86,7 @@ export function NotificationsMenu() {
                 className="date"
                 data-passed={
                   new Date(date) <
-                  addDaysToDate(new Date(), +parseInt(user.notifyBefore))
+                  addDaysToDate(new Date(), +Number(user.notifyBefore))
                 }
               >
                 {new Date(date).toLocaleDateString("en-us", {
@@ -109,4 +111,4 @@ export function NotificationsMenu() {
       </motion.div>
     </motion.aside>
   );
-}
+};

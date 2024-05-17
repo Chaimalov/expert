@@ -29,6 +29,7 @@ const products = {
       return axios.delete("/products/" + item.id, { data: { userId } });
     }
   },
+  
   getProducts: async (userId: string) => {
     return await (
       await axios.get("/products/user/" + userId)
@@ -49,7 +50,7 @@ const user = {
     ).data;
   },
 
-  addItem: (userId: string, itemId: string, expiryDays: string, emoji: string) => {
+  addItem: (userId: string, itemId: string, expiryDays: number, emoji: string) => {
     return axios.post("/users/products", {
       userId: userId,
       product: { id: itemId, expiryDays, emoji },
@@ -61,14 +62,14 @@ const user = {
     });
   },
 
-  updateItem: (userId: string, productId: string, key: string, value: string) => {
+  updateItem: (userId: string, productId: string, key: string, value: unknown) => {
     return axios.patch("/users/products", {
       userId: userId,
       product: { id: productId, key, value },
     });
   },
 
-  updateNotify: (userId: string, notifyBefore: boolean) => {
+  updateNotify: (userId: string, notifyBefore: number) => {
     return axios.patch("/users/" + userId, {
       notifyBefore,
     });

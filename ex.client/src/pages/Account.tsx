@@ -4,16 +4,15 @@ import api from "../api/api";
 import { Button, Input } from "../components";
 import { useAuth } from "../context/AuthContext";
 
-export function Account() {
-  const { user, deleteAccount, setStatus } = useAuth();
+export const Account: React.FC = () => {
+  const { user, deleteAccount } = useAuth();
 
-  const updatePreference = async (value) => {
+  const updatePreference = async (value: string) => {
     api.execute(api.user.updateNotify(user.uid, Number(value)));
-    setStatus(true);
   };
 
   const deleteAccountAction = () => {
-    toast((t) => (
+    toast(({ id }) => (
       <div className="grid">
         <h4>are you sure you would like to delete your account?</h4>
         <h4 className="danger color"> This action cannot be undone!</h4>
@@ -23,12 +22,12 @@ export function Account() {
             danger
             onClick={() => {
               deleteAccount();
-              toast.dismiss(t.id);
+              toast.dismiss(id);
             }}
           >
             delete
           </Button>
-          <Button onClick={() => toast.dismiss(t.id)}>cancel</Button>
+          <Button onClick={() => toast.dismiss(id)}>cancel</Button>
         </div>
       </div>
     ));
@@ -41,7 +40,7 @@ export function Account() {
       </header>
 
       <main className="center m2 text-center">
-        <img src={user.photoURL} alt="profile" />
+        <img src={user.photoURL ?? undefined} alt="profile" />
 
         <Input
           type="text"
@@ -49,7 +48,12 @@ export function Account() {
           placeholder={user.displayName || "Not set"}
           disabled
         />
-        <Input type="email" name="email" placeholder={user.email} disabled />
+        <Input
+          type="email"
+          name="email"
+          placeholder={user.email ?? ""}
+          disabled
+        />
         <label htmlFor="dropdown">
           <h4>notify at:</h4>
         </label>
@@ -73,4 +77,4 @@ export function Account() {
       </main>
     </>
   );
-}
+};

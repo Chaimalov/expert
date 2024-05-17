@@ -1,30 +1,41 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import api from "../api/api";
-import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
-import Transitions from "../context/Transition";
+import { Transitions, Product, useAuth, useProducts } from "../context";
 import {
   colorFromEmoji,
   displayDays,
   isInUsersList,
   useClickOutside,
 } from "../utils";
-import { Options } from "./index";
+import { Option, Options } from "./index";
 
-export function Product({ product, mini }) {
+type ProductProps = {
+  mini?: boolean;
+  product: Product;
+};
+
+export type Emoji = {
+  slug: string;
+  character: string;
+  unicodeName: string;
+  codePoint: string;
+  group: string;
+  subGroup: string;
+};
+
+export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const [OpenEmoji, setOpenEmoji] = useState(false);
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const [emojis, setEmojis] = useState();
+  const [emojis, setEmojis] = useState<Option[]>([]);
   const [expiryDays, setExpiryDays] = useState(Number(product.expiryDays));
 
   const { user } = useAuth();
-  const { setStatus } = useProducts();
+  const { products } = useProducts();
 
   const isInList = isInUsersList(user, product);
 
@@ -34,22 +45,25 @@ export function Product({ product, mini }) {
     setOpenDate(false);
   };
 
-  const updateEmoji = async (icon) => {
+  const updateEmoji = async (icon?: string) => {
     close();
+    if (!icon) return;
+
     api.execute(api.user.updateItem(user.uid, product.id, "emoji", icon));
   };
 
   const editEmoji = () => {
     close();
     setOpenEmoji(true);
-    setEmojis([
-      ...product.emojiList.map((emoji) => ({
+    setEmojis(
+      product.emojiList.map((emoji) => ({
         text: emoji.character,
-        action: updateEmoji,
         key: emoji.slug,
+        action: updateEmoji,
+        type: "",
         send: emoji.character,
-      })),
-    ]);
+      }))
+    );
   };
 
   const editDate = () => {
@@ -57,7 +71,7 @@ export function Product({ product, mini }) {
     setOpenDate(true);
   };
 
-  const updateDays = (days) => {
+  const updateDays = (days: number) => {
     api.execute(api.user.updateItem(user.uid, product.id, "expiryDays", days));
     close();
   };
@@ -103,21 +117,25 @@ export function Product({ product, mini }) {
     {
       text: "delete",
       action: () => {
-        api.execute(api.products.deleteItem(product, user.id));
+        const transaction = api.products.deleteItem(product, user.id);
+
+        if (transaction) {
+          api.execute(transaction);
+        }
       },
       key: 3,
       type: "delete",
     },
   ];
 
-  const domRef = useClickOutside(close);
+  const domRef = useClickOutside<HTMLDivElement>(close);
 
   return (
     <div
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": product.emoji && colorFromEmoji(product.emoji)[0],
+        "--hue": product.emoji && colorFromEmoji(product.emoji)[0].toString(),
       }}
     >
       {!mini && (
@@ -184,4 +202,4 @@ export function Product({ product, mini }) {
       </div>
     </div>
   );
-}
+};

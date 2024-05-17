@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Key, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const animation = {
@@ -10,7 +10,26 @@ const animation = {
   },
 };
 
-export function Options({ open, list, type, children }) {
+export type Option = {
+  type?: string;
+  key: Key;
+  action?: (value?: string) => void;
+  send?: string;
+  text: ReactNode | string;
+};
+
+type OptionsProps = {
+  open: boolean;
+  list?: Option[];
+  type?: string;
+};
+
+export const Options: React.FC<React.PropsWithChildren<OptionsProps>> = ({
+  open,
+  list,
+  type,
+  children,
+}) => {
   return (
     <AnimatePresence exitBeforeEnter>
       {open && (
@@ -26,10 +45,10 @@ export function Options({ open, list, type, children }) {
           {list &&
             list.map((option) => (
               <button
-                className={type + " " + option?.type}
+                className={type + " " + option.type}
                 key={option.key}
-                onClick={
-                  option.action ? () => option.action(option.send) : null
+                onClick={() =>
+                  option.action ? option.action(option.send) : undefined
                 }
               >
                 {option.text}
@@ -39,4 +58,4 @@ export function Options({ open, list, type, children }) {
       )}
     </AnimatePresence>
   );
-}
+};

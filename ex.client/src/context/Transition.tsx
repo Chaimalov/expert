@@ -7,7 +7,7 @@ const animationConfiguration = {
   exit: { opacity: 0, y: 0 },
 } satisfies Variants;
 
-const Transitions: React.FC<React.PropsWithChildren<{ on: Key }>> = ({
+export const Transitions: React.FC<React.PropsWithChildren<{ on?: Key }>> = ({
   children,
   on,
 }) => {
@@ -24,5 +24,3 @@ const Transitions: React.FC<React.PropsWithChildren<{ on: Key }>> = ({
     </motion.main>
   );
 };
-
-export default Transitions;

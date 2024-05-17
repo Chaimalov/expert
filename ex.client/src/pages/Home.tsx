@@ -3,13 +3,13 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Button, CategoriesList, Input, ProductsList } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
-import { categories } from "../utils";
+import { Product, useProducts } from "../context/ProductsContext";
+import { Categories } from "../utils";
 import { Loading } from "./Loading";
 
-export const Home = () => {
-  const searchRef = createRef();
-  const [filteredList, setFilteredList] = useState();
+export const Home: React.FC = () => {
+  const searchRef = createRef<HTMLInputElement>();
+  const [filteredList, setFilteredList] = useState<Product[]>([]);
 
   const goTo = useNavigate();
 
@@ -18,6 +18,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (!products) return;
+
     setFilteredList(products);
   }, [products, user]);
 
@@ -25,9 +26,9 @@ export const Home = () => {
     setFilteredList(() => {
       return products.filter((item) => {
         return (
-          item.name.indexOf(searchRef.current.value) !== -1 ||
+          item.name.indexOf(searchRef.current!.value) !== -1 ||
           item.nameVariation.find(
-            (variation) => variation.indexOf(searchRef.current.value) !== -1
+            (variation) => variation.indexOf(searchRef.current!.value) !== -1
           )
         );
       });
@@ -35,10 +36,10 @@ export const Home = () => {
   };
 
   const isProductFound = () => {
-    return filteredList.length;
+    return Boolean(filteredList?.length);
   };
 
-  const filterByCategory = (category) => {
+  const filterByCategory = (category: string) => {
     setFilteredList(
       products.filter((product) => product.category.includes(category))
     );
@@ -56,7 +57,7 @@ export const Home = () => {
         onSubmit={(e) => {
           e.preventDefault();
           return (
-            isProductFound() || goTo(`/products/${searchRef.current.value}`)
+            isProductFound() || goTo(`/products/${searchRef.current!.value}`)
           );
         }}
         className="search"
@@ -68,10 +69,12 @@ export const Home = () => {
           placeholder="search for an item"
           onChange={() => filterList()}
         />
-        <Button value={<BiSearchAlt2 />} type="submit" />
+        <Button type="submit">
+          <BiSearchAlt2 />
+        </Button>
       </form>
       <CategoriesList
-        categories={[...categories, { name: "", icon: "🗑️" }]}
+        categories={[...Categories, { name: "", icon: "🗑️" }]}
         onClick={filterByCategory}
         group="category"
         design="compact"
