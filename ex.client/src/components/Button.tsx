@@ -1,15 +1,17 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 
-interface ButtonProps extends React.PropsWithChildren {
+type ButtonProps = {
   bubble?: number;
   value?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   danger?: boolean;
   large?: boolean;
-  onClick?: (flag: boolean) => void;
-}
+  onClick?: Function;
+};
 
-export const Button = (props: ButtonProps) => {
+export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = (
+  props
+) => {
   const classes = Object.keys(props);
 
   return (

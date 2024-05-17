@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import api from "../api/api";
-import { Transitions, Product, useAuth, useProducts } from "../context";
+import { Product, Transitions, useAuth } from "../context";
 import {
   colorFromEmoji,
   displayDays,
@@ -35,7 +35,6 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const [expiryDays, setExpiryDays] = useState(Number(product.expiryDays));
 
   const { user } = useAuth();
-  const { products } = useProducts();
 
   const isInList = isInUsersList(user, product);
 

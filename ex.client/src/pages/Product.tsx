@@ -9,24 +9,30 @@ import { Loading } from "./Loading";
 
 export const Product: React.FC = () => {
   const { id } = useParams();
-  const { products, setStatus } = useProducts();
+  const { products } = useProducts();
   const { user } = useAuth();
-  const variationsInputRef = useRef();
+  const variationsInputRef = useRef<HTMLTextAreaElement>(null);
 
   const saveNameVariations = async () => {
-    const variations = variationsInputRef.current.value
+    if (!item) return;
+
+    const variations = variationsInputRef.current?.value
       .split(",")
-      .map((variation) => variation.trim())
-      .filter((value) => !!value);
-    api.execute(api.products.saveNameVariations(item.id, variations));
+      .map((variation: string) => variation.trim())
+      .filter((value: string) => !!value);
+
+    if (variations) {
+      api.execute(api.products.saveNameVariations(item.id, variations));
+    }
   };
 
-  const item = products?.find((item) => item.name === id);
+  const item = products.find((item) => item.name === id);
 
-  const [color] = colorFromEmoji(item?.emoji);
+  const [color] = item ? colorFromEmoji(item?.emoji) : [];
+
   if (products && item) {
     return (
-      <div className="center m2" style={{ "--hue": color }}>
+      <div className="center m2" style={{ "--hue": color?.toString() }}>
         <h1>
           {item.emoji} {item.name}
         </h1>
@@ -59,7 +65,10 @@ export const Product: React.FC = () => {
             onSubmit={(e) => {
               e.preventDefault();
               saveNameVariations();
-              variationsInputRef.current.value = "";
+
+              if (variationsInputRef.current) {
+                variationsInputRef.current.value = "";
+              }
             }}
           >
             <textarea
@@ -78,7 +87,6 @@ export const Product: React.FC = () => {
               className="category"
               onClick={() => {
                 api.execute(api.user.removeItem(user.uid, item.id));
-                setStatus(true);
               }}
             >
               remove item
@@ -95,7 +103,6 @@ export const Product: React.FC = () => {
                     item.emoji
                   )
                 );
-                setStatus(true);
               }}
             >
               add item

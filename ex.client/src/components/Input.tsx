@@ -5,7 +5,7 @@ type InputProps = {
   type: string;
   placeholder?: string;
   autoFocus?: boolean;
-  error?: boolean;
+  error?: string;
   onFocus?: FocusEventHandler;
   onChange?: ChangeEventHandler;
   disabled?: boolean;

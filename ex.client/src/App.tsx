@@ -17,7 +17,7 @@ export default function App() {
   const [menu, setMenu] = useCycle(false, true);
 
   if (loggedIn === "pending") return <Loading />;
-  if (!loggedIn) return <Login />;
+  if (loggedIn === "error") return <Login />;
   return (
     <div className="app">
       <ProductsProvider>

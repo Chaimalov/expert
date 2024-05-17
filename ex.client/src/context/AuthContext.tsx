@@ -19,34 +19,38 @@ export type ExpertUser = User & {
   isAdmin: boolean;
 };
 
-const AuthContext = createContext<{
+type AuthContextProps = {
   signInWithGoogle: Function;
   logOut: Function;
   signUpWithEmailAndPassword: Function;
   signIn: Function;
   user: ExpertUser;
-  loggedIn: string;
+  loggedIn: "success" | "error" | "pending";
   deleteAccount: Function;
-}>({} as any);
+};
+
+const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [providerUser, setProviderUser] = useState<User>();
   const [userRecord, setUserRecord] = useState<User>();
-  const [logInState, setLogInState] = useState<"success" | "error" | "pending">(
-    "pending"
-  );
+  const [logInState, setLogInState] =
+    useState<AuthContextProps["loggedIn"]>("error");
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    setLogInState("pending");
     setProviderUser((await signInWithPopup(auth, provider)).user);
+    setLogInState("success");
   };
 
   const signIn = async (email: string, password: string) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       setProviderUser(user);
+      setLogInState("success");
     } catch (error) {
       throw new Error("password is incorrect");
     }
@@ -127,5 +131,5 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  return useContext(AuthContext) as AuthContextProps;
 };

@@ -39,7 +39,11 @@ export const Nav: React.FC<NavProps> = ({ toggleMenu, menu }) => {
         </div>
         <Button value="sign out" onClick={signOut} />
         <NavLink to="/account">
-          <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
+          <img
+            src={user.photoURL ?? undefined}
+            alt=""
+            referrerPolicy="no-referrer"
+          />
         </NavLink>
       </div>
     </nav>

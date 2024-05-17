@@ -1,5 +1,4 @@
-import { User } from "firebase/auth";
-import { ExpertUser } from "src/context/AuthContext";
+import { ExpertUser } from "../context";
 
 export function calcDays(date: number) {
   const days = Math.round(date % 30);

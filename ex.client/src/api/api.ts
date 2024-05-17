@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { notify, Kind } from "../utils/notify";
+import axios from "axios";
 import toast from "react-hot-toast";
+import { notify } from "../utils/notify";
 
 const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading("working on it...");

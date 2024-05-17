@@ -3,10 +3,10 @@ import { FaGoogle } from "react-icons/fa";
 import { Button, Input } from "../components";
 import { useAuth } from "../context/AuthContext";
 
-export function Login() {
+export const Login: React.FC = () => {
   const { signInWithGoogle, signUpWithEmailAndPassword } = useAuth();
-  const email = useRef<Input>();
-  const password = useRef<Input>();
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string>();
 
   return (
@@ -57,10 +57,12 @@ export function Login() {
             value="continue"
             onClick={() => {
               try {
-                signUpWithEmailAndPassword(
-                  email.current.value,
-                  password.current.value
-                );
+                if (email.current && password.current) {
+                  signUpWithEmailAndPassword(
+                    email.current.value,
+                    password.current.value
+                  );
+                }
               } catch (error) {
                 if (error instanceof Error) {
                   setError(error.message);
@@ -73,4 +75,4 @@ export function Login() {
       </section>
     </div>
   );
-}
+};

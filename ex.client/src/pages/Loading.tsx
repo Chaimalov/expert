@@ -1,13 +1,13 @@
 import React from "react";
 
-export function Loading() {
+export const Loading: React.FC = () => {
   return (
     <main className="loader-container">
       <div className="loader">
-        {[...Array(9)].map((e, i) => (
+        {[...Array(9)].map((_, i) => (
           <div key={i} className="block" />
         ))}
       </div>
     </main>
   );
-}
+};
