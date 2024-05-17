@@ -1,26 +1,12 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const errorHandler_js_1 = require("../middleware/errorHandler.js");
-const productsRepository_js_1 = __importDefault(require("../repositories/productsRepository.js"));
-const userService_js_1 = __importDefault(require("./userService.js"));
-const emojisService_js_1 = __importDefault(require("./emojisService.js"));
-const createProduct = ({ name, category, refrigerator }) => __awaiter(void 0, void 0, void 0, function* () {
-    if (yield productsRepository_js_1.default.isProductExists(name)) {
-        throw new errorHandler_js_1.ApiError(`${name} already exists.`, 405);
+import { ApiError } from "../middleware/errorHandler.js";
+import productsRepository from "../repositories/productsRepository.js";
+import userService from "./userService.js";
+import emojisService from "./emojisService.js";
+const createProduct = async ({ name, category, refrigerator }) => {
+    if (await productsRepository.isProductExists(name)) {
+        throw new ApiError(`${name} already exists.`, 405);
     }
-    const iconsList = yield emojisService_js_1.default.getEmoji(name, category);
+    const iconsList = await emojisService.getEmoji(name, category);
     let product = {};
     try {
         product = {
@@ -37,41 +23,41 @@ const createProduct = ({ name, category, refrigerator }) => __awaiter(void 0, vo
     }
     catch (error) {
         console.log(name, category, refrigerator);
-        throw new errorHandler_js_1.ApiError("the product object failed to assemble. some information is missing.", 400);
+        throw new ApiError("the product object failed to assemble. some information is missing.", 400);
     }
-    return yield productsRepository_js_1.default.createProduct(product);
-});
-const getProductByName = (productName) => __awaiter(void 0, void 0, void 0, function* () {
+    return await productsRepository.createProduct(product);
+};
+const getProductByName = async (productName) => {
     if (!productName)
-        throw (0, errorHandler_js_1.ApiError)("query was empty", 400);
-    return yield productsRepository_js_1.default.getProductByName(productName);
-});
-const getProductByCategory = (category) => __awaiter(void 0, void 0, void 0, function* () {
+        throw ApiError("query was empty", 400);
+    return await productsRepository.getProductByName(productName);
+};
+const getProductByCategory = async (category) => {
     if (!category)
-        throw (0, errorHandler_js_1.ApiError)("query was empty", 400);
-    return yield productsRepository_js_1.default.getProductByCategory(category);
-});
-const deleteProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield productsRepository_js_1.default.deleteProduct(productId);
-});
-const updateProductsEmoji = (productId, emoji) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield productsRepository_js_1.default.updateProductEmoji(productId, emoji);
-});
-const updateProductsExpiryDays = (productId, days) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield productsRepository_js_1.default.updateProductsExpiryDays(productId, days);
-});
-const updateProductsNameVariations = (productId, nameVariations) => __awaiter(void 0, void 0, void 0, function* () {
+        throw ApiError("query was empty", 400);
+    return await productsRepository.getProductByCategory(category);
+};
+const deleteProductById = async (productId) => {
+    return await productsRepository.deleteProduct(productId);
+};
+const updateProductsEmoji = async (productId, emoji) => {
+    return await productsRepository.updateProductEmoji(productId, emoji);
+};
+const updateProductsExpiryDays = async (productId, days) => {
+    return await productsRepository.updateProductsExpiryDays(productId, days);
+};
+const updateProductsNameVariations = async (productId, nameVariations) => {
     if (!nameVariations.length) {
-        throw new errorHandler_js_1.ApiError("the list must contain something", 400);
+        throw new ApiError("the list must contain something", 400);
     }
-    return yield productsRepository_js_1.default.updateProductsNameVariations(productId, nameVariations);
-});
-const getProducts = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield productsRepository_js_1.default.getProducts();
-});
-const getProductsByUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield getProducts();
-    const usersProducts = (yield userService_js_1.default.getUserById(userId)).products;
+    return await productsRepository.updateProductsNameVariations(productId, nameVariations);
+};
+const getProducts = async () => {
+    return await productsRepository.getProducts();
+};
+const getProductsByUser = async (userId) => {
+    const products = await getProducts();
+    const usersProducts = (await userService.getUserById(userId)).products;
     const productsByUser = [];
     products.forEach((product) => {
         if (usersProducts && usersProducts[product.id]) {
@@ -83,7 +69,7 @@ const getProductsByUser = (userId) => __awaiter(void 0, void 0, void 0, function
         }
     });
     return productsByUser;
-});
+};
 const addDaysToDate = (date, days) => {
     return new Date(date.setDate(date.getDate() + days));
 };
@@ -113,7 +99,7 @@ const categoryDays = {
         expiryDate: 45,
     },
 };
-exports.default = {
+export default {
     createProduct,
     getProductByCategory,
     getProductByName,

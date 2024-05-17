@@ -1,47 +1,36 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
+import { FieldValue } from "firebase-admin/firestore";
+import { db } from "../firebase.js";
+const createProduct = async (product) => {
+    return await db.products.add(product);
+};
+const getProductByName = async (productName) => {
+    return (await db.products.where("name", "==", productName).get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
+};
+const getProductByCategory = async (category) => {
+    return (await db.products.where("category", "==", category).get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
+};
+const isProductExists = async (name) => {
+    return (await db.products.select("name").where("name", "==", name).get()).docs
+        .length;
+};
+const deleteProduct = async (productId) => {
+    return await db.products.doc(productId).delete();
+};
+const updateProductEmoji = async (productId, emoji) => {
+    return await db.products.doc(productId).update(emoji);
+};
+const updateProductsExpiryDays = async (productId, expiryDays) => {
+    return await db.products.doc(productId).update({ expiryDays });
+};
+const updateProductsNameVariations = async (productId, nameVariations) => {
+    return await db.products.doc(productId).update({
+        nameVariation: FieldValue.arrayUnion(...nameVariations),
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const firestore_2 = require("firebase-admin/firestore");
-const firebase_js_1 = require("../firebase.js");
-const createProduct = (product) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield firebase_js_1.db.products.add(product);
-});
-const getProductByName = (productName) => __awaiter(void 0, void 0, void 0, function* () {
-    return (yield firebase_js_1.db.products.where("name", "==", productName).get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
-});
-const getProductByCategory = (category) => __awaiter(void 0, void 0, void 0, function* () {
-    return (yield firebase_js_1.db.products.where("category", "==", category).get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
-});
-const isProductExists = (name) => __awaiter(void 0, void 0, void 0, function* () {
-    return (yield firebase_js_1.db.products.select("name").where("name", "==", name).get()).docs
-        .length;
-});
-const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield firebase_js_1.db.products.doc(productId).delete();
-});
-const updateProductEmoji = (productId, emoji) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield firebase_js_1.db.products.doc(productId).update(emoji);
-});
-const updateProductsExpiryDays = (productId, expiryDays) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield firebase_js_1.db.products.doc(productId).update({ expiryDays });
-});
-const updateProductsNameVariations = (productId, nameVariations) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield firebase_js_1.db.products.doc(productId).update({
-        nameVariation: firestore_2.FieldValue.arrayUnion(...nameVariations),
-    });
-});
-const getProducts = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield (yield firebase_js_1.db.products.get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
-});
-exports.default = {
+const getProducts = async () => {
+    return await (await db.products.get()).docs.map((doc) => (Object.assign(Object.assign({}, doc.data()), { id: doc.id })));
+};
+export default {
     createProduct,
     getProductByName,
     getProductByCategory,

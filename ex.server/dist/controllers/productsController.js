@@ -1,85 +1,71 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const productsService_js_1 = __importDefault(require("../services/productsService.js"));
-const route = express_1.default.Router();
-exports.default = route;
-route.post("/", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+import express from "express";
+import productsService from "../services/productsService.js";
+const route = express.Router();
+export default route;
+route.post("/", async (req, res, errorHandler) => {
     try {
-        yield productsService_js_1.default.createProduct(req.body.product);
+        await productsService.createProduct(req.body.product);
         res.send(req.body.product.name + " was created");
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.post("/:productId", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.post("/:productId", async (req, res, errorHandler) => {
     try {
-        yield productsService_js_1.default.updateProductsNameVariations(req.params.productId, req.body.nameVariations);
+        await productsService.updateProductsNameVariations(req.params.productId, req.body.nameVariations);
         res.send("variations were added");
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.get("/:productName", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.get("/:productName", async (req, res, errorHandler) => {
     try {
-        res.send(yield productsService_js_1.default.getProductByName(req.params.productName));
+        res.send(await productsService.getProductByName(req.params.productName));
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.get("/:category", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.get("/:category", async (req, res, errorHandler) => {
     try {
-        res.send(yield productsService_js_1.default.getProductByCategory(req.params.category));
+        res.send(await productsService.getProductByCategory(req.params.category));
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.delete("/:productId", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.delete("/:productId", async (req, res, errorHandler) => {
     try {
-        yield productsService_js_1.default.deleteProductById(req.params.productId);
+        await productsService.deleteProductById(req.params.productId);
         res.send("product was deleted successfully");
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.patch("/:productId", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.patch("/:productId", async (req, res, errorHandler) => {
     try {
-        res.send(yield productsService_js_1.default.updateProductsEmoji(req.params.productId, req.body.emoji));
+        res.send(await productsService.updateProductsEmoji(req.params.productId, req.body.emoji));
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.get("/", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.get("/", async (req, res, errorHandler) => {
     try {
-        res.send(yield productsService_js_1.default.getProducts());
+        res.send(await productsService.getProducts());
     }
     catch (error) {
         errorHandler(error);
     }
-}));
-route.get("/user/:userId", (req, res, errorHandler) => __awaiter(void 0, void 0, void 0, function* () {
+});
+route.get("/user/:userId", async (req, res, errorHandler) => {
     try {
-        res.send(yield productsService_js_1.default.getProductsByUser(req.params.userId));
+        res.send(await productsService.getProductsByUser(req.params.userId));
     }
     catch (error) {
         errorHandler(error);
     }
-}));
+});
