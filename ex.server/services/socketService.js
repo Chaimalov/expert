@@ -1,6 +1,8 @@
 import productsService from "./productsService.js";
 import { db } from "../firebase.js";
 
+
+
 export const productsSnapshot = (req, res, next) => {
   const userId = req.body.userId;
   const io = req.io;

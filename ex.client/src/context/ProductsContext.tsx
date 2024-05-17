@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
@@ -43,7 +43,8 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 
   useEffect(() => {
     getProducts();
-    const socket = socketIOClient();
+    const socket = io("http://localhost:8080");
+
     socket.on("products", (data) => {
       setProducts(sortBy(data, "name"));
     });

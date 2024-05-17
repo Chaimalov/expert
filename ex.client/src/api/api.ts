@@ -2,6 +2,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { notify } from "../utils/notify";
 
+axios.defaults.baseURL = "http://localhost:8080";
+
 const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading("working on it...");
   request
