@@ -8,24 +8,52 @@
 }
 
 :root {
-  --hue: 148;
+  --hue: 150;
   --saturation: 80%;
   --value: 50%;
+
+  --grey: hsl(var(--hue), 20%, 90%);
+  --text-color: hsla(0, 0%, 0%, 80%);
+
+  --transition: 250ms;
+  --transition-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  --factor-dark: 0.9;
+  --factor-light: 1.1;
 }
 
-:where(div, button, img, label, aside, span, label, input, h4) {
-  --grey: hsl(22, 57%, 97%);
-  --text-color: hsla(0, 0%, 0%, 80%);
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --hue: 150;
+    --saturation: 80%;
+    --value: 30%;
+
+    --text-color: hsl(var(--hue), 20%, 90%);
+    --grey: hsla(0, 0%, 20%);
+
+    --factor-dark: 1.1;
+    --factor-light: 0.9;
+  }
+
+  .list,
+  .list a.name {
+    color: var(--grey);
+  }
+}
+
+:where(*) {
   --clr-primary: hsl(var(--hue), var(--saturation), var(--value));
   --clr-primary-dark: hsl(
-    calc(var(--hue)),
+    var(--hue),
     var(--saturation),
-    calc(var(--value) * 0.9)
+    calc(var(--value) * var(--factor-dark))
   );
   --clr-primary-light: hsl(
     calc(var(--hue)),
     var(--saturation),
-    calc(var(--value) * 1.1)
+    calc(var(--value) * var(--factor-light))
   );
   --clr-primary-light-4: hsl(
     var(--hue),
@@ -37,7 +65,4 @@
     var(--clr-primary-light),
     var(--clr-primary-dark)
   );
-
-  --transition: 250ms;
-  --transition-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }

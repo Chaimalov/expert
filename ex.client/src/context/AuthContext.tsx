@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   const [providerUser, setProviderUser] = useState<User>();
   const [userRecord, setUserRecord] = useState<User>();
   const [logInState, setLogInState] =
-    useState<AuthContextProps["loggedIn"]>("error");
+    useState<AuthContextProps["loggedIn"]>("pending");
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();

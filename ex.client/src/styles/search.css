@@ -1,14 +1,11 @@
 .search {
   display: flex;
-  border: solid 3px black;
+  border: solid 3px var(--grey);
   margin: 2em auto;
   border-radius: 3em;
   align-items: center;
   overflow: hidden;
-  background-color: hsl(0, 0%, 98%);
-  box-shadow: 0 0.5em 1em hsl(0, 0%, 95%);
-  border: solid 3px;
-  border-color: hsl(0, 0%, 90%);
+  box-shadow: 0 0.5em 1em var(--grey);
   width: calc(min(100%, 65ch) - 2em);
   justify-content: space-between;
   transition: var(--transition);
@@ -17,7 +14,7 @@
 
 .search:focus-within {
   border-color: var(--clr-primary-dark);
-  box-shadow: 0 0.5em 1em hsl(0, 0%, 88%);
+  box-shadow: 0 0.5em 1em var(--grey);
 }
 
 .search button {
