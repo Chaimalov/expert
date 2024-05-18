@@ -2,8 +2,10 @@ import { ApiError } from "../middleware/errorHandler.js";
 import productsRepository from "../repositories/productsRepository.js";
 import userService from "./userService.js";
 import emojisService from "./emojisService.js";
+import { Product } from "../types/product.js";
+import { Category } from "../types/category.js";
 
-const createProduct = async ({ name, category, refrigerator }) => {
+const createProduct = async ({ name, category, refrigerator }: { name: string, category: Category, refrigerator: boolean }) => {
   if (await productsRepository.isProductExists(name)) {
     throw new ApiError(`${name} already exists.`, 405);
   }
@@ -34,29 +36,29 @@ const createProduct = async ({ name, category, refrigerator }) => {
   return await productsRepository.createProduct(product);
 };
 
-const getProductByName = async (productName) => {
-  if (!productName) throw ApiError("query was empty", 400);
+const getProductByName = async (productName: string) => {
+  if (!productName) throw new ApiError("query was empty", 400);
   return await productsRepository.getProductByName(productName);
 };
 
-const getProductByCategory = async (category) => {
-  if (!category) throw ApiError("query was empty", 400);
+const getProductByCategory = async (category: string) => {
+  if (!category) throw new ApiError("query was empty", 400);
   return await productsRepository.getProductByCategory(category);
 };
 
-const deleteProductById = async (productId) => {
+const deleteProductById = async (productId: string) => {
   return await productsRepository.deleteProduct(productId);
 };
 
-const updateProductsEmoji = async (productId, emoji) => {
+const updateProductsEmoji = async (productId: string, emoji: { [x: string]: any; } & FirebaseFirestore.AddPrefixToKeys<string, any>) => {
   return await productsRepository.updateProductEmoji(productId, emoji);
 };
 
-const updateProductsExpiryDays = async (productId, days) => {
+const updateProductsExpiryDays = async (productId: string, days: number) => {
   return await productsRepository.updateProductsExpiryDays(productId, days);
 };
 
-const updateProductsNameVariations = async (productId, nameVariations) => {
+const updateProductsNameVariations = async (productId: string, nameVariations: string[]) => {
   if (!nameVariations.length) {
     throw new ApiError("the list must contain something", 400);
   }
@@ -70,11 +72,11 @@ const getProducts = async () => {
   return await productsRepository.getProducts();
 };
 
-const getProductsByUser = async (userId) => {
+const getProductsByUser = async (userId: string) => {
   const products = await getProducts();
   const usersProducts = (await userService.getUserById(userId)).products;
 
-  const productsByUser = [];
+  const productsByUser: Product[] = [];
   products.forEach((product) => {
     if (usersProducts && usersProducts[product.id]) {
       const userProduct = usersProducts[product.id];
@@ -83,7 +85,7 @@ const getProductsByUser = async (userId) => {
         ...userProduct,
         expiryDate: addDaysToDate(
           new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
-          userProduct.expiryDays || product.expiryDays
+          userProduct.expiryDays || (product as Product).expiryDays
         ),
       });
     } else {
@@ -94,7 +96,7 @@ const getProductsByUser = async (userId) => {
   return productsByUser;
 };
 
-const addDaysToDate = (date, days) => {
+const addDaysToDate = (date: Date, days: number) => {
   return new Date(date.setDate(date.getDate() + days));
 };
 

@@ -12,7 +12,7 @@ route.get("/:userId", async (req, res, errorHandler) => {
   }
 });
 
-route.patch("/products", async (req, res) => {
+route.patch("/products", async (req, res,errorHandler) => {
   try {
     await userService.editProduct(req.body.userId, req.body.product);
     res.send("changes were saved");
@@ -21,7 +21,7 @@ route.patch("/products", async (req, res) => {
   }
 });
 
-route.patch("/:userId", async (req, res) => {
+route.patch("/:userId", async (req, res,errorHandler) => {
   try {
     await userService.updateNotify(req.params.userId, req.body.notifyBefore);
     res.send("updated preference");
@@ -30,7 +30,7 @@ route.patch("/:userId", async (req, res) => {
   }
 });
 
-route.delete("/products", async (req, res) => {
+route.delete("/products", async (req, res,errorHandler) => {
   try {
     await userService.removeProduct(req.body.userId, req.body.productId);
     res.send("product removed from your list");
@@ -39,7 +39,7 @@ route.delete("/products", async (req, res) => {
   }
 });
 
-route.delete("/:userId", async (req, res) => {
+route.delete("/:userId", async (req, res,errorHandler) => {
   try {
     await userService.deleteUser(req.params.userId);
     res.send("deleted");
@@ -48,7 +48,7 @@ route.delete("/:userId", async (req, res) => {
   }
 });
 
-route.post("/products", async (req, res) => {
+route.post("/products", async (req, res,errorHandler) => {
   try {
     await userService.addProduct(req.body.userId, req.body.product);
     res.send("product was added successfully");

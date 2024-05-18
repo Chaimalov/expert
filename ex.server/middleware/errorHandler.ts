@@ -1,5 +1,5 @@
 import { Request,Response,NextFunction } from "express";
-export const errorHandler = (error, req:Request, res:Response, next:NextFunction) => {
+export const errorHandler = (error: { message: string; status: number; }, req:Request, res:Response, next:NextFunction) => {
   console.error(`error ${error.message}`);
   const status = error.status || 400;
 

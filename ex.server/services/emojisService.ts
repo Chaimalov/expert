@@ -5,7 +5,7 @@ const route = axios.create({
   baseURL: "http://localhost:9090/emojis",
 });
 
-const getEmoji = async (name, category) => {
+const getEmoji = async (name: string, category: string) => {
   try {
     const foundEmoji = await route.get(`all/${name}`);
 

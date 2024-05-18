@@ -29,12 +29,12 @@ const createProduct = async ({ name, category, refrigerator }) => {
 };
 const getProductByName = async (productName) => {
     if (!productName)
-        throw ApiError("query was empty", 400);
+        throw new ApiError("query was empty", 400);
     return await productsRepository.getProductByName(productName);
 };
 const getProductByCategory = async (category) => {
     if (!category)
-        throw ApiError("query was empty", 400);
+        throw new ApiError("query was empty", 400);
     return await productsRepository.getProductByCategory(category);
 };
 const deleteProductById = async (productId) => {

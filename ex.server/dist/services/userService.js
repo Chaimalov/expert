@@ -26,10 +26,12 @@ const removeProduct = async (userId, productId) => {
     return await usersRepository.removeProductFromUsersList(userId, productId);
 };
 const deleteProduct = async (productId) => {
-    return await usersRepository.deleteProductFromDB(productId);
+    // return await usersRepository.deleteProductFromDB(productId);
 };
 const isProductExists = async (userId, productId) => {
-    return (await usersRepository.getUser(userId)).products.hasOwnProperty(productId);
+    var _a, _b;
+    const user = await usersRepository.getUser(userId);
+    return (_b = (_a = user === null || user === void 0 ? void 0 : user.products) === null || _a === void 0 ? void 0 : _a.hasOwnProperty(productId)) !== null && _b !== void 0 ? _b : false;
 };
 const updateNotify = async (userId, notifyBefore) => {
     return await usersRepository.updateNotify(userId, notifyBefore);
