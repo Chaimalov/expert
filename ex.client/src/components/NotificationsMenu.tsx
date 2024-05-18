@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 import React, { useMemo } from "react";
-import { Product, useAuth, useProducts } from "../context";
-import { addDaysToDate, sortObjectByDateKeys } from "../utils";
+import { useAuth, useProducts } from "../context";
+import { addDaysToDate, groupProductsByExpirationDate, sortObjectByDateKeys } from "../utils";
 import { ProductsList } from "./ProductsList";
 
 const animationConfiguration = {
@@ -11,7 +11,7 @@ const animationConfiguration = {
     width: 0,
     transition: { delay: 0.05, duration: 0.25 },
   },
-};
+} satisfies Variants;
 
 const itemVariants = {
   closed: {
@@ -22,7 +22,7 @@ const itemVariants = {
     x: "0%",
     opacity: 1,
   },
-};
+} satisfies Variants;
 
 const sideVariants = {
   closed: {
@@ -37,7 +37,7 @@ const sideVariants = {
       staggerDirection: 1,
     },
   },
-};
+} satisfies Variants;
 
 export const NotificationsMenu: React.FC = () => {
   const { userProducts } = useProducts();
@@ -46,21 +46,8 @@ export const NotificationsMenu: React.FC = () => {
   const items = useMemo(() => {
     if (!userProducts) return;
 
-    const groups = userProducts.reduce(
-      (groups: Record<string, Product[]>, item) => {
-        if (item.createdAt) {
-          const date = new Date(item.expiryDate).toString();
+    const groups = groupProductsByExpirationDate(userProducts);
 
-          if (!groups[date]) {
-            groups[date] = [];
-          }
-
-          groups[date].push(item);
-        }
-        return groups;
-      },
-      {}
-    );
     return sortObjectByDateKeys(groups);
   }, [userProducts]);
 
@@ -80,7 +67,7 @@ export const NotificationsMenu: React.FC = () => {
         variants={sideVariants}
       >
         {items && Object.keys(items).length > 0 ? (
-          Object.keys(items).map((date) => (
+          Object.entries(items).map(([date, products]) => (
             <motion.div key={date} variants={itemVariants}>
               <h4
                 className="date"
@@ -95,7 +82,7 @@ export const NotificationsMenu: React.FC = () => {
                   day: "numeric",
                 })}
               </h4>
-              <ProductsList list={items[date]} mini />
+              <ProductsList list={products} mini />
             </motion.div>
           ))
         ) : (

@@ -3,9 +3,10 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Button, CategoriesList, Input, ProductsList } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { Product, useProducts } from "../context/ProductsContext";
+import { useProducts } from "../context/ProductsContext";
 import { Categories } from "../utils";
 import { Loading } from "./Loading";
+import { Product } from "../../../ex.common";
 
 export const Home: React.FC = () => {
   const searchRef = createRef<HTMLInputElement>();
@@ -23,16 +24,15 @@ export const Home: React.FC = () => {
   }, [products, user]);
 
   const filterList = () => {
-    setFilteredList(() => {
-      return products.filter((item) => {
-        return (
-          item.name.indexOf(searchRef.current!.value) !== -1 ||
-          item.nameVariation.find(
-            (variation) => variation.indexOf(searchRef.current!.value) !== -1
-          )
-        );
-      });
-    });
+    const filteredProducts = products.filter(
+      (item) =>
+        item.name.indexOf(searchRef.current!.value) !== -1 ||
+        item.nameVariation.find(
+          (variation) => variation.indexOf(searchRef.current!.value) !== -1
+        )
+    );
+
+    setFilteredList(filteredProducts);
   };
 
   const isProductFound = () => {
@@ -54,20 +54,20 @@ export const Home: React.FC = () => {
       </header>
 
       <form
+        className="search"
         onSubmit={(e) => {
           e.preventDefault();
           return (
             isProductFound() || goTo(`/products/${searchRef.current!.value}`)
           );
         }}
-        className="search"
       >
         <Input
           type="search"
           name="search"
           ref={searchRef}
           placeholder="search for an item"
-          onChange={() => filterList()}
+          onChange={filterList}
         />
         <Button type="submit">
           <BiSearchAlt2 />

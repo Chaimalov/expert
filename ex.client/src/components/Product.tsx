@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import api from "../api/api";
-import { Product, Transitions, useAuth } from "../context";
+import { Transitions, useAuth } from "../context";
 import {
   colorFromEmoji,
   displayDays,
@@ -11,19 +11,11 @@ import {
   useClickOutside,
 } from "../utils";
 import { Option, Options } from "./index";
+import { Product } from "../../../ex.common";
 
 type ProductProps = {
   mini?: boolean;
   product: Product;
-};
-
-export type Emoji = {
-  slug: string;
-  character: string;
-  unicodeName: string;
-  codePoint: string;
-  group: string;
-  subGroup: string;
 };
 
 export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
@@ -31,7 +23,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const [emojis, setEmojis] = useState<Option[]>([]);
+  const [options, setOptions] = useState<Option[]>([]);
   const [expiryDays, setExpiryDays] = useState(Number(product.expiryDays));
 
   const { user } = useAuth();
@@ -54,7 +46,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const editEmoji = () => {
     close();
     setOpenEmoji(true);
-    setEmojis(
+    setOptions(
       product.emojiList.map((emoji) => ({
         text: emoji.character,
         key: emoji.slug,
@@ -139,7 +131,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     >
       {!mini && (
         <>
-          <Options type="emoji" open={OpenEmoji} list={emojis} />
+          <Options type="emoji" open={OpenEmoji} list={options} />
           <form
             onSubmit={(e) => {
               e.preventDefault();

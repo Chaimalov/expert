@@ -5,25 +5,15 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
+import {
+  ClientToServerEvents,
+  Product,
+  ServerToClientEvents,
+} from "../../../ex.common";
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
-import { Emoji } from "../components";
-
-export type Product = {
-  id: string;
-  name: string;
-  category: string;
-  emojiList: Emoji[];
-  expiryDays: number;
-  createdAt: Date;
-  expiryDate: Date;
-  emoji: string;
-  supportRate: number;
-  refrigerator: boolean;
-  nameVariation: string[];
-};
 
 const ProductsContext = createContext<{
   products: Product[];
@@ -43,10 +33,12 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 
   useEffect(() => {
     getProducts();
-    const socket = io("http://localhost:8080");
+    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+      "http://localhost:8080"
+    );
 
-    socket.on("products", (data) => {
-      setProducts(sortBy(data, "name"));
+    socket.on("products", (products) => {
+      setProducts(sortBy(products, "name"));
     });
 
     return () => {

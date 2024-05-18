@@ -1,7 +1,7 @@
 import React from "react";
 import { Transition, Variants, motion } from "framer-motion";
 import { ProductCard } from "./Product";
-import { Product } from "../context";
+import { Product } from "../../../ex.common";
 
 const transition = {
   staggerChildren: 0.05,
