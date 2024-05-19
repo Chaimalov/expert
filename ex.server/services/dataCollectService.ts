@@ -1,8 +1,9 @@
 import dataCollectRepository from "../repositories/dataCollectRepository.js";
 import productsService from "./productsService.js";
-
+import { Product } from "../types/product.js";
+import { avgArrayOfNumbers } from "../utils.js";
 const updateProductsExpiryDays = async () => {
-  const products = await productsService.getProducts();
+  const products: Product[] = await productsService.getProducts();
 
   products.forEach(async (product) => {
     const daysArray = await collectExpiryDaysOnProduct(product.id);
@@ -17,23 +18,16 @@ const updateProductsExpiryDays = async () => {
   });
 };
 
-const collectExpiryDaysOnProduct = async (productId) => {
-  const productGroup = await dataCollectRepository.collectUsersWithProduct(
-    productId
-  );
+const collectExpiryDaysOnProduct = async (productId: string) => {
+  const productGroup: { products: Product[] }[] = await dataCollectRepository
+    .collectUsersWithProduct(productId)
+    .then((docs) => docs.map((doc) => ({ products: doc.get("products") })));
 
   return productGroup
-    .filter((doc) => doc.products)
     .map((doc) =>
       Object.values(doc.products).map((product) => parseInt(product.expiryDays))
     )
     .flat();
-};
-
-const avgArrayOfNumbers = (numbersArray) => {
-  return parseInt(
-    numbersArray.reduce((sum, number) => sum + number, 0) / numbersArray.length
-  );
 };
 
 export default {

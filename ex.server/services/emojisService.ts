@@ -1,11 +1,12 @@
 import axios from "axios";
 import { ApiError } from "../middleware/errorHandler.js";
+import { Category } from "../types/category.js";
 
 const route = axios.create({
-  baseURL: "http://localhost:9090/emojis",
+  baseURL: process.env.EMOJI_SERVICE,
 });
 
-const getEmoji = async (name, category) => {
+const getEmoji = async (name: string, category: Category) => {
   try {
     const foundEmoji = await route.get(`all/${name}`);
 
