@@ -3,13 +3,13 @@ import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import { Server } from "socket.io";
-import userController from "./controllers/userController";
-import productsController from "./controllers/productsController";
-import { errorHandler } from "./middleware/errorHandler";
+import userController from "./controllers/userController.js";
+import productsController from "./controllers/productsController.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
-import dataCollectService from "./services/dataCollectService";
-import alertService from "./services/alertService";
-import { productsSnapshot } from "./services/socketService";
+import dataCollectService from "./services/dataCollectService.js";
+import alertService from "./services/alertService.js";
+import { productsSnapshot } from "./services/socketService.js";
 
 const app = express();
 const PORT = 8080;
