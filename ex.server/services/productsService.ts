@@ -3,7 +3,8 @@ import productsRepository from "../repositories/productsRepository.js";
 import userService from "./userService.js";
 import emojisService from "./emojisService.js";
 import { Product } from "../types/product.js";
-import { Category } from "../types/category.js";
+import { Category, categoryDays } from "../types/category.js";
+import { addDaysToDate } from "../utils.js";
 
 const createProduct = async ({
   name,
@@ -37,7 +38,7 @@ const createProduct = async ({
     console.log(name, category, refrigerator);
     throw new ApiError(
       "the product object failed to assemble. some information is missing.",
-      400,
+      400
     );
   }
 
@@ -49,7 +50,7 @@ const getProductByName = async (productName: string) => {
   return await productsRepository.getProductByName(productName);
 };
 
-const getProductByCategory = async (category: string) => {
+const getProductByCategory = async (category: Category) => {
   if (!category) throw new ApiError("query was empty", 400);
   return await productsRepository.getProductByCategory(category);
 };
@@ -58,10 +59,7 @@ const deleteProductById = async (productId: string) => {
   return await productsRepository.deleteProduct(productId);
 };
 
-const updateProductsEmoji = async (
-  productId: string,
-  emoji: { [x: string]: any } & FirebaseFirestore.AddPrefixToKeys<string, any>,
-) => {
+const updateProductsEmoji = async (productId: string, emoji: unknown) => {
   return await productsRepository.updateProductEmoji(productId, emoji);
 };
 
@@ -71,14 +69,14 @@ const updateProductsExpiryDays = async (productId: string, days: number) => {
 
 const updateProductsNameVariations = async (
   productId: string,
-  nameVariations: string[],
+  nameVariations: string[]
 ) => {
   if (!nameVariations.length) {
     throw new ApiError("the list must contain something", 400);
   }
   return await productsRepository.updateProductsNameVariations(
     productId,
-    nameVariations,
+    nameVariations
   );
 };
 
@@ -99,7 +97,7 @@ const getProductsByUser = async (userId: string) => {
         ...userProduct,
         expiryDate: addDaysToDate(
           new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
-          userProduct.expiryDays || (product as Product).expiryDays,
+          userProduct.expiryDays || product.expiryDays
         ),
       });
     } else {
@@ -110,36 +108,7 @@ const getProductsByUser = async (userId: string) => {
   return productsByUser;
 };
 
-const addDaysToDate = (date: Date, days: number) => {
-  return new Date(date.setDate(date.getDate() + days));
-};
 
-const categoryDays = {
-  fruits: {
-    expiryDate: 30,
-  },
-  vegetables: {
-    expiryDate: 14,
-  },
-  dairy: {
-    expiryDate: 10,
-  },
-  meat: {
-    expiryDate: 360,
-  },
-  fish: {
-    expiryDate: 180,
-  },
-  pantry: {
-    expiryDate: 360,
-  },
-  wine: {
-    expiryDate: 1855,
-  },
-  ice_cream: {
-    expiryDate: 45,
-  },
-};
 
 export default {
   createProduct,

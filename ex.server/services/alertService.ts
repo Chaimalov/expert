@@ -5,13 +5,13 @@ import { User } from "../types/user.js";
 
 const getExpiredProducts = async (userId: string, notifyBefore: number) => {
   const usersProducts = await productsService.getProductsByUser(userId);
+
   const expiredProducts = usersProducts.filter((product) => {
-    if (product.expiryDate) {
-      return (
-        product.expiryDate <=
-        productsService.addDaysToDate(new Date(), -notifyBefore)
-      );
-    }
+    if (!product.expiryDate) return false;
+    
+    const notifyDate = productsService.addDaysToDate(new Date(), -notifyBefore);
+    
+    return product.expiryDate <= notifyDate;
   });
 
   return expiredProducts;

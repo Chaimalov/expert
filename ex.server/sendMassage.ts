@@ -1,6 +1,8 @@
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
+if (!process.env.SENDGRID_API_KEY) throw new Error("no api key has been found for sendgrid");
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export const sendEmail = (email: string, subject: string, message: string) => {
   console.log("------sending email------");

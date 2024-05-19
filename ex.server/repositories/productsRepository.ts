@@ -1,8 +1,9 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../firebase.js";
+import { Product } from "../types/product.js";
 
 const createProduct = async (
-  product: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>,
+  product: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>
 ) => {
   return await db.products.add(product);
 };
@@ -12,7 +13,7 @@ const getProductByName = async (productName: string) => {
     (doc) => ({
       ...doc.data(),
       id: doc.id,
-    }),
+    })
   );
 };
 
@@ -21,7 +22,7 @@ const getProductByCategory = async (category: string) => {
     (doc) => ({
       ...doc.data(),
       id: doc.id,
-    }),
+    })
   );
 };
 
@@ -34,33 +35,31 @@ const deleteProduct = async (productId: string) => {
   return await db.products.doc(productId).delete();
 };
 
-const updateProductEmoji = async (
-  productId: string,
-  emoji: { [x: string]: any } & FirebaseFirestore.AddPrefixToKeys<string, any>,
-) => {
-  return await db.products.doc(productId).update(emoji);
+const updateProductEmoji = async (productId: string, emoji: unknown) => {
+  return await db.products.doc(productId).update({ emoji });
 };
 
 const updateProductsExpiryDays = async (
   productId: string,
-  expiryDays: number,
+  expiryDays: number
 ) => {
   return await db.products.doc(productId).update({ expiryDays });
 };
 
 const updateProductsNameVariations = async (
   productId: string,
-  nameVariations: string[],
+  nameVariations: string[]
 ) => {
   return await db.products.doc(productId).update({
     nameVariation: FieldValue.arrayUnion(...nameVariations),
   });
 };
 
-const getProducts = async () => {
-  return await (
-    await db.products.get()
-  ).docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+const getProducts = async (): Promise<Product[]> => {
+  return (await db.products.get()).docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+  }));
 };
 
 export default {

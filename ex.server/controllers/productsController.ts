@@ -1,5 +1,6 @@
 import express from "express";
 import productsService from "../services/productsService.js";
+import { Category, isCategory } from "../types/category.js";
 
 const route = express.Router();
 export default route;
@@ -17,7 +18,7 @@ route.post("/:productId", async (req, res, errorHandler) => {
   try {
     await productsService.updateProductsNameVariations(
       req.params.productId,
-      req.body.nameVariations,
+      req.body.nameVariations
     );
     res.send("variations were added");
   } catch (error) {
@@ -35,6 +36,7 @@ route.get("/:productName", async (req, res, errorHandler) => {
 
 route.get("/:category", async (req, res, errorHandler) => {
   try {
+    if (!isCategory(req.params.category)) throw new Error("invalid category");
     res.send(await productsService.getProductByCategory(req.params.category));
   } catch (error) {
     errorHandler(error);
@@ -55,8 +57,8 @@ route.patch("/:productId", async (req, res, errorHandler) => {
     res.send(
       await productsService.updateProductsEmoji(
         req.params.productId,
-        req.body.emoji,
-      ),
+        req.body.emoji
+      )
     );
   } catch (error) {
     errorHandler(error);

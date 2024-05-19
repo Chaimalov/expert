@@ -1,4 +1,4 @@
-import {} from "dotenv/config";
+import "dotenv/config";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import http from "http";
@@ -20,6 +20,7 @@ const io = new Server(server);
 io.on("connection", (socket) => {
   console.log("connection made");
 });
+
 app.use(cors());
 app.use(express.json());
 
