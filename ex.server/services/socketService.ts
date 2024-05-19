@@ -1,9 +1,13 @@
-import { Request,Response ,NextFunction} from "express"; 
+import { Request, Response, NextFunction } from "express";
 import productsService from "./productsService.js";
 import { db } from "../firebase.js";
 import { Server } from "socket.io";
 
-export const productsSnapshot = (req: Request, res:Response, next:NextFunction) => {
+export const productsSnapshot = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const userId = req.body.userId;
   const io = req.io;
 

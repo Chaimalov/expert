@@ -18,6 +18,6 @@ export const sendEmail = (email: string, subject: string, message: string) => {
       if (error.response) {
         console.error(error.response.body);
       }
-    }
+    },
   );
 };

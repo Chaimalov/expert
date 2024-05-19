@@ -2,7 +2,6 @@ import { db } from "../firebase.js";
 import { FieldValue } from "firebase-admin/firestore";
 import { Product } from "../types/product.js";
 
-
 const createUser = async (userId: string) => {
   return await db.users.doc(userId).set({ products: {}, notifyBefore: 0 });
 };
@@ -34,7 +33,7 @@ const addProductToUsersList = async (userId: string, product: Product) => {
         },
       },
     },
-    { merge: true }
+    { merge: true },
   );
 };
 
@@ -51,11 +50,14 @@ const editProductInUsersList = async (userId: string, product: Product) => {
         },
       },
     },
-    { merge: true }
+    { merge: true },
   );
 };
 
-const removeProductFromUsersList = async (userId: string, productId: string) => {
+const removeProductFromUsersList = async (
+  userId: string,
+  productId: string,
+) => {
   return await db.users.doc(userId).update({
     [`products.${productId}.createdAt`]: FieldValue.delete(),
   });

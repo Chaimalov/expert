@@ -5,7 +5,15 @@ import emojisService from "./emojisService.js";
 import { Product } from "../types/product.js";
 import { Category } from "../types/category.js";
 
-const createProduct = async ({ name, category, refrigerator }: { name: string, category: Category, refrigerator: boolean }) => {
+const createProduct = async ({
+  name,
+  category,
+  refrigerator,
+}: {
+  name: string;
+  category: Category;
+  refrigerator: boolean;
+}) => {
   if (await productsRepository.isProductExists(name)) {
     throw new ApiError(`${name} already exists.`, 405);
   }
@@ -29,7 +37,7 @@ const createProduct = async ({ name, category, refrigerator }: { name: string, c
     console.log(name, category, refrigerator);
     throw new ApiError(
       "the product object failed to assemble. some information is missing.",
-      400
+      400,
     );
   }
 
@@ -50,7 +58,10 @@ const deleteProductById = async (productId: string) => {
   return await productsRepository.deleteProduct(productId);
 };
 
-const updateProductsEmoji = async (productId: string, emoji: { [x: string]: any; } & FirebaseFirestore.AddPrefixToKeys<string, any>) => {
+const updateProductsEmoji = async (
+  productId: string,
+  emoji: { [x: string]: any } & FirebaseFirestore.AddPrefixToKeys<string, any>,
+) => {
   return await productsRepository.updateProductEmoji(productId, emoji);
 };
 
@@ -58,13 +69,16 @@ const updateProductsExpiryDays = async (productId: string, days: number) => {
   return await productsRepository.updateProductsExpiryDays(productId, days);
 };
 
-const updateProductsNameVariations = async (productId: string, nameVariations: string[]) => {
+const updateProductsNameVariations = async (
+  productId: string,
+  nameVariations: string[],
+) => {
   if (!nameVariations.length) {
     throw new ApiError("the list must contain something", 400);
   }
   return await productsRepository.updateProductsNameVariations(
     productId,
-    nameVariations
+    nameVariations,
   );
 };
 
@@ -85,7 +99,7 @@ const getProductsByUser = async (userId: string) => {
         ...userProduct,
         expiryDate: addDaysToDate(
           new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
-          userProduct.expiryDays || (product as Product).expiryDays
+          userProduct.expiryDays || (product as Product).expiryDays,
         ),
       });
     } else {

@@ -21,7 +21,7 @@ const deleteUser = async (userId: string) => {
   return await usersRepository.deleteUser(userId);
 };
 
-const addProduct = async (userId:string, product: Product) => {
+const addProduct = async (userId: string, product: Product) => {
   return await usersRepository.addProductToUsersList(userId, product);
 };
 

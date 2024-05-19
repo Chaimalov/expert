@@ -18,20 +18,24 @@ const updateProductsExpiryDays = async () => {
 };
 
 const collectExpiryDaysOnProduct = async (productId: string) => {
-  const productGroup: { products: Record<string, { expiryDays: string }> }[] = await dataCollectRepository.collectUsersWithProduct(
-    productId
-  ).then(docs => docs.map(doc => ({ products: doc.get('products') })));
+  const productGroup: { products: Record<string, { expiryDays: string }> }[] =
+    await dataCollectRepository
+      .collectUsersWithProduct(productId)
+      .then((docs) => docs.map((doc) => ({ products: doc.get("products") })));
 
   return productGroup
     .map((doc) =>
-      Object.values(doc.products).map((product) => parseInt(product.expiryDays))
+      Object.values(doc.products).map((product) =>
+        parseInt(product.expiryDays),
+      ),
     )
     .flat();
 };
 
-
 const avgArrayOfNumbers = (numbersArray: number[]) => {
-  return numbersArray.reduce((sum, number) => sum + number, 0) / numbersArray.length;
+  return (
+    numbersArray.reduce((sum, number) => sum + number, 0) / numbersArray.length
+  );
 };
 
 export default {
