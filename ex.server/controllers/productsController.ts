@@ -1,5 +1,6 @@
 import express from "express";
 import productsService from "../services/productsService.js";
+import { Category, isCategory } from "../types/category.js";
 
 const route = express.Router();
 export default route;
@@ -35,6 +36,7 @@ route.get("/:productName", async (req, res, errorHandler) => {
 
 route.get("/:category", async (req, res, errorHandler) => {
   try {
+    if (!isCategory(req.params.category)) throw new Error("invalid category");
     res.send(await productsService.getProductByCategory(req.params.category));
   } catch (error) {
     errorHandler(error);

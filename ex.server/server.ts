@@ -1,6 +1,6 @@
-import {} from "dotenv/config";
+import "dotenv/config";
 import cors from "cors";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import { Server } from "socket.io";
 import userController from "./controllers/userController.js";
@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   req.io = io;
   next();
 });
