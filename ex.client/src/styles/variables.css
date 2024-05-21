@@ -3,11 +3,12 @@
 
 * {
   box-sizing: border-box;
-  font-family: "Nunito", "Varela Round", sans-serif;
   margin: 0;
 }
 
 :root {
+  font-family: "Nunito", "Varela Round", sans-serif;
+
   --hue: 150;
   --saturation: 80%;
   --value: 50%;
