@@ -1,8 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { notify } from "../utils/notify";
-
-axios.defaults.baseURL = "http://localhost:8080";
+import { Product } from "../../../ex.common";
 
 const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading("working on it...");
@@ -19,19 +18,24 @@ const execute = <T extends { data: any }>(request: Promise<T>) => {
 };
 
 const products = {
-  createProduct: (name: string, category: string, refrigerator: boolean, userId: string) => {
+  createProduct: (
+    name: string,
+    category: string,
+    refrigerator: boolean,
+    userId: string
+  ) => {
     return axios.post("/products", {
       product: { name: name.toLowerCase().trim(), category, refrigerator },
       userId,
     });
   },
 
-  deleteItem: (item: {name: string, id: string }, userId: string) => {
+  deleteItem: (item: { name: string; id: string }, userId: string) => {
     if (window.confirm(`would you like to delete ${item.name}?`)) {
       return axios.delete("/products/" + item.id, { data: { userId } });
     }
   },
-  
+
   getProducts: async (userId: string) => {
     return await (
       await axios.get("/products/user/" + userId)
@@ -52,7 +56,12 @@ const user = {
     ).data;
   },
 
-  addItem: (userId: string, itemId: string, expiryDays: number, emoji: string) => {
+  addItem: (
+    userId: string,
+    itemId: string,
+    expiryDays: number,
+    emoji: string
+  ) => {
     return axios.post("/users/products", {
       userId: userId,
       product: { id: itemId, expiryDays, emoji },
@@ -64,7 +73,12 @@ const user = {
     });
   },
 
-  updateItem: (userId: string, productId: string, key: string, value: unknown) => {
+  updateItem: <K extends keyof Product>(
+    userId: string,
+    productId: string,
+    key: K,
+    value: Product[K]
+  ) => {
     return axios.patch("/users/products", {
       userId: userId,
       product: { id: productId, key, value },

@@ -1,16 +1,12 @@
 import React from "react";
-import { Category } from "./Category";
+import { CategoryButton as CategoryButton } from "./Category";
+import { Category } from "../../../ex.common";
 
 type CategoryListProps = {
   design?: "compact" | "regular";
-  categories: Readonly<Category[]>;
-  onClick: (value: string) => void;
+  categories: Readonly<{ name: Category | null; icon: string }[]>;
+  onClick: (value: Category | null) => void;
   group: string;
-};
-
-type Category = {
-  name: string;
-  icon: string;
 };
 
 export const CategoriesList: React.FC<CategoryListProps> = ({
@@ -22,12 +18,11 @@ export const CategoriesList: React.FC<CategoryListProps> = ({
   return (
     <div className="section">
       {categories.map((category) => (
-        <Category
+        <CategoryButton
           key={category.name}
           category={category.name}
           icon={category.icon}
-          onClick={onClick}
-          value={category.name as any}
+          onClick={() => onClick(category.name)}
           group={group}
           design={design}
         />

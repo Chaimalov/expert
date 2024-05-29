@@ -33,9 +33,7 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 
   useEffect(() => {
     getProducts();
-    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-      "http://localhost:8080"
-    );
+    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
     socket.on("products", (products) => {
       setProducts(sortBy(products, "name"));

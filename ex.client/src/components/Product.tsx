@@ -23,7 +23,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const [OpenDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const [options, setOptions] = useState<Option[]>([]);
+  const [menuOptions, setMenuOptions] = useState<Option[]>([]);
   const [expiryDays, setExpiryDays] = useState(Number(product.expiryDays));
 
   const { user } = useAuth();
@@ -46,7 +46,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const editEmoji = () => {
     close();
     setOpenEmoji(true);
-    setOptions(
+    setMenuOptions(
       product.emojiList.map((emoji) => ({
         text: emoji.character,
         key: emoji.slug,
@@ -131,7 +131,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     >
       {!mini && (
         <>
-          <Options type="emoji" open={OpenEmoji} list={options} />
+          <Options type="emoji" open={OpenEmoji} list={menuOptions} />
           <form
             onSubmit={(e) => {
               e.preventDefault();

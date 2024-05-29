@@ -7,14 +7,14 @@ export const Kind = {
   CONFIRM: "confirm",
 } as const;
 
-export type Kind = typeof Kind[keyof typeof Kind];
+export type Status = (typeof Kind)[keyof typeof Kind];
 
 const style = {
   borderRadius: "2em",
   textTransform: "capitalize",
 } satisfies React.CSSProperties;
 
-export function notify(message: string, type: Kind) {
+export function notify(message: string, type: Status) {
   switch (type) {
     case Kind.SUCCESS:
       toast.success(message, {

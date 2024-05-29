@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
 import { Categories } from "../utils";
 import { Loading } from "./Loading";
-import { Product } from "../../../ex.common";
+import { Product, Category } from "../../../ex.common";
 
 export const Home: React.FC = () => {
   const searchRef = createRef<HTMLInputElement>();
@@ -39,10 +39,12 @@ export const Home: React.FC = () => {
     return Boolean(filteredList?.length);
   };
 
-  const filterByCategory = (category: string) => {
-    setFilteredList(
-      products.filter((product) => product.category.includes(category))
-    );
+  const filterByCategory = (category: Category | null) => {
+    const filteredProducts = !category
+      ? []
+      : products.filter((product) => product.category.includes(category));
+
+    setFilteredList(filteredProducts);
   };
 
   if (!products) return <Loading />;
@@ -74,7 +76,7 @@ export const Home: React.FC = () => {
         </Button>
       </form>
       <CategoriesList
-        categories={[...Categories, { name: "", icon: "🗑️" }]}
+        categories={[...Categories, { name: null, icon: "🗑️" }]}
         onClick={filterByCategory}
         group="category"
         design="compact"

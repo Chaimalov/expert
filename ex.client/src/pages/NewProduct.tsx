@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
-import { Button, CategoriesList, Category } from "../components";
+import { Button, CategoriesList, CategoryButton } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { Categories, notify, Kind } from "../utils";
+import { Categories, notify, Status } from "../utils";
+import { Category } from "../../../ex.common";
 
 export const NewProduct: React.FC = () => {
   const saveProduct = async () => {
@@ -21,7 +22,7 @@ export const NewProduct: React.FC = () => {
   };
 
   const [storage, setStorage] = useState<"fridge" | "pantry">();
-  const [category, setCategory] = useState<string>();
+  const [category, setCategory] = useState<Category | null>();
   const { name } = useParams();
   const { user } = useAuth();
 
@@ -46,18 +47,16 @@ export const NewProduct: React.FC = () => {
       />
       <h2 className="text-center">where should you store it?</h2>
       <div className="section">
-        <Category
+        <CategoryButton
           category="fridge"
           icon="❄️"
-          onClick={setStorage}
-          value={"fridge"}
+          onClick={() => setStorage("fridge")}
           group="storage"
         />
-        <Category
+        <CategoryButton
           category="pantry"
           icon="🧺"
-          onClick={setStorage}
-          value={"pantry"}
+          onClick={() => setStorage("pantry")}
           group="storage"
         />
       </div>

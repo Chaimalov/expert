@@ -3,17 +3,15 @@ import { colorFromEmoji } from "../utils";
 interface CategoryProps extends React.PropsWithChildren {
   design?: "compact" | "regular";
   group: string;
-  category: string;
-  value: "fridge" | "pantry";
+  category: string | null;
   icon: string;
-  onClick: (value: "fridge" | "pantry") => void;
+  onClick: () => void;
 }
 
-export const Category: React.FC<CategoryProps> = ({
+export const CategoryButton: React.FC<CategoryProps> = ({
   design,
   group,
   category,
-  value,
   icon,
   onClick,
 }) => {
@@ -23,9 +21,7 @@ export const Category: React.FC<CategoryProps> = ({
     <label
       className={`category ${design}`}
       style={{ "--hue": color.toString() }}
-      onClick={() => {
-        onClick(value);
-      }}
+      onClick={() => onClick()}
     >
       <div className="icon">{icon}</div>
       {design !== "compact" && <h3>{category}</h3>}
