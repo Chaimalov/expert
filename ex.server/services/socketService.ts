@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 export const productsSnapshot = (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const userId = req.body.userId;
   const io = req.io;
