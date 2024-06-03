@@ -1,14 +1,14 @@
 import { emojis } from "./emojis";
 
+const emojiValues = Object.values(emojis).flat()
+
+
 const getAll = () => {
   return emojis;
 };
 
 const getByName = (name: string) => {
-  const reg = new RegExp(`(?<![a-z])${name}`);
-  return Object.values(emojis)
-    .flat()
-    .filter((emoji) => emoji.slug.match(reg));
+  return emojiValues.filter((emoji) => emoji.slug.includes(name));
 };
 
 const getByCategory = (category: keyof typeof emojis) => {

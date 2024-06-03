@@ -1,4 +1,3 @@
-
 import express from "express";
 import cors from "cors";
 import emojiController from "./controller";
@@ -10,6 +9,6 @@ app.use(express.json());
 
 app.use("/emojis", emojiController);
 
-const port = process.env.PORT?.toString() || "9090";
+const port = process.env.PORT ?? 9090;
 
-app.listen(port, () => console.log(`listening on PORT ${process.env.PORT}`));
+app.listen(port, () => console.log(`listening on PORT ${port}`));

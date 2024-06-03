@@ -1,5 +1,6 @@
 import emojiRepository from "./repository";
 import { emojis } from "./emojis";
+
 const getAllEmojis = () => {
   return emojiRepository.getAll();
 };
@@ -31,8 +32,8 @@ const levenshtein = (s: string, t: string): number => {
     for (let j = 1; j <= n; j++) {
       const cost = s[i - 1] === t[j - 1] ? 0 : 1;
       dp[i][j] = Math.min(
-        dp[i - 1][j] + 1, 
-        dp[i][j - 1] + 1, 
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
         dp[i - 1][j - 1] + cost
       );
     }
@@ -40,7 +41,6 @@ const levenshtein = (s: string, t: string): number => {
 
   return dp[m][n];
 };
-
 
 export default {
   getAllEmojis,

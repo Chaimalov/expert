@@ -1,4 +1,4 @@
-import express, {Request,Response} from "express";
+import express, { Request, Response } from "express";
 import emojiService from "./service";
 import { emojis } from "./emojis";
 
@@ -8,7 +8,7 @@ router.get("/", (req: Request, res: Response) => {
   res.send(emojiService.getAllEmojis());
 });
 
-router.get("/all/:name", (req: Request, res:Response) => {
+router.get("/all/:name", (req: Request, res: Response) => {
   res.send(emojiService.getEmojiByName(req.params.name));
   console.log(req.params.name + " - sent emoji by name");
 });
@@ -27,7 +27,5 @@ router.get("/:category", (req: Request, res: Response) => {
 const isEmojiCategory = (category: string): category is keyof typeof emojis => {
   return Object.keys(emojis).includes(category);
 };
-
-
 
 export default router;
