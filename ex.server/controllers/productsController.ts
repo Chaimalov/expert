@@ -1,6 +1,6 @@
 import express from "express";
-import productsService from "../services/productsService.js";
-import { Category, isCategory } from "../types/category.js";
+import  productsService from "../services/productsService.js";
+import { isCategory } from "../../ex.common";
 
 const route = express.Router();
 export default route;

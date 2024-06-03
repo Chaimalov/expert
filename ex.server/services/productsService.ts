@@ -1,10 +1,10 @@
-import { ApiError } from "../middleware/errorHandler.js";
-import productsRepository from "../repositories/productsRepository.js";
-import userService from "./userService.js";
-import emojisService from "./emojisService.js";
-import { Product } from "../types/product.js";
-import { Category, categoryDays } from "../types/category.js";
-import { addDaysToDate } from "../utils.js";
+import { ApiError } from "../middleware/errorHandler";
+import productsRepository from "../repositories/productsRepository";
+import userService from "./userService";
+import emojisService from "./emojisService";
+import { Product } from "../types/product";
+import { Category, categoryDays } from "../../ex.common/category";
+import { addDaysToDate } from "../utils";
 
 const createProduct = async ({
   name,
