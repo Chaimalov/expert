@@ -3,7 +3,7 @@ import productsRepository from "../repositories/productsRepository";
 import userService from "./userService";
 import emojisService from "./emojisService";
 import { Product } from "../types/product";
-import { Category, categoryDays } from "../../ex.common/category";
+import { Category, categoryDays } from "ex.common";
 import { addDaysToDate } from "../utils";
 
 const createProduct = async ({

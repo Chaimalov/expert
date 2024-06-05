@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiError } from "../middleware/errorHandler";
-import { Category } from "../../ex.common/category";
+import { Category } from "ex.common";
 
 const route = axios.create({
   baseURL: process.env.EMOJI_SERVICE,

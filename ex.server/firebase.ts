@@ -13,7 +13,7 @@ const firebase = admin.initializeApp({
 const firestore = getFirestore(firebase);
 
 export const db = {
-  products: await firestore.collection("products"),
-  users: await firestore.collection("users"),
+  products:  firestore.collection("products"),
+  users:  firestore.collection("users"),
   auth: admin.app().auth(),
 };
