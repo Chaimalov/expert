@@ -19,7 +19,7 @@ export default function App() {
   if (loggedIn === 'pending') return <Loading />;
   if (loggedIn === 'error') return <Login />;
   return (
-    <div className="app">
+    <div className="font-nunito">
       <ProductsProvider>
         <AnimatePresence>{menu && <NotificationsMenu />}</AnimatePresence>
         <motion.div className="main">

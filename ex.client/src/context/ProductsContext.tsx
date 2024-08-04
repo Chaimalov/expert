@@ -4,16 +4,16 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import io, { Socket } from "socket.io-client";
+} from 'react';
+import io, { Socket } from 'socket.io-client';
 import {
   ClientToServerEvents,
   Product,
   ServerToClientEvents,
-} from "../../../ex.common";
-import api from "../api/api";
-import { addDaysToDate, sortBy } from "../utils";
-import { useAuth } from "./AuthContext";
+} from '@expert/common';
+import api from '../api/api';
+import { addDaysToDate, sortBy } from '../utils';
+import { useAuth } from './AuthContext';
 
 const ProductsContext = createContext<{
   products: Product[];
@@ -35,12 +35,12 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     getProducts();
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
-    socket.on("products", (products) => {
-      setProducts(sortBy(products, "name"));
+    socket.on('products', (products) => {
+      setProducts(sortBy(products, 'name'));
     });
 
     return () => {
-      socket.off("products");
+      socket.off('products');
       socket.disconnect();
     };
   }, []);
@@ -49,7 +49,7 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     if (!user?.uid) return;
 
     const list = await api.products.getProducts(user.uid);
-    setProducts(sortBy(list, "name"));
+    setProducts(sortBy(list, 'name'));
   };
 
   const userProducts = products?.filter((product) => product.createdAt);

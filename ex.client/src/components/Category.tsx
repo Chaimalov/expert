@@ -1,7 +1,7 @@
-import { colorFromEmoji } from "../utils";
+import { colorFromEmoji } from '../utils';
 
 interface CategoryProps extends React.PropsWithChildren {
-  design?: "compact" | "regular";
+  design?: 'compact' | 'regular';
   group: string;
   category: string | null;
   icon: string;
@@ -19,14 +19,14 @@ export const CategoryButton: React.FC<CategoryProps> = ({
 
   return (
     <label
-      className={`category ${design}`}
-      style={{ "--hue": color.toString() }}
+      className="p-2 rounded-lg text-2xl bg-custom/20 grayscale hover:grayscale-0 cursor-pointer"
+      style={{ '--customColor': color.toString() }}
       onClick={() => onClick()}
     >
-      <div className="icon">{icon}</div>
-      {design !== "compact" && <h3>{category}</h3>}
+      {icon}
+      {design !== 'compact' && <h3>{category}</h3>}
 
-      <input type="radio" name={group} />
+      <input type="radio" name={group} hidden />
     </label>
   );
 };

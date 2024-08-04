@@ -1,5 +1,5 @@
-import { Category } from "./category";
-import { Emoji } from "./emoji";
+import { Category } from './category';
+import { Emoji } from './emoji';
 
 export type Product = ProductDetails & ProductMetadata;
 

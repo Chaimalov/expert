@@ -1,7 +1,7 @@
-import React from "react";
-import { Transition, Variants, motion } from "framer-motion";
-import { ProductCard } from "./Product";
-import { Product } from "../../../ex.common";
+import React from 'react';
+import { Transition, Variants, motion } from 'framer-motion';
+import { ProductCard } from './Product';
+import { Product } from '@expert/common';
 
 const transition = {
   staggerChildren: 0.05,
@@ -35,7 +35,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({ list, mini }) => {
   return (
     <motion.div
       layout
-      className="list"
+      className="grid gap-4 auto-fill-[150px] w-full max-w-3xl"
       initial="hide"
       animate="show"
       variants={sideVariants}

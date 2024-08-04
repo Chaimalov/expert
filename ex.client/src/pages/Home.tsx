@@ -1,12 +1,12 @@
-import { createRef, useEffect, useState } from "react";
-import { BiSearchAlt2 } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { Button, CategoriesList, Input, ProductsList } from "../components";
-import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
-import { Categories } from "../utils";
-import { Loading } from "./Loading";
-import { Product, Category } from "../../../ex.common";
+import { Category, Product } from '@expert/common';
+import { createRef, useEffect, useState } from 'react';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { CategoriesList, ProductsList } from '../components';
+import { useAuth } from '../context/AuthContext';
+import { useProducts } from '../context/ProductsContext';
+import { Categories } from '../utils';
+import { Loading } from './Loading';
 
 export const Home: React.FC = () => {
   const searchRef = createRef<HTMLInputElement>();
@@ -24,12 +24,12 @@ export const Home: React.FC = () => {
   }, [products, user]);
 
   const filterList = () => {
+    const isNameMatched = (name: string) =>
+      name.includes(searchRef.current!.value);
+
     const filteredProducts = products.filter(
       (item) =>
-        item.name.indexOf(searchRef.current!.value) !== -1 ||
-        item.nameVariation.find(
-          (variation) => variation.indexOf(searchRef.current!.value) !== -1
-        )
+        isNameMatched(item.name) || item.nameVariation.find(isNameMatched)
     );
 
     setFilteredList(filteredProducts);
@@ -41,22 +41,22 @@ export const Home: React.FC = () => {
 
   const filterByCategory = (category: Category | null) => {
     const filteredProducts = !category
-      ? []
-      : products.filter((product) => product.category.includes(category));
+      ? products
+      : products.filter((product) => product.category === category);
 
     setFilteredList(filteredProducts);
   };
 
   if (!products) return <Loading />;
   return (
-    <div className="App">
-      <header>
-        <h1>this is expert</h1>
+    <div className="grid justify-center gap-4">
+      <header className="grid text-center p-8">
+        <h1 className="text-5xl font-extrabold">this is expert</h1>
         <h3>expiry dates by the experts</h3>
       </header>
 
       <form
-        className="search"
+        className="grid grid-cols-[1fr_auto] m-auto w-[calc(100%-2rem)] max-w-xl items-center"
         onSubmit={(e) => {
           e.preventDefault();
           return (
@@ -64,22 +64,27 @@ export const Home: React.FC = () => {
           );
         }}
       >
-        <Input
+        <input
           type="search"
           name="search"
           ref={searchRef}
           placeholder="search for an item"
           onChange={filterList}
+          className="rounded-full focus:outline-brand border-2 row-start-1 col-start-1 col-span-2 border-grey p-4"
         />
-        <Button type="submit">
+        <button
+          type="submit"
+          className="row-start-1 col-start-2 p-4 text-brand"
+        >
           <BiSearchAlt2 />
-        </Button>
+        </button>
       </form>
       <CategoriesList
-        categories={[...Categories, { name: null, icon: "🗑️" }]}
+        categories={[...Categories, { name: null, icon: '🗑️' }]}
         onClick={filterByCategory}
         group="category"
         design="compact"
+        className="m-auto"
       />
       <ProductsList list={filteredList} />
     </div>
