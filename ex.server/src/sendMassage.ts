@@ -8,7 +8,7 @@ export const sendEmail = (email: string, subject: string, message: string) => {
   console.log("------sending email------");
   const msg = {
     to: email,
-    from: "expirebyexpert@gmail.com",
+    from: process.env.COMPANY_MAIL,
     subject,
     html: message,
   };

@@ -7,12 +7,12 @@ import userController from './controllers/userController';
 import productsController from './controllers/productsController';
 import { errorHandler } from './middleware/errorHandler';
 
-// import dataCollectService from './services/dataCollectService';
-// import alertService from './services/alertService';
+import dataCollectService from './services/dataCollectService';
+import alertService from './services/alertService';
 import { productsSnapshot } from './services/socketService';
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -21,15 +21,17 @@ const io = new Server(server, {
   },
 });
 
-io.on('connection', (socket) => {
+type CustomRequest = Request & { io: Server };
+
+io.on('connection', () => {
   console.log('connection made');
 });
 
 app.use(cors());
 app.use(express.json());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  (req as any).io = io;
+app.use((req: CustomRequest, res: Response, next: NextFunction) => {
+  req.io = io;
   next();
 });
 
@@ -41,6 +43,7 @@ app.use(errorHandler);
 
 server.listen(PORT, () => console.log('listening on PORT ' + PORT));
 
-// dataCollectService.updateProductsExpiryDays();
-
-// alertService.sendEmailToExpired();
+setInterval(() => {
+  dataCollectService.updateProductsExpiryDays();
+  alertService.sendEmailToExpired();
+},  60 * 1000);

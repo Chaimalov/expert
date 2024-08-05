@@ -63,6 +63,10 @@ const removeProductFromUsersList = async (
   });
 };
 
+const deleteProductFromDB = async (productId: string) => {
+  return await db.products.doc(productId).delete();
+};
+
 export default {
   getUser,
   deleteUser,
@@ -72,4 +76,5 @@ export default {
   createUser,
   updateNotify,
   getAllUsers,
+  deleteProductFromDB,
 };

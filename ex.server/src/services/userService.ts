@@ -35,12 +35,12 @@ const removeProduct = async (userId: string, productId: string) => {
 };
 
 const deleteProduct = async (productId: string) => {
-  // return await usersRepository.deleteProductFromDB(productId);
+  return await usersRepository.deleteProductFromDB(productId);
 };
 
 const isProductExists = async (userId: string, productId: string) => {
   const user = await usersRepository.getUser(userId);
-  return user?.products?.hasOwnProperty(productId) ?? false;
+  return user?.products ? productId in user.products : false;
 };
 
 const updateNotify = async (userId: string, notifyBefore: number) => {

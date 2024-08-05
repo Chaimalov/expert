@@ -4,17 +4,25 @@ import { sendEmail } from '../sendMassage';
 import { User } from '../types/user';
 
 const getExpiredProducts = async (userId: string, notifyBefore: number) => {
-  const usersProducts = await productsService.getProductsByUser(userId);
+  try {
+    const usersProducts = await productsService.getProductsByUser(userId);
 
-  const expiredProducts = usersProducts.filter((product) => {
-    if (!product.expiryDate) return false;
+    const expiredProducts = usersProducts.filter((product) => {
+      if (!product.expiryDate) return false;
 
-    const notifyDate = productsService.addDaysToDate(new Date(), -notifyBefore);
+      const notifyDate = productsService.addDaysToDate(
+        new Date(),
+        -notifyBefore
+      );
 
-    return product.expiryDate <= notifyDate;
-  });
+      return product.expiryDate <= notifyDate;
+    });
 
-  return expiredProducts;
+    return expiredProducts;
+  } catch (error) {
+    console.error('Error getting expired products:', error);
+    return [];
+  }
 };
 
 const sendEmailToUser = (user: User) => {
@@ -25,15 +33,22 @@ const sendEmailToUser = (user: User) => {
 
     sendEmail(user.email, subject, message);
   }
+  else {
+    console.log("user doesn't have email or notifyBefore");
+  }
 };
 
 const sendEmailToExpired = async () => {
-  const users = await userService.getAllUsers();
-  if (users) {
-    users.forEach((user) => {
-      console.log('------extracting users data------');
-      sendEmailToUser(user);
-    });
+  try {
+    const users = await userService.getAllUsers();
+    console.log(users);
+    if (users) {
+      users.forEach((user) => {
+        sendEmailToUser(user);
+      });
+    }
+  } catch (error) {
+    console.error('Error sending email to expired users:', error);
   }
 };
 
