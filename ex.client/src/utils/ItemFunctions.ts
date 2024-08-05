@@ -1,4 +1,4 @@
-import { Product } from "../../../ex.common";
+import { Product } from "ex.common/src/index";
 import { ExpertUser } from "../context";
 
 export function calcDays(date: number) {

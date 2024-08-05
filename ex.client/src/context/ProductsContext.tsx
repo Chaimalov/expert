@@ -10,7 +10,7 @@ import {
   ClientToServerEvents,
   Product,
   ServerToClientEvents,
-} from "../../../ex.common";
+} from "ex.common/src/index";
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";

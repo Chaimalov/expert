@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductsContext";
 import { Categories } from "../utils";
 import { Loading } from "./Loading";
-import { Product, Category } from "../../../ex.common";
+import { Product, Category } from "ex.common/src/index";
 
 export const Home: React.FC = () => {
   const searchRef = createRef<HTMLInputElement>();

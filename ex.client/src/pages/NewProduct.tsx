@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import { Button, CategoriesList, CategoryButton } from "../components";
 import { useAuth } from "../context/AuthContext";
-import { Categories, notify, Status } from "../utils";
-import { Category } from "../../../ex.common";
+import { Categories, Kind, notify, Status } from "../utils";
+import { Category } from "ex.common/src/index";
 
 export const NewProduct: React.FC = () => {
   const saveProduct = async () => {

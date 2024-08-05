@@ -1,4 +1,4 @@
-import { Product } from "../../../ex.common";
+import { Product } from "ex.common/src/index";
 
 export const sortBy = <K extends string, T extends Record<K, unknown>[]>(
   list: T,

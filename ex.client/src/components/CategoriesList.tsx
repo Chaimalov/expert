@@ -1,6 +1,6 @@
 import React from "react";
 import { CategoryButton as CategoryButton } from "./Category";
-import { Category } from "../../../ex.common";
+import { Category } from "ex.common/src/index";
 
 type CategoryListProps = {
   design?: "compact" | "regular";
