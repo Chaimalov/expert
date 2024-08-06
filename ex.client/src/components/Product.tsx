@@ -11,7 +11,7 @@ import {
   useClickOutside,
 } from "../utils";
 import { Option, Options } from "./index";
-import { Product } from "ex.common/src/index";
+import { Product } from "@expert/common";
 
 type ProductProps = {
   mini?: boolean;

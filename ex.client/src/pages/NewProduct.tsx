@@ -4,7 +4,7 @@ import api from "../api/api";
 import { Button, CategoriesList, CategoryButton } from "../components";
 import { useAuth } from "../context/AuthContext";
 import { Categories, Kind, notify, Status } from "../utils";
-import { Category } from "ex.common/src/index";
+import { Category } from '@expert/common';
 
 export const NewProduct: React.FC = () => {
   const saveProduct = async () => {
