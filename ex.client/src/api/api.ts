@@ -8,6 +8,7 @@ axios.defaults.baseURL = SERVER_URL;
 
 const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading('working on it...');
+  console.log("request:" ,request)
   request
     .then(({ data }) => {
       notify(data, 'success');
@@ -53,6 +54,10 @@ const products = {
 };
 
 const user = {
+  createUser: async (name: string, email: string) => {
+    return await axios.post('/users/createUser', { user: { name, email } });
+
+  },
   getUser: async (userId: string) => {
     return await (
       await axios.get('/users/' + userId)

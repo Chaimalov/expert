@@ -10,7 +10,7 @@ import {
   ClientToServerEvents,
   Product,
   ServerToClientEvents,
-} from "ex.common/src/index";
+} from '@expert/common';
 import api from "../api/api";
 import { addDaysToDate, sortBy } from "../utils";
 import { useAuth } from "./AuthContext";
@@ -46,9 +46,9 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
   }, []);
 
   const getProducts = async () => {
-    if (!user?.uid) return;
+    if (!user?.email) return;
 
-    const list = await api.products.getProducts(user.uid);
+    const list = await api.products.getProducts(user.email);
     setProducts(sortBy(list, "name"));
   };
 

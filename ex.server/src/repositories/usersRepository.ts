@@ -2,16 +2,41 @@ import { db } from '../firebase';
 import { FieldValue } from 'firebase-admin/firestore';
 import { Product } from '../types/product';
 
-const createUser = async (userId: string) => {
-  return await db.users.doc(userId).set({ products: {}, notifyBefore: 0 });
+// const createUser = async (userId: string) => {
+//   return await db.users.doc(userId).set({ products: {}, notifyBefore: 0 });
+// };
+
+const createUser = async (user) => {
+  try {
+    const { name, email } = user;
+
+    const userDocRef = db.users.doc(email);
+    const userDoc = await userDocRef.get();
+
+    console.log(user)
+    if (userDoc.exists) {
+      return 'User already exists';
+    }
+    
+    const result = await userDocRef.create({
+      name,
+      products: {},
+      notifyBefore: 0,
+    });
+    console.log('result: ', result);
+    return result;
+  } catch (error) {
+    console.error('Error in createUser: ', error);
+    throw new Error(error.message);
+  }
 };
 
 const getUser = async (id: string) => {
-  return await (await db.users.doc(id).get()).data();
+  return  (await db.users.doc(id).get()).data();
 };
 
 const getAllUsers = async () => {
-  return await (
+  return (
     await db.users.get()
   ).docs.map((doc) => {
     return { id: doc.id, ...doc.data() };

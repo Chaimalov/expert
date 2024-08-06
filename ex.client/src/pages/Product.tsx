@@ -86,7 +86,7 @@ export const Product: React.FC = () => {
             <button
               className="category"
               onClick={() => {
-                api.execute(api.user.removeItem(user.uid, item.id));
+                api.execute(api.user.removeItem(user.email, item.id));
               }}
             >
               remove item
@@ -97,7 +97,7 @@ export const Product: React.FC = () => {
               onClick={() => {
                 api.execute(
                   api.user.addItem(
-                    user.uid,
+                    user.email,
                     item.id,
                     item.expiryDays,
                     item.emoji

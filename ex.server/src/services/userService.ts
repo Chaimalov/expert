@@ -3,14 +3,23 @@ import { Product } from '../types/product';
 import { isAdmin } from './admins';
 
 const getUserById = async (id: string) => {
-  let user = await usersRepository.getUser(id);
+  const user = await usersRepository.getUser(id);
 
   if (!user) {
-    user = await usersRepository.createUser(id);
+    // user = await usersRepository.createUser(id);
+    return
   }
 
   user.isAdmin = isAdmin(id);
   return user;
+};
+
+const createUser = async (user) => {
+  try {
+    return await usersRepository.createUser(user);
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 const getAllUsers = async () => {
@@ -48,6 +57,7 @@ const updateNotify = async (userId: string, notifyBefore: number) => {
 };
 
 export default {
+  createUser,
   getUserById,
   deleteUser,
   addProduct,

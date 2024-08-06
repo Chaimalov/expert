@@ -7,10 +7,8 @@ import userController from './controllers/userController';
 import productsController from './controllers/productsController';
 import { errorHandler } from './middleware/errorHandler';
 
-import dataCollectService from './services/dataCollectService';
-import alertService from './services/alertService';
 import { productsSnapshot } from './services/socketService';
-
+import { checkAndNotifyExpiry } from './services/alertService';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -43,7 +41,4 @@ app.use(errorHandler);
 
 server.listen(PORT, () => console.log('listening on PORT ' + PORT));
 
-setInterval(() => {
-  dataCollectService.updateProductsExpiryDays();
-  alertService.sendEmailToExpired();
-},  60 * 1000);
+checkAndNotifyExpiry();

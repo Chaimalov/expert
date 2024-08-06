@@ -40,7 +40,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     close();
     if (!icon) return;
 
-    api.execute(api.user.updateItem(user.uid, product.id, "emoji", icon));
+    api.execute(api.user.updateItem(user.email, product.id, "emoji", icon));
   };
 
   const editEmoji = () => {
@@ -63,7 +63,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   };
 
   const updateDays = (days: number) => {
-    api.execute(api.user.updateItem(user.uid, product.id, "expiryDays", days));
+    api.execute(api.user.updateItem(user.email, product.id, "expiryDays", days));
     close();
   };
 
@@ -88,13 +88,13 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
       text: isInList ? "remove item" : "add item",
       action: isInList
         ? () => {
-            api.execute(api.user.removeItem(user.uid, product.id));
+            api.execute(api.user.removeItem(user.email, product.id));
             close();
           }
         : () => {
             api.execute(
               api.user.addItem(
-                user.uid,
+                user.email,
                 product.id,
                 product.expiryDays,
                 product.emoji

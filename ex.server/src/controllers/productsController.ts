@@ -2,10 +2,10 @@ import { isCategory } from '@expert/common';
 import express from 'express';
 import productsService from '../services/productsService';
 
-const route = express.Router();
-export default route;
+const router = express.Router();
+export default router;
 
-route.post('/', async (req, res, errorHandler) => {
+router.post('/', async (req, res, errorHandler) => {
   try {
     await productsService.createProduct(req.body.product);
     res.send(req.body.product.name + ' was created');
@@ -14,7 +14,7 @@ route.post('/', async (req, res, errorHandler) => {
   }
 });
 
-route.post('/:productId', async (req, res, errorHandler) => {
+router.post('/:productId', async (req, res, errorHandler) => {
   try {
     await productsService.updateProductsNameVariations(
       req.params.productId,
@@ -26,7 +26,7 @@ route.post('/:productId', async (req, res, errorHandler) => {
   }
 });
 
-route.get('/:productName', async (req, res, errorHandler) => {
+router.get('/:productName', async (req, res, errorHandler) => {
   try {
     res.send(await productsService.getProductByName(req.params.productName));
   } catch (error) {
@@ -34,7 +34,7 @@ route.get('/:productName', async (req, res, errorHandler) => {
   }
 });
 
-route.get('/:category', async (req, res, errorHandler) => {
+router.get('/:category', async (req, res, errorHandler) => {
   try {
     if (!isCategory(req.params.category)) throw new Error('invalid category');
     res.send(await productsService.getProductByCategory(req.params.category));
@@ -43,7 +43,7 @@ route.get('/:category', async (req, res, errorHandler) => {
   }
 });
 
-route.delete('/:productId', async (req, res, errorHandler) => {
+router.delete('/:productId', async (req, res, errorHandler) => {
   try {
     await productsService.deleteProductById(req.params.productId);
     res.send('product was deleted successfully');
@@ -52,7 +52,7 @@ route.delete('/:productId', async (req, res, errorHandler) => {
   }
 });
 
-route.patch('/:productId', async (req, res, errorHandler) => {
+router.patch('/:productId', async (req, res, errorHandler) => {
   try {
     res.send(
       await productsService.updateProductsEmoji(
@@ -65,7 +65,7 @@ route.patch('/:productId', async (req, res, errorHandler) => {
   }
 });
 
-route.get('/', async (req, res, errorHandler) => {
+router.get('/', async (req, res, errorHandler) => {
   try {
     res.send(await productsService.getProducts());
   } catch (error) {
@@ -73,7 +73,7 @@ route.get('/', async (req, res, errorHandler) => {
   }
 });
 
-route.get('/user/:userId', async (req, res, errorHandler) => {
+router.get('/user/:userId', async (req, res, errorHandler) => {
   try {
     res.send(await productsService.getProductsByUser(req.params.userId));
   } catch (error) {

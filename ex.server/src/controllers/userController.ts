@@ -1,10 +1,10 @@
 import express from 'express';
 import userService from '../services/userService';
 
-const route = express.Router();
-export default route;
+const router = express.Router();
+export default router;
 
-route.get('/:userId', async (req, res, errorHandler) => {
+router.get('/:userId', async (req, res, errorHandler) => {
   try {
     res.send(await userService.getUserById(req.params.userId));
   } catch (error) {
@@ -12,7 +12,7 @@ route.get('/:userId', async (req, res, errorHandler) => {
   }
 });
 
-route.patch('/products', async (req, res, errorHandler) => {
+router.patch('/products', async (req, res, errorHandler) => {
   try {
     await userService.editProduct(req.body.userId, req.body.product);
     res.send('changes were saved');
@@ -21,7 +21,7 @@ route.patch('/products', async (req, res, errorHandler) => {
   }
 });
 
-route.patch('/:userId', async (req, res, errorHandler) => {
+router.patch('/:userId', async (req, res, errorHandler) => {
   try {
     await userService.updateNotify(req.params.userId, req.body.notifyBefore);
     res.send('updated preference');
@@ -30,7 +30,7 @@ route.patch('/:userId', async (req, res, errorHandler) => {
   }
 });
 
-route.delete('/products', async (req, res, errorHandler) => {
+router.delete('/products', async (req, res, errorHandler) => {
   try {
     await userService.removeProduct(req.body.userId, req.body.productId);
     res.send('product removed from your list');
@@ -39,7 +39,7 @@ route.delete('/products', async (req, res, errorHandler) => {
   }
 });
 
-route.delete('/:userId', async (req, res, errorHandler) => {
+router.delete('/:userId', async (req, res, errorHandler) => {
   try {
     await userService.deleteUser(req.params.userId);
     res.send('deleted');
@@ -48,7 +48,16 @@ route.delete('/:userId', async (req, res, errorHandler) => {
   }
 });
 
-route.post('/products', async (req, res, errorHandler) => {
+router.post('/createUser', async (req, res, errorHandler) => {
+  try {
+    const user = req.body.user;
+    const result = await userService.createUser(user);
+    res.status(201).json({ message: 'User created successfully', result });
+  } catch (error) {
+    errorHandler(error);
+  }
+});
+router.post('/products', async (req, res, errorHandler) => {
   try {
     await userService.addProduct(req.body.userId, req.body.product);
     res.send('product was added successfully');
