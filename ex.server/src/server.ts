@@ -35,9 +35,9 @@ app.use((req: CustomRequest, res: Response, next: NextFunction) => {
 
 app.use(productsSnapshot);
 
+app.use(errorHandler);
 app.use('/products', productsController);
 app.use('/users', userController);
-app.use(errorHandler);
 
 server.listen(PORT, () => console.log('listening on PORT ' + PORT));
 
