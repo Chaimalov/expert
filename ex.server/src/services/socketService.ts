@@ -12,6 +12,9 @@ export const productsSnapshot = (
   const userId = req.body.userId;
   const io = req.io;
 
+  console.log('products snapshot');
+  console.log(userId)
+  console.log(req.body)
   if (userId) {
     db.products.onSnapshot(() => {
       emitUpdatedProducts(io, userId);

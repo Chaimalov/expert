@@ -19,11 +19,10 @@ const createProduct = async ({
     throw new ApiError(`${name} already exists.`, 405);
   }
 
-  const iconsList = await emojisService.getEmoji(name, category);
-  let product = {};
-
   try {
-    product = {
+    const iconsList = await emojisService.getEmoji(name, category);
+
+    const product = {
       name: name,
       category: category,
       emojiList: iconsList,
@@ -34,6 +33,8 @@ const createProduct = async ({
       refrigerator: refrigerator,
       nameVariation: [],
     };
+
+    return await productsRepository.createProduct(product);
   } catch (error) {
     console.log(name, category, refrigerator);
     throw new ApiError(
@@ -41,8 +42,6 @@ const createProduct = async ({
       400
     );
   }
-
-  return await productsRepository.createProduct(product);
 };
 
 const getProductByName = async (productName: string) => {

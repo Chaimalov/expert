@@ -6,25 +6,21 @@ import { Product } from '../types/product';
 //   return await db.users.doc(userId).set({ products: {}, notifyBefore: 0 });
 // };
 
-const createUser = async (user) => {
+const createUser = async (userId: string) => {
   try {
-    const { name, email } = user;
-
-    const userDocRef = db.users.doc(email);
+    const userDocRef = db.users.doc(userId);
     const userDoc = await userDocRef.get();
 
-    console.log(user)
     if (userDoc.exists) {
-      return 'User already exists';
+      throw new Error('User already exists');
     }
-    
-    const result = await userDocRef.create({
-      name,
+
+    await userDocRef.create({
       products: {},
       notifyBefore: 0,
     });
-    console.log('result: ', result);
-    return result;
+    console.log('result: ', userDoc);
+    return userDoc;
   } catch (error) {
     console.error('Error in createUser: ', error);
     throw new Error(error.message);
@@ -32,13 +28,11 @@ const createUser = async (user) => {
 };
 
 const getUser = async (id: string) => {
-  return  (await db.users.doc(id).get()).data();
+  return (await db.users.doc(id).get()).data();
 };
 
 const getAllUsers = async () => {
-  return (
-    await db.users.get()
-  ).docs.map((doc) => {
+  return (await db.users.get()).docs.map((doc) => {
     return { id: doc.id, ...doc.data() };
   });
 };

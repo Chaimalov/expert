@@ -12,13 +12,13 @@ const getEmoji = async (name: string, category: Category) => {
 
     if (!foundEmoji.data.length) throw new ApiError('emoji not found', 404);
 
-    return await foundEmoji.data;
+    return foundEmoji.data;
   } catch (error) {
-    console.error(error);
+    console.warn(error);
     try {
       const foundEmojiCategory = await route.get(category);
 
-      return await foundEmojiCategory.data;
+      return foundEmojiCategory.data;
     } catch (error) {
       console.error(error);
       throw new ApiError("couldn't retrieve emojis from service", 500);

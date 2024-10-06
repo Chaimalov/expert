@@ -54,12 +54,11 @@ router.delete('/:productId', async (req, res, errorHandler) => {
 
 router.patch('/:productId', async (req, res, errorHandler) => {
   try {
-    res.send(
-      await productsService.updateProductsEmoji(
-        req.params.productId,
-        req.body.emoji
-      )
+    await productsService.updateProductsEmoji(
+      req.params.productId,
+      req.body.product.value
     );
+    res.send('emoji was updated');
   } catch (error) {
     errorHandler(error);
   }

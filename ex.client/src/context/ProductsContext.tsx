@@ -4,16 +4,16 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import io, { Socket } from "socket.io-client";
+} from 'react';
+import io, { Socket } from 'socket.io-client';
 import {
   ClientToServerEvents,
   Product,
   ServerToClientEvents,
 } from '@expert/common';
-import api from "../api/api";
-import { addDaysToDate, sortBy } from "../utils";
-import { useAuth } from "./AuthContext";
+import api from '../api/api';
+import { addDaysToDate, sortBy } from '../utils';
+import { useAuth } from './AuthContext';
 
 const ProductsContext = createContext<{
   products: Product[];
@@ -33,14 +33,17 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 
   useEffect(() => {
     getProducts();
-    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
+    const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+      'http://localhost:8080'
+    );
 
-    socket.on("products", (products) => {
-      setProducts(sortBy(products, "name"));
+    socket.on('products', (products) => {
+      console.log('product is here');
+      setProducts(sortBy(products, 'name'));
     });
 
     return () => {
-      socket.off("products");
+      socket.off('products');
       socket.disconnect();
     };
   }, []);
@@ -49,7 +52,7 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     if (!user?.email) return;
 
     const list = await api.products.getProducts(user.email);
-    setProducts(sortBy(list, "name"));
+    setProducts(sortBy(list, 'name'));
   };
 
   const userProducts = products?.filter((product) => product.createdAt);

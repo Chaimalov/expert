@@ -87,7 +87,7 @@ const user = {
     key: K,
     value: Product[K]
   ) => {
-    return axios.patch('/users/products', {
+    return axios.patch('/products/' + productId, {
       userId: userId,
       product: { id: productId, key, value },
     });

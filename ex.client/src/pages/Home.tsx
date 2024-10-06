@@ -1,11 +1,11 @@
-import { createRef, useEffect, useState } from "react";
-import { BiSearchAlt2 } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { Button, CategoriesList, Input, ProductsList } from "../components";
-import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
-import { Categories } from "../utils";
-import { Loading } from "./Loading";
+import { createRef, useEffect, useState } from 'react';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { Button, CategoriesList, Input, ProductsList } from '../components';
+import { useAuth } from '../context/AuthContext';
+import { useProducts } from '../context/ProductsContext';
+import { Categories } from '../utils';
+import { Loading } from './Loading';
 import { Product, Category } from '@expert/common';
 
 export const Home: React.FC = () => {
@@ -41,7 +41,7 @@ export const Home: React.FC = () => {
 
   const filterByCategory = (category: Category | null) => {
     const filteredProducts = !category
-      ? []
+      ? products
       : products.filter((product) => product.category.includes(category));
 
     setFilteredList(filteredProducts);
@@ -76,7 +76,7 @@ export const Home: React.FC = () => {
         </Button>
       </form>
       <CategoriesList
-        categories={[...Categories, { name: null, icon: "🗑️" }]}
+        categories={[...Categories, { name: null, icon: '🗑️' }]}
         onClick={filterByCategory}
         group="category"
         design="compact"

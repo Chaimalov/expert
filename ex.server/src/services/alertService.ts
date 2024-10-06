@@ -61,8 +61,6 @@ const sendEmailToExpired = async () => {
   }
 };
 
-const dayInMS = 86400000;
-
 export const checkAndNotifyExpiry = async () => {
   try {
     await dataCollectService.updateProductsExpiryDays();
@@ -71,7 +69,5 @@ export const checkAndNotifyExpiry = async () => {
     console.error('Error during expiration check and notification:', error);
   }
 };
-setInterval(checkAndNotifyExpiry, dayInMS / 24 / 60);
-checkAndNotifyExpiry();
 
 

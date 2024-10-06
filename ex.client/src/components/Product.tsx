@@ -108,7 +108,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     {
       text: "delete",
       action: () => {
-        const transaction = api.products.deleteItem(product, user.id);
+        const transaction = api.products.deleteItem(product, user.uid);
 
         if (transaction) {
           api.execute(transaction);

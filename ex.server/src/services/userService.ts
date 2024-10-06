@@ -3,22 +3,21 @@ import { Product } from '../types/product';
 import { isAdmin } from './admins';
 
 const getUserById = async (id: string) => {
-  const user = await usersRepository.getUser(id);
+  const user =
+    (await usersRepository.getUser(id)) ??
+    (await usersRepository.createUser(id));
 
   if (!user) {
-    // user = await usersRepository.createUser(id);
-    return
+    throw new Error('user not found');
   }
-
-  user.isAdmin = isAdmin(id);
-  return user;
+  
+  return { ...user.data, isAdmin: isAdmin(id) };
 };
-
-const createUser = async (user) => {
+const createUser = async (userId: string) => {
   try {
-    return await usersRepository.createUser(user);
+    return await usersRepository.createUser(userId);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 

@@ -36,6 +36,7 @@ const deleteProduct = async (productId: string) => {
 };
 
 const updateProductEmoji = async (productId: string, emoji: unknown) => {
+  console.log(emoji);
   return await db.products.doc(productId).update({ emoji });
 };
 

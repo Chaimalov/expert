@@ -13,6 +13,7 @@
       },
       "configurations": {
         "development": {
+          "watch": true,
           "buildTarget": "server:build:development"
         },
         "production": {

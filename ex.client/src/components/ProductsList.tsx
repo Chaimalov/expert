@@ -1,6 +1,6 @@
-import React from "react";
-import { Transition, Variants, motion } from "framer-motion";
-import { ProductCard } from "./Product";
+import React from 'react';
+import { Transition, Variants, motion } from 'framer-motion';
+import { ProductCard } from './Product';
 import { Product } from '@expert/common';
 
 const transition = {

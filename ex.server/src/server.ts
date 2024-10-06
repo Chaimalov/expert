@@ -8,7 +8,7 @@ import productsController from './controllers/productsController';
 import { errorHandler } from './middleware/errorHandler';
 
 import { productsSnapshot } from './services/socketService';
-import { checkAndNotifyExpiry } from './services/alertService';
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -41,4 +41,3 @@ app.use('/users', userController);
 
 server.listen(PORT, () => console.log('listening on PORT ' + PORT));
 
-checkAndNotifyExpiry();
