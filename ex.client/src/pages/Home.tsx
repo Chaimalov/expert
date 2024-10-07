@@ -23,10 +23,10 @@ export const Home: React.FC = () => {
     setFilteredList(products);
   }, [products, user]);
 
-  const filterList = () => {
-    const isNameMatched = (name: string) =>
-      name.includes(searchRef.current!.value);
+  const isNameMatched = (name: string) =>
+    name.includes(searchRef.current!.value);
 
+  const filterList = () => {
     const filteredProducts = products.filter(
       (item) =>
         isNameMatched(item.name) || item.nameVariation.find(isNameMatched)
@@ -48,6 +48,7 @@ export const Home: React.FC = () => {
   };
 
   if (!products) return <Loading />;
+
   return (
     <div className="grid justify-center gap-4">
       <header className="grid text-center p-8">
