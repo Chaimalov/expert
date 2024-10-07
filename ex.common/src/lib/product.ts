@@ -5,8 +5,7 @@ export type Product = ProductDetails & ProductMetadata;
 
 export type ProductMetadata = {
   id: string;
-  createdAt: Date;
-  supportRate: number;
+  createdAt?: Date;
 };
 
 export type ProductDetails = {

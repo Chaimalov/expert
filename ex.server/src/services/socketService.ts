@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import productsService from './productsService';
+import * as productsService from './productsService';
+import * as userService from './usersService';
 import { db } from '../firebase';
 import { Server } from 'socket.io';
 import { Server as SocketIOServer } from 'socket.io';
@@ -13,12 +14,12 @@ export const productsSnapshot = (
   const io = req.io;
 
   console.log('products snapshot');
-  console.log(userId)
-  console.log(req.body)
+  console.log("userId in socket: ",userId)
+  console.log("req.body in socket: [",req.body,"]")
   if (userId) {
     db.products.onSnapshot(() => {
       emitUpdatedProducts(io, userId);
-      console.log('product emitted');
+      console.log(`product emitted`);
     });
     db.users.onSnapshot(() => {
       emitUpdatedProducts(io, userId);
@@ -28,7 +29,12 @@ export const productsSnapshot = (
   next();
 };
 
-const emitUpdatedProducts = async (io: Server, userId: string) => {
+export const emitUpdatedProducts = async (io: Server, userId: string) => {
   const data = await productsService.getProductsByUser(userId);
   io.emit('products', data);
+};
+
+export const emitUpdatedUser = async (io: Server, userId: string) => {
+  const data = await userService.getUserById(userId);
+  io.emit('users', data);
 };

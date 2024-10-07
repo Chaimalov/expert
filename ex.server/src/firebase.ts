@@ -1,3 +1,4 @@
+import { Product, ProductDetails, User } from '@expert/common';
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
 import { readFileSync } from 'fs';
@@ -14,7 +15,15 @@ const firebase = admin.initializeApp({
 const firestore = getFirestore(firebase);
 
 export const db = {
-  products:   firestore.collection('products'),
-  users:   firestore.collection('users'),
+  products: firestore.collection('products').withConverter({
+    toFirestore: (data: ProductDetails) => data,
+    fromFirestore: (snap: FirebaseFirestore.QueryDocumentSnapshot) =>
+      snap.data() as ProductDetails,
+  }),
+  users: firestore.collection('users').withConverter({
+    toFirestore: (data: Omit<User, 'id'>) => data,
+    fromFirestore: (snap: FirebaseFirestore.QueryDocumentSnapshot) =>
+      snap.data() as User,
+  }),
   auth: admin.app().auth(),
 };

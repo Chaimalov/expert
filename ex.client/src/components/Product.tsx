@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { IoEllipsisHorizontal } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import api from "../api/api";
-import { Transitions, useAuth } from "../context";
+import { useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
+import { IoEllipsisHorizontal } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
+import api from '../api/api';
+import { Transitions, useAuth } from '../context';
 import {
   colorFromEmoji,
   displayDays,
   isInUsersList,
   useClickOutside,
-} from "../utils";
-import { Option, Options } from "./index";
-import { Product } from "@expert/common";
+} from '../utils';
+import { Option, Options } from './index';
+import { Product } from '@expert/common';
 
 type ProductProps = {
   mini?: boolean;
@@ -40,7 +40,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     close();
     if (!icon) return;
 
-    api.execute(api.user.updateItem(user.email, product.id, "emoji", icon));
+    api.execute(api.user.updateItem(user.email, {id: product.id, emoji: icon}));
   };
 
   const editEmoji = () => {
@@ -51,7 +51,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
         text: emoji.character,
         key: emoji.slug,
         action: updateEmoji,
-        type: "",
+        type: '',
         send: emoji.character,
       }))
     );
@@ -63,7 +63,10 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   };
 
   const updateDays = (days: number) => {
-    api.execute(api.user.updateItem(user.email, product.id, "expiryDays", days));
+    console.log('user.email', user.email, 'days:', days);
+    api.execute(
+      api.user.updateItem(user.email, {id: product.id, expiryDays: days})
+    );
     close();
   };
 
@@ -71,21 +74,21 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     {
       text: <AiOutlineClose className="ion" />,
       action: () => setOpen(false),
-      type: "ion",
+      type: 'ion',
       key: 4,
     },
     {
-      text: "edit emoji",
+      text: 'edit emoji',
       action: editEmoji,
       key: 1,
     },
     {
-      text: "edit date",
+      text: 'edit date',
       action: editDate,
       key: 2,
     },
     {
-      text: isInList ? "remove item" : "add item",
+      text: isInList ? 'remove item' : 'add item',
       action: isInList
         ? () => {
             api.execute(api.user.removeItem(user.email, product.id));
@@ -95,18 +98,16 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
             api.execute(
               api.user.addItem(
                 user.email,
-                product.id,
-                product.expiryDays,
-                product.emoji
+                product
               )
             );
             close();
           },
       key: 5,
-      type: isInList ? "delete" : "add",
+      type: isInList ? 'delete' : 'add',
     },
     {
-      text: "delete",
+      text: 'delete',
       action: () => {
         const transaction = api.products.deleteItem(product, user.uid);
 
@@ -115,7 +116,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
         }
       },
       key: 3,
-      type: "delete",
+      type: 'delete',
     },
   ];
 
@@ -126,19 +127,19 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
       className="itemContainer"
       ref={domRef}
       style={{
-        "--hue": product.emoji && colorFromEmoji(product.emoji)[0].toString(),
+        '--hue': product.emoji && colorFromEmoji(product.emoji)[0].toString(),
       }}
     >
       {!mini && (
         <>
           <Options type="emoji" open={OpenEmoji} list={menuOptions} />
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              updateDays(expiryDays);
-            }}
-          >
-            <Options open={OpenDate}>
+          {OpenDate && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateDays(expiryDays);
+              }}
+            >
               <label className="date" htmlFor="days">
                 <h4>expiry days</h4>
               </label>
@@ -151,15 +152,15 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
                 onChange={(e) => setExpiryDays(() => Number(e.target.value))}
               />
               <button type="submit">save</button>
-            </Options>
-          </form>
+            </form>
+          )}
           <Options
             open={open}
-            list={user.isAdmin ? productOptions : productOptions.splice(0, 4)}
+            list={user.isAdmin ? productOptions : productOptions.slice(0, 4)}
           />
         </>
       )}
-      <div className={`item ${mini ? "mini" : ""}`}>
+      <div className={`item ${mini ? 'mini' : ''}`}>
         <div className="top">
           {product.emoji && (
             <Transitions on={product.emoji}>
@@ -184,8 +185,8 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
             <h4>{product.category} </h4>
             <Transitions on={product.expiryDays}>
               <h5 className="space-between">
-                {displayDays(product.expiryDays)}{" "}
-                <span>{product.refrigerator && "❄️"}</span>
+                {displayDays(product.expiryDays)}{' '}
+                <span>{product.refrigerator && '❄️'}</span>
               </h5>
             </Transitions>
           </>

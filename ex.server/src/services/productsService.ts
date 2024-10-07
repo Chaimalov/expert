@@ -1,12 +1,12 @@
 import { ApiError } from '../middleware/errorHandler';
-import productsRepository from '../repositories/productsRepository';
-import userService from './userService';
+import * as productsRepository from '../repositories/productsRepository';
+import * as userService from './usersService';
 import emojisService from './emojisService';
-import { Product } from '../types/product';
+import { Product, ProductDetails } from '@expert/common';
 import { Category, categoryDays } from '@expert/common';
 import { addDaysToDate } from '../utils';
 
-const createProduct = async ({
+export  const createProduct = async ({
   name,
   category,
   refrigerator,
@@ -22,21 +22,19 @@ const createProduct = async ({
   try {
     const iconsList = await emojisService.getEmoji(name, category);
 
-    const product = {
+    const product: ProductDetails = {
       name: name,
       category: category,
       emojiList: iconsList,
       expiryDays: categoryDays[category].expiryDate,
       emoji: iconsList[0].character,
-      supportRate: 1,
-      createdBy: '',
       refrigerator: refrigerator,
       nameVariation: [],
+      expiryDate: addDaysToDate(new Date(), categoryDays[category].expiryDate),
     };
 
     return await productsRepository.createProduct(product);
   } catch (error) {
-    console.log(name, category, refrigerator);
     throw new ApiError(
       'the product object failed to assemble. some information is missing.',
       400
@@ -44,29 +42,32 @@ const createProduct = async ({
   }
 };
 
-const getProductByName = async (productName: string) => {
+export const getProductByName = async (productName: string) => {
   if (!productName) throw new ApiError('query was empty', 400);
   return await productsRepository.getProductByName(productName);
 };
 
-const getProductByCategory = async (category: Category) => {
+export const getProductByCategory = async (category: Category) => {
   if (!category) throw new ApiError('query was empty', 400);
   return await productsRepository.getProductByCategory(category);
 };
 
-const deleteProductById = async (productId: string) => {
+export const deleteProductById = async (productId: string) => {
   return await productsRepository.deleteProduct(productId);
 };
 
-const updateProductsEmoji = async (productId: string, emoji: unknown) => {
-  return await productsRepository.updateProductEmoji(productId, emoji);
+export const updateProduct = async (
+  productId: string,
+  product: Partial<ProductDetails>
+) => {
+  return await productsRepository.updateProduct(productId, product);
 };
 
-const updateProductsExpiryDays = async (productId: string, days: number) => {
+export const updateProductsExpiryDays = async (productId: string, days: number) => {
   return await productsRepository.updateProductsExpiryDays(productId, days);
 };
 
-const updateProductsNameVariations = async (
+export const updateProductsNameVariations = async (
   productId: string,
   nameVariations: string[]
 ) => {
@@ -79,11 +80,11 @@ const updateProductsNameVariations = async (
   );
 };
 
-const getProducts = async () => {
+export const getProducts = async () => {
   return await productsRepository.getProducts();
 };
 
-const getProductsByUser = async (userId: string) => {
+export const getProductsByUser = async (userId: string) => {
   const products = await getProducts();
   const usersProducts = (await userService.getUserById(userId)).products;
 
@@ -107,15 +108,3 @@ const getProductsByUser = async (userId: string) => {
   return productsByUser;
 };
 
-export default {
-  createProduct,
-  getProductByCategory,
-  getProductByName,
-  getProducts,
-  updateProductsEmoji,
-  updateProductsExpiryDays,
-  updateProductsNameVariations,
-  deleteProductById,
-  getProductsByUser,
-  addDaysToDate,
-};

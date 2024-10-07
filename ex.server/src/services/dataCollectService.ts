@@ -1,7 +1,7 @@
 import dataCollectRepository from '../repositories/dataCollectRepository';
-import productsService from './productsService';
-import { Product } from '../types/product';
+import * as productsService from './productsService';
 import { avgArrayOfNumbers } from '../utils';
+import { Product } from '@expert/common';
 
 /**
  * Update the expiry days of products by calculating the average expiry days
@@ -15,7 +15,7 @@ const updateProductsExpiryDays = async () => {
       const expiryDays = await collectExpiryDaysOnProduct(product.id);
 
       if (expiryDays && expiryDays.length > 0) {
-        expiryDays.push(parseInt(product.expiryDays));
+        expiryDays.push(product.expiryDays);
         const avgDays = avgArrayOfNumbers(expiryDays);
         await productsService.updateProductsExpiryDays(product.id, avgDays);
       } else {
@@ -45,7 +45,7 @@ const collectExpiryDaysOnProduct = async (
         if (doc.products && typeof doc.products === 'object') {
           return Object.values(doc.products)
             .filter((product): product is Product => product !== undefined)
-            .map((product) => parseInt(product.expiryDays));
+            .map((product) => product.expiryDays);
         }
       })
       .flat();

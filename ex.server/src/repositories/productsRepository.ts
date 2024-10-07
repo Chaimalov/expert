@@ -1,14 +1,12 @@
 import { FieldValue } from 'firebase-admin/firestore';
 import { db } from '../firebase';
-import { Product } from '../types/product';
+import { Product, ProductDetails } from '@expert/common';
 
-const createProduct = async (
-  product: FirebaseFirestore.WithFieldValue<FirebaseFirestore.DocumentData>
-) => {
+export const createProduct = async (product: ProductDetails) => {
   return await db.products.add(product);
 };
 
-const getProductByName = async (productName: string) => {
+export const getProductByName = async (productName: string) => {
   return (await db.products.where('name', '==', productName).get()).docs.map(
     (doc) => ({
       ...doc.data(),
@@ -17,7 +15,7 @@ const getProductByName = async (productName: string) => {
   );
 };
 
-const getProductByCategory = async (category: string) => {
+export const getProductByCategory = async (category: string) => {
   return (await db.products.where('category', '==', category).get()).docs.map(
     (doc) => ({
       ...doc.data(),
@@ -26,28 +24,31 @@ const getProductByCategory = async (category: string) => {
   );
 };
 
-const isProductExists = async (name: string) => {
+export const isProductExists = async (name: string) => {
   return (await db.products.select('name').where('name', '==', name).get()).docs
     .length;
 };
 
-const deleteProduct = async (productId: string) => {
+export const deleteProduct = async (productId: string) => {
   return await db.products.doc(productId).delete();
 };
 
-const updateProductEmoji = async (productId: string, emoji: unknown) => {
-  console.log(emoji);
-  return await db.products.doc(productId).update({ emoji });
+export const updateProduct = async (
+  productId: string,
+  product: Partial<ProductDetails>
+) => {
+  console.log("updateProduct: ", product)
+  return await db.products.doc(productId).update(product);
 };
 
-const updateProductsExpiryDays = async (
+export const updateProductsExpiryDays = async (
   productId: string,
   expiryDays: number
 ) => {
   return await db.products.doc(productId).update({ expiryDays });
 };
 
-const updateProductsNameVariations = async (
+export const updateProductsNameVariations = async (
   productId: string,
   nameVariations: string[]
 ) => {
@@ -56,21 +57,11 @@ const updateProductsNameVariations = async (
   });
 };
 
-const getProducts = async (): Promise<Product[]> => {
-  return (await db.products.get()).docs.map((doc) => ({
+export const getProducts = async (): Promise<Product[]> => {
+  const products = (await db.products.get()).docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
   }));
-};
 
-export default {
-  createProduct,
-  getProductByName,
-  getProductByCategory,
-  deleteProduct,
-  updateProductEmoji,
-  getProducts,
-  updateProductsExpiryDays,
-  updateProductsNameVariations,
-  isProductExists,
+  return products;
 };

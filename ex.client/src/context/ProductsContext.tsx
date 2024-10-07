@@ -30,15 +30,17 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const { user } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
+  const [userProducts, setUserProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    getProducts();
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-      'http://localhost:8080'
+      'http://localhost:8080',
+      {
+        auth: { userId: user?.email },
+      }
     );
 
     socket.on('products', (products) => {
-      console.log('product is here');
       setProducts(sortBy(products, 'name'));
     });
 
@@ -48,14 +50,10 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     };
   }, []);
 
-  const getProducts = async () => {
-    if (!user?.email) return;
-
-    const list = await api.products.getProducts(user.email);
-    setProducts(sortBy(list, 'name'));
-  };
-
-  const userProducts = products?.filter((product) => product.createdAt);
+  useEffect(() => {
+    setUserProducts(products.filter((product) => product.createdAt));
+    console.log('products: ', products);
+  }, [products]);
 
   const expireAlertCount = useMemo(() => {
     if (!userProducts) return 0;

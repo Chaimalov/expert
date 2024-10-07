@@ -8,7 +8,6 @@ axios.defaults.baseURL = SERVER_URL;
 
 const execute = <T extends { data: any }>(request: Promise<T>) => {
   const toastId = toast.loading('working on it...');
-  console.log("request:" ,request)
   request
     .then(({ data }) => {
       notify(data, 'success');
@@ -66,13 +65,12 @@ const user = {
 
   addItem: (
     userId: string,
-    itemId: string,
-    expiryDays: number,
-    emoji: string
+   product: Product
   ) => {
+    console.log("addItem: ", userId, product)
     return axios.post('/users/products', {
       userId: userId,
-      product: { id: itemId, expiryDays, emoji },
+      product,
     });
   },
   removeItem: (userId: string, productId: string) => {
@@ -81,15 +79,13 @@ const user = {
     });
   },
 
-  updateItem: <K extends keyof Product>(
+  updateItem: (
     userId: string,
-    productId: string,
-    key: K,
-    value: Product[K]
+    {id, ...product}: Partial<Pick<Product, 'emoji' | 'expiryDays'>> & Pick<Product, 'id'>
   ) => {
-    return axios.patch('/products/' + productId, {
-      userId: userId,
-      product: { id: productId, key, value },
+    return axios.patch('users/products/' + id, {
+      userId,
+      product,
     });
   },
 

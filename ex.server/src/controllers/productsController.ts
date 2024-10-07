@@ -1,6 +1,6 @@
 import { isCategory } from '@expert/common';
 import express from 'express';
-import productsService from '../services/productsService';
+import * as productsService from '../services/productsService';
 
 const router = express.Router();
 export default router;
@@ -54,11 +54,8 @@ router.delete('/:productId', async (req, res, errorHandler) => {
 
 router.patch('/:productId', async (req, res, errorHandler) => {
   try {
-    await productsService.updateProductsEmoji(
-      req.params.productId,
-      req.body.product.value
-    );
-    res.send('emoji was updated');
+    await productsService.updateProduct(req.params.productId, req.body.product);
+    res.send('product was updated');
   } catch (error) {
     errorHandler(error);
   }

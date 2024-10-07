@@ -1,9 +1,10 @@
-import productsService from './productsService';
-import userService from './userService';
+import * as productsService from './productsService';
+import * as userService from './usersService';
 import { sendEmail } from '../sendMassage';
-import { User } from '../types/user';
+import { User } from '@expert/common';
 import dataCollectService from './dataCollectService';
 import { Product } from '@expert/common';
+import { addDaysToDate } from '../utils';
 
 const getExpiredProducts = async (userId: string, notifyBefore: number) => {
   try {
@@ -11,8 +12,8 @@ const getExpiredProducts = async (userId: string, notifyBefore: number) => {
 
     const expiredProducts = usersProducts.filter((product: Product) => {
       if (!product.expiryDate) return false;
-      console.log(product)
-      const notifyDate = productsService.addDaysToDate(
+      console.log('getExpiredProducts: ', product);
+      const notifyDate = addDaysToDate(
         new Date(),
         -notifyBefore
       );
@@ -28,7 +29,6 @@ const getExpiredProducts = async (userId: string, notifyBefore: number) => {
 };
 
 const sendEmailToUser = async (user: User) => {
-
   if (user.id && user.notifyBefore >= 0) {
     const products = await getExpiredProducts(user.id, user.notifyBefore);
 
@@ -50,11 +50,11 @@ const sendEmailToUser = async (user: User) => {
 const sendEmailToExpired = async () => {
   try {
     const users = await userService.getAllUsers();
-  
+
     if (users) {
-     for (const user of users) {
-         sendEmailToUser(user);
-      };
+      for (const user of users) {
+        sendEmailToUser(user);
+      }
     }
   } catch (error) {
     console.error('Error sending email to expired users:', error);
@@ -69,5 +69,3 @@ export const checkAndNotifyExpiry = async () => {
     console.error('Error during expiration check and notification:', error);
   }
 };
-
-
