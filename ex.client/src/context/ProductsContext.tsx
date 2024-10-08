@@ -17,8 +17,8 @@ import { useAuth } from './AuthContext';
 const TODAY = new Date(new Date().setHours(0, 0, 0, 0));
 
 const ProductsContext = createContext<{
-  products: Product[];
-  userProducts: Product[];
+  products?: Product[];
+  userProducts?: Product[];
   expireAlertCount: number;
 }>({
   products: [],
@@ -30,7 +30,7 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const { user } = useAuth();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[] | undefined>();
 
   useEffect(() => {
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
@@ -50,14 +50,14 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     };
   }, []);
 
-  const userProducts = products.filter((product) => product.createdAt);
-  const expiredProducts = userProducts.filter(
+  const userProducts = products?.filter((product) => product.createdAt);
+  const expiredProducts = userProducts?.filter(
     ({ expiryDate }) =>
       expiryDate &&
       addDaysToDate(new Date(expiryDate), -(user?.notifyBefore ?? 0)) <= TODAY
   );
 
-  const expireAlertCount = expiredProducts.length;
+  const expireAlertCount = expiredProducts?.length ?? 0;
 
   return (
     <ProductsContext.Provider

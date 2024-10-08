@@ -24,13 +24,14 @@ export const Home: React.FC = () => {
   }, [products, user]);
 
   const filterList = () => {
-    const filteredProducts = products.filter(
-      (item) =>
-        item.name.indexOf(searchRef.current!.value) !== -1 ||
-        item.nameVariation.find(
-          (variation) => variation.indexOf(searchRef.current!.value) !== -1
-        )
-    );
+    const filteredProducts =
+      products?.filter(
+        (item) =>
+          item.name.indexOf(searchRef.current!.value) !== -1 ||
+          item.nameVariation.find(
+            (variation) => variation.indexOf(searchRef.current!.value) !== -1
+          )
+      ) ?? [];
 
     setFilteredList(filteredProducts);
   };
@@ -40,9 +41,11 @@ export const Home: React.FC = () => {
   };
 
   const filterByCategory = (category: Category | null) => {
-    const filteredProducts = !category
-      ? products
-      : products.filter((product) => product.category.includes(category));
+    const filteredProducts =
+      (!category
+        ? products
+        : products?.filter((product) => product.category.includes(category))) ??
+      [];
 
     setFilteredList(filteredProducts);
   };
