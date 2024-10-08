@@ -1,12 +1,12 @@
-import React, { Key, ReactNode } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { Key, ReactNode } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const animation = {
   hide: {
-    y: "110%",
+    y: '110%',
   },
   show: {
-    y: "0%",
+    y: '0%',
   },
 };
 
@@ -31,21 +31,21 @@ export const Options: React.FC<React.PropsWithChildren<OptionsProps>> = ({
   children,
 }) => {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {open && (
         <motion.div
           initial="hide"
           animate="show"
           exit="hide"
-          transition={{ duration: 0.2, ease: "anticipate" }}
+          transition={{ duration: 0.2, ease: 'anticipate' }}
           variants={animation}
-          className={"options"}
+          className={'options'}
         >
           {children}
           {list &&
             list.map((option) => (
               <button
-                className={type + " " + option.type}
+                className={type + ' ' + option.type}
                 key={option.key}
                 onClick={() =>
                   option.action ? option.action(option.send) : undefined

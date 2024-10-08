@@ -6,27 +6,26 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-} from "firebase/auth";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import api from "../api/api";
-import { auth } from "../firebase";
-import { generateAvatar } from "../utils";
+} from 'firebase/auth';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import api from '../api/api';
+import { auth } from '../firebase';
+import { generateAvatar } from '../utils';
+import { User as UserPreferences } from '@expert/common';
 
-export type ExpertUser = User & {
-  products: Record<string, unknown>;
-  notifyBefore: number;
-  id: string;
-  isAdmin: boolean;
-};
+export type ExpertUser = User & UserPreferences;
 
 type AuthContextProps = {
-  signInWithGoogle: Function;
-  logOut: Function;
-  signUpWithEmailAndPassword: Function;
-  signIn: Function;
+  signInWithGoogle: () => Promise<void>;
+  logOut: () => void;
+  signUpWithEmailAndPassword: (
+    email: string,
+    password: string
+  ) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   user: ExpertUser;
-  loggedIn: "success" | "error" | "pending";
-  deleteAccount: Function;
+  loggedIn: 'success' | 'error' | 'pending';
+  deleteAccount: () => void;
 };
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -37,22 +36,31 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   const [providerUser, setProviderUser] = useState<User>();
   const [userRecord, setUserRecord] = useState<User>();
   const [logInState, setLogInState] =
-    useState<AuthContextProps["loggedIn"]>("pending");
+    useState<AuthContextProps['loggedIn']>('pending');
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    setLogInState("pending");
-    setProviderUser((await signInWithPopup(auth, provider)).user);
-    setLogInState("success");
+    setLogInState('pending');
+
+    const result = await signInWithPopup(auth, provider);
+    await api.user.createUser(
+      result.user.displayName ?? '',
+      result.user.email ?? ''
+    );
+
+    setProviderUser(result.user);
+    setLogInState('success');
   };
 
   const signIn = async (email: string, password: string) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       setProviderUser(user);
-      setLogInState("success");
+      setLogInState('success');
     } catch (error) {
-      throw new Error("password is incorrect");
+      console.error(error);
+      setLogInState('error');
+      throw new Error('password is incorrect');
     }
   };
 
@@ -69,43 +77,62 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
 
       setProviderUser(user);
     } catch (error) {
-      signIn(email, password);
+      console.error(error);
+      setLogInState('error');
+      throw new Error('SignUp failed');
     }
   };
 
-  function logOut() {
+  const logOut = () => {
     signOut(auth);
-  }
+    setLogInState('pending');
+  };
 
   const deleteAccount = () => {
-    if (!user.uid) return;
+    if (!user?.uid) return;
 
-    api.execute(api.user.deleteAccount(user.uid));
-    logOut();
+    try {
+      api.execute(api.user.deleteAccount(user.email));
+      logOut();
+    } catch (error) {
+      console.error(error);
+      setLogInState('error');
+    }
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) return setLogInState("error");
-      setProviderUser(currentUser);
+      if (currentUser) {
+        setProviderUser(currentUser);
+        setLogInState('success');
+      } else {
+        setLogInState('error');
+      }
     });
 
     return unsubscribe;
-  }, [providerUser]);
+  }, []);
 
   useEffect(() => {
     const getRecord = async (providerUser: Readonly<User>) => {
-      const record = await api.user.getUser(providerUser.uid);
-
-      if (!providerUser.photoURL && user.email) {
-        record.photoURL = generateAvatar(user.email.charAt(0), "white");
+      try {
+        const record = await api.user.getUser(providerUser.email ?? '');
+        if (!providerUser.photoURL && providerUser.email) {
+          record.photoURL = generateAvatar(
+            providerUser.email.charAt(0),
+            'white'
+          );
+        }
+        setUserRecord(record);
+      } catch (error) {
+        console.error(error);
+        setLogInState('error');
       }
-
-      setUserRecord(record);
-      setLogInState("success");
     };
 
-    if (providerUser) getRecord(providerUser);
+    if (providerUser) {
+      getRecord(providerUser);
+    }
   }, [providerUser]);
 
   const user = {
@@ -131,5 +158,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext) as AuthContextProps;
+  return (
+    useContext(AuthContext) ??
+    ((): never => {
+      throw new Error(`Authentication didn't happen yet`);
+    })()
+  );
 };

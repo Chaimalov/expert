@@ -8,7 +8,7 @@ export const Account: React.FC = () => {
   const { user, deleteAccount } = useAuth();
 
   const updatePreference = async (value: string) => {
-    api.execute(api.user.updateNotify(user.uid, Number(value)));
+    api.execute(api.user.updateNotify(user.email, Number(value)));
   };
 
   const deleteAccountAction = () => {

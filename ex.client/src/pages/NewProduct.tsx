@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import api from "../api/api";
-import { Button, CategoriesList, CategoryButton } from "../components";
-import { useAuth } from "../context/AuthContext";
-import { Categories, notify, Status } from "../utils";
-import { Category } from "../../../ex.common";
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../api/api';
+import { Button, CategoriesList, CategoryButton } from '../components';
+import { useAuth } from '../context/AuthContext';
+import { Categories, Kind, notify } from '../utils';
+import { Category } from '@expert/common';
 
 export const NewProduct: React.FC = () => {
   const saveProduct = async () => {
     if (!category || !storage) {
-      notify("category and storage options are required.", Kind.ERROR);
+      notify('category and storage options are required.', Kind.ERROR);
       return;
     }
 
     if (!name) return;
-
+    console.log(user)
     api.execute(
-      api.products.createProduct(name, category, storage === "fridge", user.id)
+      api.products.createProduct(name, category, storage === 'fridge', user.uid)
     );
-    goTo("/");
+    goTo('/');
   };
 
-  const [storage, setStorage] = useState<"fridge" | "pantry">();
+  const [storage, setStorage] = useState<'fridge' | 'pantry'>();
   const [category, setCategory] = useState<Category | null>();
   const { name } = useParams();
   const { user } = useAuth();
@@ -50,19 +50,19 @@ export const NewProduct: React.FC = () => {
         <CategoryButton
           category="fridge"
           icon="❄️"
-          onClick={() => setStorage("fridge")}
+          onClick={() => setStorage('fridge')}
           group="storage"
         />
         <CategoryButton
           category="pantry"
           icon="🧺"
-          onClick={() => setStorage("pantry")}
+          onClick={() => setStorage('pantry')}
           group="storage"
         />
       </div>
       <div className="flex m-auto">
         <Button value="add" type="submit" />
-        <Button type="button" value="cancel" danger onClick={() => goTo("/")} />
+        <Button type="button" value="cancel" danger onClick={() => goTo('/')} />
       </div>
     </form>
   );

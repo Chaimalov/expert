@@ -1,9 +1,9 @@
-import React from "react";
-import { FaBell, FaRegBell } from "react-icons/fa";
-import { Link, To, useMatch, useResolvedPath } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { useProducts } from "../context/ProductsContext";
-import { Button } from "./Button";
+import React from 'react';
+import { FaBell, FaRegBell } from 'react-icons/fa';
+import { Link, To, useMatch, useResolvedPath } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useProducts } from '../context/ProductsContext';
+import { Button } from './Button';
 
 type NavProps = {
   toggleMenu: () => void;
@@ -61,7 +61,7 @@ const NavLink: React.FC<React.PropsWithChildren<NavLinkProps>> = ({
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
   return (
-    <Link className={isActive ? "active" : ""} to={to}>
+    <Link className={isActive ? 'active' : ''} to={to}>
       {children}
     </Link>
   );

@@ -1,0 +1,19 @@
+{
+  "name": "expert-common",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "ex.common/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/expert-common",
+        "main": "ex.common/src/index.ts",
+        "tsConfig": "ex.common/tsconfig.lib.json",
+        "assets": []
+      }
+    }
+  }
+}
