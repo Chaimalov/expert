@@ -4,6 +4,7 @@ import * as userService from './usersService';
 import { db } from '../firebase';
 import { Server } from 'socket.io';
 import { Server as SocketIOServer } from 'socket.io';
+import { ServerToClientEvents } from '@expert/common';
 
 export const productsSnapshot = (
   req: Request & { io: SocketIOServer },
@@ -13,9 +14,6 @@ export const productsSnapshot = (
   const userId = req.body.userId;
   const io = req.io;
 
-  console.log('products snapshot');
-  console.log("userId in socket: ",userId)
-  console.log("req.body in socket: [",req.body,"]")
   if (userId) {
     db.products.onSnapshot(() => {
       emitUpdatedProducts(io, userId);
@@ -29,12 +27,18 @@ export const productsSnapshot = (
   next();
 };
 
-export const emitUpdatedProducts = async (io: Server, userId: string) => {
+export const emitUpdatedProducts = async (
+  io: Server<ServerToClientEvents>,
+  userId: string
+) => {
   const data = await productsService.getProductsByUser(userId);
   io.emit('products', data);
 };
 
-export const emitUpdatedUser = async (io: Server, userId: string) => {
+export const emitUpdatedUser = async (
+  io: Server<ServerToClientEvents>,
+  userId: string
+) => {
   const data = await userService.getUserById(userId);
-  io.emit('users', data);
+  io.emit('user', data);
 };

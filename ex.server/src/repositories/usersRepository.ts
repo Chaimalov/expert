@@ -15,10 +15,9 @@ export const createUser = async (userId: string) => {
       products: {},
       notifyBefore: 0,
     });
-    console.log('result of createUser: ', userDoc);
+
     return userDoc.data();
   } catch (error) {
-    console.error('Error in createUser: ', error);
     throw new Error(error.message);
   }
 };
@@ -60,12 +59,12 @@ export const updateNotify = async (userId: string, notifyBefore: number) => {
 
 export const editProductInUsersList = async (
   userId: string,
-  product: Partial<Product>
+  { id, ...product }: Partial<Product>
 ) => {
   return await db.users.doc(userId).set(
     {
       products: {
-        [product.id]: product,
+        [id]: product,
       },
     },
     { merge: true }
@@ -79,8 +78,4 @@ export const removeProductFromUsersList = async (
   return await db.users.doc(userId).update({
     [`products.${productId}.createdAt`]: FieldValue.delete(),
   });
-};
-
-export const deleteProductFromDB = async (productId: string) => {
-  return await db.products.doc(productId).delete();
 };

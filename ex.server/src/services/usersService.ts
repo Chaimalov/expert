@@ -7,10 +7,10 @@ export const getUserById = async (id: string) => {
     (await usersRepository.getUser(id)) ??
     (await usersRepository.createUser(id));
 
-    if (!user) {
-      throw new Error('user not found');
-    }
-  
+  if (!user) {
+    throw new Error('user not found');
+  }
+
   return { ...user, isAdmin: isAdmin(id) };
 };
 export const createUser = async (userId: string) => {
@@ -42,10 +42,6 @@ export const removeProduct = async (userId: string, productId: string) => {
   return await usersRepository.removeProductFromUsersList(userId, productId);
 };
 
-export const deleteProduct = async (productId: string) => {
-  return await usersRepository.deleteProductFromDB(productId);
-};
-
 export const isProductExists = async (userId: string, productId: string) => {
   const user = await usersRepository.getUser(userId);
   return user?.products ? productId in user.products : false;
@@ -54,4 +50,3 @@ export const isProductExists = async (userId: string, productId: string) => {
 export const updateNotify = async (userId: string, notifyBefore: number) => {
   return await usersRepository.updateNotify(userId, notifyBefore);
 };
-

@@ -37,7 +37,7 @@ export const updateProduct = async (
   productId: string,
   product: Partial<ProductDetails>
 ) => {
-  console.log("updateProduct: ", product)
+  console.log('updateProduct: ', product);
   return await db.products.doc(productId).update(product);
 };
 
@@ -64,4 +64,8 @@ export const getProducts = async (): Promise<Product[]> => {
   }));
 
   return products;
+};
+
+export const deleteProductFromDB = async (productId: string) => {
+  return await db.products.doc(productId).delete();
 };

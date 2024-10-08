@@ -1,3 +1,8 @@
+import {
+  ClientToServerEvents,
+  Product,
+  ServerToClientEvents,
+} from '@expert/common';
 import React, {
   createContext,
   useContext,
@@ -6,14 +11,10 @@ import React, {
   useState,
 } from 'react';
 import io, { Socket } from 'socket.io-client';
-import {
-  ClientToServerEvents,
-  Product,
-  ServerToClientEvents,
-} from '@expert/common';
-import api from '../api/api';
 import { addDaysToDate, sortBy } from '../utils';
 import { useAuth } from './AuthContext';
+
+const TODAY = new Date(new Date().setHours(0, 0, 0, 0));
 
 const ProductsContext = createContext<{
   products: Product[];
@@ -30,7 +31,6 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const { user } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
-  const [userProducts, setUserProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
@@ -50,23 +50,14 @@ export const ProductsProvider: React.FC<React.PropsWithChildren> = ({
     };
   }, []);
 
-  useEffect(() => {
-    setUserProducts(products.filter((product) => product.createdAt));
-    console.log('products: ', products);
-  }, [products]);
+  const userProducts = products.filter((product) => product.createdAt);
+  const expiredProducts = userProducts.filter(
+    ({ expiryDate }) =>
+      expiryDate &&
+      addDaysToDate(new Date(expiryDate), -(user?.notifyBefore ?? 0)) <= TODAY
+  );
 
-  const expireAlertCount = useMemo(() => {
-    if (!userProducts) return 0;
-    return userProducts.filter((product) => {
-      return (
-        product.expiryDate &&
-        addDaysToDate(
-          new Date(product.expiryDate),
-          -(user?.notifyBefore ?? 0)
-        ) <= new Date(new Date().setHours(0, 0, 0, 0))
-      );
-    }).length;
-  }, [userProducts, user]);
+  const expireAlertCount = expiredProducts.length;
 
   return (
     <ProductsContext.Provider

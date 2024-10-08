@@ -11,13 +11,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import api from '../api/api';
 import { auth } from '../firebase';
 import { generateAvatar } from '../utils';
+import { User as UserPreferences } from '@expert/common';
 
-export type ExpertUser = User & {
-  products: Record<string, unknown>;
-  notifyBefore: number;
-  email: string;
-  isAdmin: boolean;
-};
+export type ExpertUser = User & UserPreferences;
 
 type AuthContextProps = {
   signInWithGoogle: () => Promise<void>;
@@ -47,8 +43,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
     setLogInState('pending');
 
     const result = await signInWithPopup(auth, provider);
-    await api.user.createUser(result.user.displayName ?? '',result.user.email ?? '')
- 
+    await api.user.createUser(
+      result.user.displayName ?? '',
+      result.user.email ?? ''
+    );
+
     setProviderUser(result.user);
     setLogInState('success');
   };
@@ -87,7 +86,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   const logOut = () => {
     signOut(auth);
     setLogInState('pending');
-  }
+  };
 
   const deleteAccount = () => {
     if (!user?.uid) return;
@@ -159,5 +158,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext) as AuthContextProps;
+  return (
+    useContext(AuthContext) ??
+    ((): never => {
+      throw new Error(`Authentication didn't happen yet`);
+    })()
+  );
 };
