@@ -13,10 +13,7 @@ const getExpiredProducts = async (userId: string, notifyBefore: number) => {
     const expiredProducts = usersProducts.filter((product: Product) => {
       if (!product.expiryDate) return false;
       console.log('getExpiredProducts: ', product);
-      const notifyDate = addDaysToDate(
-        new Date(),
-        -notifyBefore
-      );
+      const notifyDate = addDaysToDate(new Date(), -notifyBefore);
 
       return product.expiryDate <= notifyDate;
     });
@@ -53,7 +50,7 @@ const sendEmailToExpired = async () => {
 
     if (users) {
       for (const user of users) {
-        sendEmailToUser(user);
+        sendEmailToUser(user as any);
       }
     }
   } catch (error) {

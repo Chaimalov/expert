@@ -1,10 +1,10 @@
 label.date {
-  color: var(--text-color);
+  color: var(--grey);
   text-align: left;
 }
 
 input.date {
-  color: var(--text-color);
+  color: var(--grey);
   text-align: right;
   background: none;
   border: none;
@@ -18,7 +18,7 @@ button:is(.date):hover {
   color: black;
 }
 
-button input[type="number"]::-webkit-inner-spin-button {
+button input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   appearance: none;
 }

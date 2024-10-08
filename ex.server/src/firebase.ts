@@ -21,7 +21,7 @@ export const db = {
       snap.data() as ProductDetails,
   }),
   users: firestore.collection('users').withConverter({
-    toFirestore: (data: Omit<User, 'id'>) => data,
+    toFirestore: (data: Omit<User, keyof Pick<User, 'id' | 'isAdmin'>>) => data,
     fromFirestore: (snap: FirebaseFirestore.QueryDocumentSnapshot) =>
       snap.data() as User,
   }),

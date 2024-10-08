@@ -40,7 +40,9 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
     close();
     if (!icon) return;
 
-    api.execute(api.user.updateItem(user.email, {id: product.id, emoji: icon}));
+    api.execute(
+      api.user.updateItem(user.email, { id: product.id, emoji: icon })
+    );
   };
 
   const editEmoji = () => {
@@ -65,7 +67,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
   const updateDays = (days: number) => {
     console.log('user.email', user.email, 'days:', days);
     api.execute(
-      api.user.updateItem(user.email, {id: product.id, expiryDays: days})
+      api.user.updateItem(user.email, { id: product.id, expiryDays: days })
     );
     close();
   };
@@ -95,12 +97,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
             close();
           }
         : () => {
-            api.execute(
-              api.user.addItem(
-                user.email,
-                product
-              )
-            );
+            api.execute(api.user.addItem(user.email, product));
             close();
           },
       key: 5,
@@ -133,27 +130,29 @@ export const ProductCard: React.FC<ProductProps> = ({ product, mini }) => {
       {!mini && (
         <>
           <Options type="emoji" open={OpenEmoji} list={menuOptions} />
-          {OpenDate && (
+          <Options type="date" open={OpenDate}>
             <form
+              style={{ padding: '1rem' }}
               onSubmit={(e) => {
                 e.preventDefault();
                 updateDays(expiryDays);
               }}
             >
-              <label className="date" htmlFor="days">
+              <label className="date">
                 <h4>expiry days</h4>
+                <input
+                  min="1"
+                  type="number"
+                  className="date"
+                  value={expiryDays}
+                  onChange={(e) => setExpiryDays(() => Number(e.target.value))}
+                />
               </label>
-              <input
-                min="1"
-                id="days"
-                type="number"
-                className="date"
-                value={expiryDays}
-                onChange={(e) => setExpiryDays(() => Number(e.target.value))}
-              />
-              <button type="submit">save</button>
+
+              <button>save</button>
             </form>
-          )}
+          </Options>
+
           <Options
             open={open}
             list={user.isAdmin ? productOptions : productOptions.slice(0, 4)}

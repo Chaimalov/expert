@@ -5,4 +5,5 @@ export type User = {
   notifyBefore?: number;
   email?: string;
   products?: Record<string, Product>;
+  isAdmin: boolean;
 };
