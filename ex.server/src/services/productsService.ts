@@ -6,7 +6,7 @@ import { Product, ProductDetails } from '@expert/common';
 import { Category, categoryDays } from '@expert/common';
 import { addDaysToDate } from '../utils';
 
-export  const createProduct = async ({
+export const createProduct = async ({
   name,
   category,
   refrigerator,
@@ -21,6 +21,7 @@ export  const createProduct = async ({
 
   try {
     const iconsList = await emojisService.getEmoji(name, category);
+    console.log(iconsList);
 
     const product: ProductDetails = {
       name: name,
@@ -30,7 +31,6 @@ export  const createProduct = async ({
       emoji: iconsList[0].character,
       refrigerator: refrigerator,
       nameVariation: [],
-      expiryDate: addDaysToDate(new Date(), categoryDays[category].expiryDate),
     };
 
     return await productsRepository.createProduct(product);
@@ -63,7 +63,10 @@ export const updateProduct = async (
   return await productsRepository.updateProduct(productId, product);
 };
 
-export const updateProductsExpiryDays = async (productId: string, days: number) => {
+export const updateProductsExpiryDays = async (
+  productId: string,
+  days: number
+) => {
   return await productsRepository.updateProductsExpiryDays(productId, days);
 };
 
@@ -89,6 +92,7 @@ export const getProductsByUser = async (userId: string) => {
   const usersProducts = (await userService.getUserById(userId)).products;
 
   const productsByUser: Product[] = [];
+
   products.forEach((product) => {
     if (usersProducts && usersProducts[product.id]) {
       const userProduct = usersProducts[product.id];
@@ -97,7 +101,7 @@ export const getProductsByUser = async (userId: string) => {
         ...userProduct,
         expiryDate: addDaysToDate(
           new Date(new Date(userProduct.createdAt).setHours(0, 0, 0, 0)),
-          userProduct.expiryDays || product.expiryDays
+          userProduct.expiryDays ?? product.expiryDays
         ),
       });
     } else {
@@ -107,4 +111,3 @@ export const getProductsByUser = async (userId: string) => {
 
   return productsByUser;
 };
-

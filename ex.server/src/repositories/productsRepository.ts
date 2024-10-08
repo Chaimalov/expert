@@ -57,7 +57,9 @@ export const updateProductsNameVariations = async (
   });
 };
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (): Promise<
+  Omit<Product, keyof Pick<Product, 'expiryDate'>>[]
+> => {
   const products = (await db.products.get()).docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,

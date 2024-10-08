@@ -1,4 +1,4 @@
-@import url("variables.css");
+@import url('variables.css');
 
 :where(h1, h2, h3, h4, strong, a, button, h5) {
   text-transform: capitalize;
@@ -132,7 +132,7 @@ button:active {
   padding: 0.5em;
 }
 
-.bubble::after {
+.bubble:not([data-count='0'])::after {
   content: attr(data-count);
   font-size: small;
   position: absolute;

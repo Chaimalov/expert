@@ -19,10 +19,6 @@ export const productsSnapshot = (
       emitUpdatedProducts(io, userId);
       console.log(`product emitted`);
     });
-    db.users.onSnapshot(() => {
-      emitUpdatedProducts(io, userId);
-      console.log('user emitted');
-    });
   }
   next();
 };
